@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "iotlab-a703c",
+  "private_key_id": "6ada0b48d430622d87e03e35442cb15f2c24893a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCNk2MRDID2kby5\n4y0EBEKaXdX41im8yobkSTk0oewCPXUcqas0K2+DTOi2Fghxgih7asvS6BOPRDJO\nQa7p62AUKVAZ6kPj8BV+Ibd5xXCV2HyqStp8+Dl6aLb5ATRrvA/Zkup2RQqd9rFn\nHn0gXvuju+H8ufEN0FweWtKQIPL8dZqJRAvd9AkqfFWkiv9O1gnd9aWf5S2x3irB\nLPEnoeXFUNI3Fk4cb2Zth7BlwmFlnNfOljvof+zUxjMxTE+THMuLsFcTSolbOV8H\nB1JXp2k4vBI8ZKWyEROCLrIxsfSkBrZ9u7TVyEccCTQNbrUjL7lY1oxXqe8g006n\nckCpQjRVAgMBAAECggEAA9Dpti9umHbULfSEJZwRyYRm/JaVOGwDF8srehI1QNg0\nPGoMXdMf5dugWCwe3SRjf/Qge1ZbFJ0DeB2IH/ECvXhhmtk4LEAv7B7viZ47Syaz\nMYnj+sNcFUMWT37rUU4X5Uby/+4be6eHH57wQ3ub781kKYI/j55CpWTQUSc6NXjR\nw2m4J4tViZC46h4p190RiLcIlw+M9DfsLaIn2kwRgjx3D36gGuCMm11FRlc99vRl\nMwmxAohCoADrwvEkK2C8eUtBVwcPdl5Eq+AOlc0OzgzAOS4GIBuI4suM1N4nfbpa\nw1HQQEjY00teUCYw9oRcbgLiV9O4ISGNHC3Dvcm/TwKBgQDIIDGDtwIwXEdNk9SG\nYNamtG+RJZdkSwebeL2Lc2Gc6FH6DT+9P7fywwYlMj+HA+Q5yIAn+KG+aXkID1li\nlIzM2zYypUyQ5pw8F6bAtUdXxznb2Ec4P9jSRuz2FOQ8V68iEQUhjCNKpeieZrkb\nesSMrDxLvdvlVJBNIoAy30IspwKBgQC1GmI6StBb07+449lUxLVZMbOvdI8kqXJK\nXZ4QNWK7KRT5WxVySKi+rKAHdBH9NNEDjKjfzlo1oHrssTc9NFdaWLH9Qqz2SsVr\nFYfGeltXyT/MwUMigPpymeX7htBr3s4ylDFP0EKkeZPHpVT+yAlclqybEoN7zHP0\nJ0X5RnzKowKBgCbzvS95638mNuqun2sYZi9EZ4LE4lavE+f69Em0R4eW4H3fHkzj\nnhYuR3/t69eHtmBY2jjtd+3r8ZbUBf3eFBm7gS0SZ3i8qiQ4JkjT//Lh4C0eR553\nLuiezXiIUHQ+TORAk9MXx7a73C8Yp2bl2mPXElVbuvVEJGIfGPzN3795AoGAQQC2\nTxv5S2xmfVNy92UffmNDjm90zYDwX9bYXBL9XBYzzAiwWvPPdZj6W5KCvnKNrwt2\ntdYYNPVkCb7WB+bYj7oUMMYU1NYjo/r3X/sc/BZlCvY3RZQr0KSCktRhzMYNFsRw\nKqiisuxcaaVjK4vbKFuAmqx7exz4ZaMPD5kIQ6cCgYAereXUWhjmp9rVtdsoKx5w\nYMvcgPxmyA03k5gAvkZJ4Lvc9LPP6eQMowbyD3nfYdvJxLna5SNbLPOryv3wd20R\nW7Wn5d1pEd1+TYq7iv4HCAuCeKPiMcU5j9HPsPvI+IQU5qDjuZ7nWaCrvDDM7KpS\ntEaxW+MYX8nokYmUQilIUg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-d1hq5@iotlab-a703c.iam.gserviceaccount.com",
+  "client_id": "103354133400873168753",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-d1hq5%40iotlab-a703c.iam.gserviceaccount.com"
+}
