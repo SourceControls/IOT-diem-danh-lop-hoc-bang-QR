@@ -6,9 +6,6 @@ function routes(app) {
 
   app.use('/PhongDaoTao', phongDaoTaoRouters);
 
-
-
-
   app.get('/insertSensorData', function (req, res) {
     var myobj = { ...req.query, time: getCurrentTime() };
     console.log(myobj);

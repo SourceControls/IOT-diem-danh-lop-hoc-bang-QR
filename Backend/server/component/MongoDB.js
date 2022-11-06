@@ -23,7 +23,6 @@ class MongoDB {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).find(query).toArray();
-      console.log(rs);
       db.close();
       return new Promise((resolve, reject) => {
         resolve(rs);
@@ -32,31 +31,33 @@ class MongoDB {
       console.log(error.message);
     }
   }
-  update(collectionName, query = {}, newValue = {}) {
-    MongoClient.connect(DBUri, function (err, db) {
-      if (err) throw err;
+  update = async (collectionName, query = {}, newValue = {}) => {
+    newValue = { $set: newValue };
+    console.log(newValue);
+    try {
+      var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
-      // var myquery = { MAGV: "GV02" };
-      // var newValue = { $set: { HOTEN: "Bùi Tuấn Hùng",EMAIL:"hungbuituan1@gmail.com" } };
-      dbo.collection(collectionName).updateOne(myquery, newValue, function (err, result) {
-        if (err) throw err;
-        db.close();
-
-        return result;
-      });
-    });
+      var rs = await dbo.collection(collectionName).updateOne(query, newValue);
+      db.close();
+      return new Promise((resolve, reject) => {
+        resolve(rs);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
   }
-  delete(collectionName, query) {
-    MongoClient.connect(DBUri, function (err, db) {
-      if (err) throw err;
+  delete = async (collectionName, query) => {
+    try {
+      var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
-      // var myquery = { MAGV: 'GV03' }; //SET ĐIỀU KIỆN
-      dbo.collection(collectionName).deleteOne(myquery, function (err, result) {
-        if (err) throw err;
-        db.close();
-        return result;
-      });
-    });
+      var rs = await dbo.collection(collectionName).deleteOne(query);
+      db.close();
+      return new Promise((resolve, reject) => {
+        resolve(rs);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }
 
