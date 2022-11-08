@@ -1,7 +1,5 @@
 
-var time = document.querySelector('#time');
-var msv = document.querySelector('#msv');
-var lhp = document.querySelector('#lhp');
+var content = document.querySelector('.content');
 var socket = io.connect("localhost");
 
 socket.on('connected', function (msg) {
@@ -11,32 +9,33 @@ socket.on('connected', function (msg) {
   // lhp.innerText = msg.LHP;
 });
 
-let updateData = {
-  query: {
-    MAGV: 'GV02',
-    HOTEN: 'Bùi Tuấn Hùng 1'
-  },
-  newValue: {
-    EMAIL: 'hungbuituan2@gmail.com'
-  }
-};
+// let updateData = {
+//   query: {
+//     MAGV: 'GV02',
+//     HOTEN: 'Bùi Tuấn Hùng 1'
+//   },
+//   newValue: {
+//     EMAIL: 'hungbuituan2@gmail.com'
+//   }
+// };
 
-let deleteData = {
-  MAGV: 'GV03'
-}
+// let deleteData = {
+//   MAGV: 'GV03'
+// }
 
-let getData = {
-  // MAGV: 'GV01',
-  // HOTEN: 'Bùi Tuấn Hùng'
-};
+// let getData = {
+//    MAGV: 'GV01',
+// };
+console.log(content.innerText);
 
-fetch("http://localhost/PhongDaoTao/deleteGiangVien", {
+fetch("http://localhost/CT_DiemDanh/GetList", {
   method: "POST",
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(getData)
+  body: JSON.stringify({})
 }).then(res => {
   return res.json();
 }).then(res => {
+  content.innerText = JSON.stringify(res);
   console.log("Request complete! response:", res);  //res là object mà server trả về
 }).catch(function () {
   console.log("OOP!!");

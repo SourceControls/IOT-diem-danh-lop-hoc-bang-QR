@@ -22,8 +22,9 @@ class MongoDB {
     try {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
-      var rs = await dbo.collection(collectionName).find(query).toArray();
+      var rs = await dbo.collection(collectionName).find(query, {  projection : { _id: 0  } }).toArray();
       db.close();
+      console.log(rs);
       return new Promise((resolve, reject) => {
         resolve(rs);
       })
@@ -33,12 +34,12 @@ class MongoDB {
   }
   update = async (collectionName, query = {}, newValue = {}) => {
     newValue = { $set: newValue };
-    console.log(newValue);
     try {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).updateOne(query, newValue);
       db.close();
+      console.log(rs);
       return new Promise((resolve, reject) => {
         resolve(rs);
       })
@@ -52,6 +53,7 @@ class MongoDB {
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).deleteOne(query);
       db.close();
+      console.log(rs);
       return new Promise((resolve, reject) => {
         resolve(rs);
       })
