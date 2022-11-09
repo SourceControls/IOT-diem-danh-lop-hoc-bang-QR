@@ -1,50 +1,60 @@
+import socket from '../socket/main.js'  //không cần import
 
-var content = document.querySelector('.content');
-var socket = io.connect("localhost");
+import { server } from '../server/main.js' //phải import cái này
 
-socket.on('connected', function (msg) {
-  console.log(msg, { io });
-  // time.innerText = msg.time;
-  // msv.innerText = msg.MSV;
-  // lhp.innerText = msg.LHP;
-});
+//GET
+//query để trống thì nó match all
+//match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
 
-// let updateData = {
+// let data = {
+//   TENDN: 'GV01'
+// };
+
+//result là 1 mảng object, có 0-n phần tử
+// server.getList(server.tbl.TAIKHOAN, data).then((result) => {
+//   console.log(result);
+// })
+
+
+//INSERT
+//Insert tài khoản vào bảng tài khoản
+
+// let data = {
+//   TENDN: 'GV10',
+//   MATKHAU: '123@123',
+//   LOAITK: 'GV'
+// };
+
+//result là 1 boolean, true = thành công.
+// server.insert(server.tbl.TAIKHOAN, data).then((result) => {
+//   console.log(result);
+// })
+
+
+//UPDATE
+//Cần phải có phần query và phần newValue
+// let data = {
 //   query: {
-//     MAGV: 'GV02',
-//     HOTEN: 'Bùi Tuấn Hùng 1'
+//     TENDN: 'GV10',
 //   },
 //   newValue: {
-//     EMAIL: 'hungbuituan2@gmail.com'
+//     MATKHAU: '123@121',
+//     LOAITK: 'GV'
 //   }
 // };
 
-// let deleteData = {
-//   MAGV: 'GV03'
-// }
+//result = boolean, true = đã có 1 dòng dữ liệu được update, false = 0 dòng được update
+// server.update(server.tbl.TAIKHOAN, data).then((result) => {
+//   console.log(result);
+// })
 
-// let getData = {
-//    MAGV: 'GV01',
+//DELETE
+// let data = {
+//   TENDN: 'GV10'
 // };
-console.log(content.innerText);
 
-fetch("http://localhost/CT_DiemDanh/GetList", {
-  method: "POST",
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({})
-}).then(res => {
-  return res.json();
-}).then(res => {
-  content.innerText = JSON.stringify(res);
-  console.log("Request complete! response:", res);  //res là object mà server trả về
-}).catch(function () {
-  console.log("OOP!!");
-});
+//result = boolean, true = đã có 1 dòng dữ liệu được xóa, false = 0 dòng được xóa
+// server.delete(server.tbl.TAIKHOAN, data).then((result) => {
+//   console.log(result);
+// })
 
-// fetch("http://localhost/PhongDaoTao/GetListGiangVien?QUERY='{'MAGV'='GV01','HOTEN'='Bùi Tuấn Hùng'}'&HOTEN=Bùi Tuấn Hùng&Email= hungbuituan1@gmail.com").then(function (response) {
-//   return response.json();
-// }).then(function (data) {
-//   console.log(data);
-// }).catch(function () {
-//   console.log("OOP!!");
-// });

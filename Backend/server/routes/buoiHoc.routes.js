@@ -4,6 +4,8 @@ const controller = require('../controllers/BuoiHocController')
 
 router.use('/GetList', controller.getList);
 
+router.use('/Insert', controller.insert);
+
 router.use('/Delete', controller.delete);
 
 router.use('/Update', controller.update)

@@ -10,7 +10,7 @@ function socket(app, port) {
     socket.on('disconnect', () => {
       console.log('user disconnected ||', time.getCurrentTime());
     });
-    io.emit('connected', 'connected');
+    io.emit('connected', 'socket connected');
     // console.log(socket.handshake.address);
   });
 }
