@@ -1,10 +1,14 @@
 const io = require('../component/IO');
 const doRequest = require('../component/doRequest');
 const cheatDetector = require('../component/CheatDetector');
-class sensorControllers {
+class SensorControllers {
+
+  //điểm danh bằng QR.
   insertSensorData = async (req, res) => {
     var myobj = { ...req.query };
     console.log("SensorData: ", myobj);
+    res.send('Thành công');
+    return;
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
     // http://localhost/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
 
@@ -13,7 +17,6 @@ class sensorControllers {
       //cập nhật lại trạng thái điểm danh của sinh viên
       let updated = (await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
       if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
-
       //phát hiện gian lận và cập nhật vào ghi chú nếu có
       let MAGV = (await doRequest('http://localhost/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
       MAGV = MAGV[0].IDLGVSUBMITTED;
@@ -28,8 +31,12 @@ class sensorControllers {
     } catch (error) {
       res.send("FAIL!! " + error.message);
     }
+  }
+
+  //nhiệt độ độ ẩm
+  insertNhietDoDoAm(req, res) {
 
   }
 }
 
-module.exports = new sensorControllers;
+module.exports = new SensorControllers;
