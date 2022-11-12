@@ -9,25 +9,24 @@ class sensorControllers {
     // http://localhost/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
 
     try {
-      await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: false } })
 
       //cập nhật lại trạng thái điểm danh của sinh viên
       let updated = (await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
-      if (updated == 0) { res.send("Fail!! Sinh viên đã điểm danh trước đó"); return; }
+      if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
 
       //phát hiện gian lận và cập nhật vào ghi chú nếu có
-      let maGV = (await doRequest('http://localhost/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
-      maGV = maGV[0].IDLGVSUBMITTED;
+      let MAGV = (await doRequest('http://localhost/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
+      MAGV = MAGV[0].IDLGVSUBMITTED;
       let studentPosition = { lat: myobj.lat, lng: myobj.lng };
-      let giangVienPosition = io.getGiangVienPosition(maGV);
-      var ghiChu = cheatDetector.dectect(myobj.IDBUOIHOC, myobj.IP, giangVienPosition, studentPosition)
-      if (ghiChu != "");
-      await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { GHICHU: ghiChu } })
+      let giangVienPosition = io.getGiangVienPosition(MAGV);
+      var GHICHU = cheatDetector.dectect(myobj.IDBUOIHOC, myobj.IP, giangVienPosition, studentPosition)
+      if (GHICHU != "");
+      await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { GHICHU } })
 
 
-      res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + ghiChu);
+      res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + GHICHU);
     } catch (error) {
-      res.send(error.message);
+      res.send("FAIL!! " + error.message);
     }
 
   }

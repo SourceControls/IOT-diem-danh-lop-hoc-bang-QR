@@ -14,17 +14,24 @@ class MongoDB {
     CT_LOP_SV: "CT_LOP_SV",
   }
   insert = async (collectionName, query = {}) => {
-    if (Object.keys(query).length === 0)
-      return false;
+    if (Array.isArray(query))
+      if (Object.keys(query).length === 0)
+        return false;
 
     try {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
-      var rs = await dbo.collection(collectionName).insertOne(query);
+      if (Array.isArray(query))
+        var rs = await dbo.collection(collectionName).insertMany(query);
+      else
+        var rs = await dbo.collection(collectionName).insertOne(query);
       db.close();
       console.log("Inserted: ", rs);
       return new Promise((resolve, reject) => {
-        resolve(rs.insertedId != null);
+        if (Array.isArray(query))
+          resolve(rs.insertedIds != null);
+        else
+          resolve(rs.insertedId != null);
       })
     } catch (error) {
       console.log(error.message);

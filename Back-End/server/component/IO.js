@@ -5,10 +5,10 @@ class IO {
     defaultPosition: { lat: 10.848085, lng: 106.786452 }  // đặt mặc định là vị trí của học viện
 
   };  //lưu lại position của tất cả giảng viên
-  getGiangVienPosition(maGV) {
-    if (!IO.giangVienPositions.hasOwnProperty(maGV))
+  getGiangVienPosition(MAGV) {
+    if (!IO.giangVienPositions.hasOwnProperty(MAGV))
       return IO.giangVienPositions.defaultPosition;
-    return IO.giangVienPositions[maGV];
+    return IO.giangVienPositions[MAGV];
   }
   init(app, port) {
     var io = this.io;
@@ -25,12 +25,11 @@ class IO {
       });
 
       socket.emit('connected', 'socket connected');
-
-      io.emit('clientLocation', 'GV01')
+      io.emit('clientLocation') //cap nhat lai vi tri cua giang vien.
       //cập nhật lại mã giảng viên
       socket.on('clientLocation', (clientPosition) => {
         if (clientPosition.position) {
-          giangVienPositions[clientPosition.maGV] = clientPosition.position;
+          giangVienPositions[clientPosition.MAGV] = clientPosition.position;
           console.log(giangVienPositions);
 
         }

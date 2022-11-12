@@ -3,7 +3,6 @@ const doRequest = require('../component/doRequest');
 
 class CheatDetector {
   static listIPInBuoiHoc = {
-    BUOI01: ["127.0.0.1"]
   }
   addBuoiHoc(IDBUOIHOC) {
     if (!CheatDetector.listIPInBuoiHoc.hasOwnProperty(IDBUOIHOC)) {

@@ -10,6 +10,8 @@ import socket from '../socket/main.js'
 
 import { server } from '../server/main.js' //phải import cái này
 
+
+server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
 //GET
 //query để trống thì nó match all
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
@@ -25,7 +27,7 @@ import { server } from '../server/main.js' //phải import cái này
 
 
 //INSERT
-//Insert tài khoản vào bảng tài khoản
+//Insert tài khoản vào bảng tài khoản,data có thể là 1 list các tài khoản nếu muốn insert nhiều.
 
 // let data = {
 //   TENDN: 'GV10',

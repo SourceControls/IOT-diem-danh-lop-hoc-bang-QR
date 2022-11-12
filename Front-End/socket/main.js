@@ -13,28 +13,20 @@ socket.on('connected', function (msg) {
 
 
 // gửi và nhận vị trí của giảng viên
-socket.on('clientLocation', (maGV) => {
-  var MAGV = 'GV01'
-  if (maGV == MAGV)
-    navigator.geolocation.getCurrentPosition((p) => {
-      console.log({
+var MAGV = "GV01";
+socket.on('clientLocation', () => {
+  navigator.geolocation.getCurrentPosition((p) => {
+    console.log({
+      lat: p.coords.latitude,
+      lng: p.coords.longitude
+    });
+    socket.emit('clientLocation', {
+      MAGV,
+      position: {
         lat: p.coords.latitude,
         lng: p.coords.longitude
-      });
-      socket.emit('clientLocation', {
-        maGV: MAGV,
-        position: {
-          lat: p.coords.latitude,
-          lng: p.coords.longitude
-        }
-      });
-    })
+      }
+    });
+  })
 });
-
-
-function a() {
-
-}
-
-
 export default socket;
