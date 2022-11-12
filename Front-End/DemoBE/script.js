@@ -1,4 +1,12 @@
-import socket from '../socket/main.js'  //không cần import
+// cho vào trong file index.html, cái này dùng cho page xem danh sách điểm danh của giảng viên
+// <script
+//   src="https://cdn.socket.io/4.5.3/socket.io.min.js"
+//   integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi"
+//   crossorigin="anonymous"
+// ></script>
+import socket from '../socket/main.js'
+
+
 
 import { server } from '../server/main.js' //phải import cái này
 
