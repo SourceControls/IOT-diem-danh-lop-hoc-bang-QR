@@ -7,8 +7,6 @@ class SensorControllers {
   insertSensorData = async (req, res) => {
     var myobj = { ...req.query };
     console.log("SensorData: ", myobj);
-    res.send('Thành công');
-    return;
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
     // http://localhost/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
 
@@ -33,10 +31,6 @@ class SensorControllers {
     }
   }
 
-  //nhiệt độ độ ẩm
-  insertNhietDoDoAm(req, res) {
-
-  }
 }
 
 module.exports = new SensorControllers;
