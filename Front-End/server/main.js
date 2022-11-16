@@ -13,19 +13,19 @@ class Server {
     CT_DIEMDANH: "CT_DiemDanh"
   };
   getList(tbl, data) {
-    let api = `http://${domain}/${tbl}/GetList`
+    let api = `${domain}/${tbl}/GetList`
     return excute(api, data)
   }
   insert(tbl, data) {
-    let api = `http://${domain}/${tbl}/Insert`
+    let api = `${domain}/${tbl}/Insert`
     return excute(api, data)
   }
   update(tbl, data) {
-    let api = `http://${domain}/${tbl}/Update`
+    let api = `${domain}/${tbl}/Update`
     return excute(api, data)
   }
   delete(tbl, data) {
-    let api = `http://${domain}/${tbl}/Delete`
+    let api = `${domain}/${tbl}/Delete`
     return excute(api, data)
   }
   fuct = {

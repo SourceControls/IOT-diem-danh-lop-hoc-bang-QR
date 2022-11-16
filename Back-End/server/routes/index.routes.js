@@ -8,10 +8,7 @@ const CT_LOP_GVRouters = require('./CT_LOP_GV.routes');
 const CT_LOP_SVRouters = require('./CT_LOP_SV.routes');
 const CT_DiemDanhRouters = require('./CT_DiemDanh.routes');
 const sensorRouters = require('./sensor.routes');
-
-
 const siteRouters = require('./sites.routes');
-const { resolve } = require('path');
 
 function routes(app) {
 
@@ -26,8 +23,10 @@ function routes(app) {
   app.use('/sensor', sensorRouters);
 
   // init route for sensor
+  app.use('/site', siteRouters);
 
-  app.use('/', siteRouters);
+  app.get('/', (req, res) => (res.send({ data: "Hello, world!" })));
+
 }
 
 

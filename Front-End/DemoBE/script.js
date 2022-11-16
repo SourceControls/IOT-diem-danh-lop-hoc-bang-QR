@@ -1,3 +1,7 @@
+
+//===================================  SOCKET  ==================================
+
+
 // cho vào trong file index.html, cái này dùng cho page xem danh sách điểm danh của giảng viên
 // <script
 //   src="https://cdn.socket.io/4.5.3/socket.io.min.js"
@@ -6,12 +10,12 @@
 // ></script>
 import socket from '../socket/main.js'
 
+//===================================  SERVER  ==================================
+
+// import { server } from '../server/main.js' //phải import cái này
+// server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
 
 
-import { server } from '../server/main.js' //phải import cái này
-
-
-server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
 //GET
 //query để trống thì nó match all
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
@@ -68,3 +72,22 @@ server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
 //   console.log(result);
 // })
 
+//===================================  UPLOAD IMAGE  ==================================
+
+
+// import uploadImg from "../Image/main.js";
+
+// element input là 1 thẻ input image đã được chọn ảnh.
+// var file = document.getElementById('input_img').files[0];  
+// uploadImg(file).then(imgURL => console.log(imgURL))
+
+//===================================  GET QR IMAGE  ==================================
+
+import getQRSrc from '../QR/main.js';
+// i là thẻ IMG
+var i = document.querySelector('.QR-img');
+//200 là size của QR.
+getQRSrc('BUOI01', 'LSV01', '200').then((src) => {
+  i.src = src;
+  console.log(src);
+});
