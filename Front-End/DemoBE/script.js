@@ -8,11 +8,11 @@
 //   integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi"
 //   crossorigin="anonymous"
 // ></script>
-import socket from '../socket/main.js'
+import socket from '../components/socket/main.js'
 
 //===================================  SERVER  ==================================
 
-// import { server } from '../server/main.js' //phải import cái này
+// import { server } from '../components/server/main.js' //phải import cái này
 // server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
 
 
@@ -34,7 +34,7 @@ import socket from '../socket/main.js'
 //Insert tài khoản vào bảng tài khoản,data có thể là 1 list các tài khoản nếu muốn insert nhiều.
 
 // let data = {
-//   TENDN: 'GV10',
+//   MASV: 'GV10',
 //   MATKHAU: '123@123',
 //   LOAITK: 'GV'
 // };
@@ -75,7 +75,7 @@ import socket from '../socket/main.js'
 //===================================  UPLOAD IMAGE  ==================================
 
 
-// import uploadImg from "../Image/main.js";
+// import uploadImg from "../components/Image/main.js";
 
 // element input là 1 thẻ input image đã được chọn ảnh.
 // var file = document.getElementById('input_img').files[0];  
@@ -83,7 +83,7 @@ import socket from '../socket/main.js'
 
 //===================================  GET QR IMAGE  ==================================
 
-import getQRSrc from '../QR/main.js';
+import getQRSrc from '../components/QR/main.js';
 // i là thẻ IMG
 var i = document.querySelector('.QR-img');
 //200 là size của QR.
