@@ -38,6 +38,7 @@ class MongoDB {
     }
   }
   find = async (collectionName, query = {}) => {
+    console.log(query);
     try {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
