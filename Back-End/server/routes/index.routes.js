@@ -22,18 +22,9 @@ function routes(app) {
   app.use('/CT_DiemDanh', CT_DiemDanhRouters);
   app.use('/sensor', sensorRouters);
   //API chung
-  app.use('/site', siteRouters);
+  app.use('/', siteRouters);
 
 
-  //Dieu huong trang
-  const path = require('path');
-  app.use('/sign-in', (req, res) => res.sendFile(path.join(__dirname, "../view/sign-in.html")));
-  app.use('/lecturers', (req, res) => res.sendFile(path.join(__dirname, "../view/lecturers.html")));
-  app.use('/students', (req, res) => res.sendFile(path.join(__dirname, "../view/students.html")));
-  app.use('/index.html', (req, res) => res.sendFile(path.join(__dirname, "../view/class.html")));
-  app.use('/password', (req, res) => res.sendFile(path.join(__dirname, "../view/password.html")));
-
-  app.get('/', (req, res) => (res.sendFile(path.join(__dirname, "../view/sign-in.html"))));
 
 }
 
