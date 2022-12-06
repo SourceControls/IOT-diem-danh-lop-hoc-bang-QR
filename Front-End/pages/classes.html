@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/ptit-logo.png">
-  <link rel="icon" type="image/png" href="../assets/img/ptit-logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/ptit-logo.png">
+  <link rel="icon" type="image/png" href="/assets/img/ptit-logo.png">
   <title>
     Lớp học phần
   </title>
@@ -75,7 +75,7 @@
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3"> 
+      <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
@@ -84,11 +84,17 @@
           <h6 class="font-weight-bolder text-white mb-0">Lớp học phần</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <ul class="navbar-nav ms-md-auto justify-content-end">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" placeholder="Tìm kiếm...">
+            </div>
+          </div>
+          <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
-                <img src="https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg" class="avatar avatar-xs mb-1" alt="admin">
-                <span class="d-sm-inline d-none">ADMIN</span>
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">Sign In</span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -99,6 +105,84 @@
                   <i class="sidenav-toggler-line bg-white"></i>
                 </div>
               </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bell cursor-pointer"></i>
+              </a>
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">New message</span> from Laur
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          13 minutes ago
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">New album</span> by Travis Scott
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          1 day
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <title>credit-card</title>
+                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                              <g transform="translate(1716.000000, 291.000000)">
+                                <g transform="translate(453.000000, 454.000000)">
+                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
+                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          Payment successfully completed
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          2 days
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -149,13 +233,12 @@
                         <span class="text-secondary">Môn 1</span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <div class="text-secondary">Giảng viên 1</div>
+                        <span class="text-secondary">Giảng viên 1</span>
                       </td>
                       <td class="align-middle">
                         <button type="button" class="btn btn-outline-primary btn-xs mb-0 edit" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
                         <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete">Xóa</button>
-                        <button type="button" class="btn btn-outline-dark btn-xs mb-0 dssv" data-bs-toggle="modal" data-bs-target="#dssvModal">DSSV</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Quản lý buổi học</button>
+                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Xem DS buổi</button>
                       </td>
                     </tr>
                     <tr>
@@ -171,13 +254,12 @@
                         <span class="text-secondary">Môn 2</span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <div class="text-secondary">Giảng viên 2</div>
+                        <span class="text-secondary">Giảng viên 2</span>
                       </td>
                       <td class="align-middle">
                         <button type="button" class="btn btn-outline-primary btn-xs mb-0 edit" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
                         <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete">Xóa</button>
-                        <button type="button" class="btn btn-outline-dark btn-xs mb-0 dssv" data-bs-toggle="modal" data-bs-target="#dssvModal">DSSV</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Quản lý buổi học</button>
+                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Xem DS buổi</button>
                       </td>
                     </tr>
                     <tr>
@@ -193,13 +275,12 @@
                         <span class="text-secondary">Môn 3</span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <div class="text-secondary">Giảng viên 3</div>
+                        <span class="text-secondary">Giảng viên 3</span>
                       </td>
                       <td class="align-middle">
                         <button type="button" class="btn btn-outline-primary btn-xs mb-0 edit" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
                         <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete">Xóa</button>
-                        <button type="button" class="btn btn-outline-dark btn-xs mb-0 dssv" data-bs-toggle="modal" data-bs-target="#dssvModal">DSSV</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Quản lý buổi học</button>
+                        <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Xem DS buổi</button>
                       </td>
                     </tr>
                   </tbody>
@@ -237,9 +318,8 @@
       </footer>
     </div>
   </main>
-</div>
 
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
@@ -265,29 +345,6 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Giảng viên" id="input-4">
                 </div>
-                <button type="button" class="btn btn-outline-warning btn-xs mb-0 tgv">Thêm giảng viên</button>
-                <div class="tgv-hidden mt-2 d-none">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <input type="text" class="form-control form-control-sm mt-2" placeholder="Mã GV">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="text" class="form-control form-control-sm mt-2" placeholder="Họ tên">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="tel" class="form-control form-control-sm mt-2" placeholder="SĐT">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="email" class="form-control form-control-sm mt-2" placeholder="Email">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="file" class="form-control form-control-sm mt-2" placeholder="Hình ảnh">
-                    </div>
-                    <div class="col-md-6">
-                      <button type="button" class="btn btn-success btn-xs w-100 mt-2">Thêm</button>
-                    </div>
-                  </div>
-                </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Cập nhật</button>
                 </div>
@@ -298,60 +355,37 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
           <div class="card card-plain">
             <div class="card-header pb-0 text-left">
-              <h3 class="font-weight-bolder text-info text-gradient">Danh sách buổi học</h3>
+              <h3 class="font-weight-bolder text-info text-gradient ten-gv"></h3>
+              <p class="mb-0 ten-mon"></p>
             </div>
             <div class="card-body">
-              <div class="row mb-4">
-                <div class="col-6">
-                  <span class="badge bg-gradient-primary ma-lop"></span>
-                  <span class="badge bg-gradient-success ten-lop"></span>
-                  <span class="badge bg-gradient-info ten-gv"></span>
-                  <span class="badge bg-gradient-secondary ten-mon"></span>
-                </div>
-                <div class="col-3 text-end">
-                  <button type="button" class="btn btn-outline-warning btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#cnbh">Thêm <br/>buổi học</button>
-                </div>
-                <div class="col-3 text-end">
-                  <button type="button" class="btn btn-outline-success btn-xs mb-0 xemdiemdanh" data-bs-toggle="modal" data-bs-target="#xdd">Xem điểm danh toàn bộ buổi học</button>
-                </div>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="ps-0">Tên buổi học</th>
-                    <th class="ps-2">Tiết bắt đầu</th>
-                    <th class="ps-2">Phòng</th>
-                    <th class="ps-2">Số tiết</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="ps-0">Công nghệ phần mềm</td>
-                    <td>1</td>
-                    <td>2A08</td>
-                    <td>5</td>
-                    <td class="text-end pe-0">
-                      <button type="button" class="btn btn-outline-primary btn-xs mb-0 cnbh" data-bs-toggle="modal" data-bs-target="#cnbh">Cập nhật</button>
-                      <button type="button" class="btn btn-outline-danger btn-xs mb-0">Xóa</button>
-                      <button type="button" class="btn btn-outline-success btn-xs mb-0 dsdd" data-bs-toggle="modal" data-bs-target="#dsdd">DSĐD</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <button type="button" class="btn btn-info btn-lg w-100">
+                <div class="text-lg">Buổi 1</div>
+                <div class="text-sm">Ngày, tiết BD, phòng, số tiết</div>
+              </button>
+              <button type="button" class="btn btn-info btn-lg w-100">
+                <div class="text-lg">Buổi 2</div>
+                <div class="text-sm">Ngày, tiết BD, phòng, số tiết</div>
+              </button>
+              <button type="button" class="btn btn-info btn-lg w-100">
+                <div class="text-lg">Buổi 3</div>
+                <div class="text-sm">Ngày, tiết BD, phòng, số tiết</div>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
@@ -387,146 +421,8 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="cnbh" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="card card-plain">
-            <div class="card-body">
-              <form role="form text-left">
-                <label>Tên buổi học</label>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh1" placeholder="Tên buổi học">
-                </div>
-                <label>Tiết bắt đầu</label>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh2" placeholder="Tiết bắt đầu">
-                </div>
-                <label>Phòng</label>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh3" placeholder="Phòng">
-                </div>
-                <label>Số tiết</label>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh4" placeholder="Số tiết">
-                </div>
-                <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Thêm</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="xdd" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="card card-plain">
-            <div class="card-header pb-0 text-center">
-              <h3 class="font-weight-bolder text-info text-gradient">Danh sách điểm danh theo lớp</h3>
-            </div>
-            <div class="card-body">
-              <div class="row mb-4">
-                <div class="col-12">
-                  <span class="badge bg-gradient-primary">Họ tên gv</span>
-                  <span class="badge bg-gradient-success">Tên lớp - số buổi</span>
-                  <span class="badge bg-gradient-secondary">Tổng số sv</span>
-                </div>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="ps-0">Mã SV</th>
-                    <th class="ps-2">Họ tên</th>
-                    <th class="ps-2">Buổi 1</th>
-                    <th class="ps-2">Buổi [n]</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>x</td>
-                    <td>v</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="text-center">
-                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="dssvModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="card card-plain">
-            <div class="card-header pb-0 text-center">
-              <h3 class="font-weight-bolder text-info text-gradient">Danh sách sinh viên</h3>
-            </div>
-            <div class="card-body">
-              <div class="row mb-4">
-                <div class="col-7">
-                  <span class="badge bg-gradient-primary">Mã lớp HP</span>
-                  <span class="badge bg-gradient-success">Tên lớp</span>
-                  <span class="badge bg-gradient-secondary">Tên môn</span>
-                </div>
-                <div class="col-5 text-end">
-                  <button type="button" class="btn btn-outline-info btn-xs mb-0 tsv">Thêm sinh viên</button>
-                </div>
-              </div>
-              <div class="tsv-hidden d-none">
-                <form class="row">
-                  <input type="text" class="form-control form-control-sm w-15 me-2" placeholder="Mã SV">
-                  <input type="text" class="form-control form-control-sm w-20 me-2" placeholder="Họ tên">
-                  <input type="tel" class="form-control form-control-sm w-15 me-2" placeholder="SĐT">
-                  <input type="email" class="form-control form-control-sm w-15 me-2" placeholder="Email">
-                  <input type="file" class="form-control form-control-sm w-10 me-2" placeholder="Hình ảnh">
-                  <button type="button" class="btn btn-success btn-xs w-15 mb-0 ms-auto">Thêm</button>
-                </form>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="ps-0">Mã SV</th>
-                    <th class="ps-2">Họ tên</th>
-                    <th class="ps-2">SĐT</th>
-                    <th class="ps-2">Email</th>
-                    <th class="px-2 text-center">Hình ảnh</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="../assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-danger btn-xs mb-0">Xóa</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="text-center">
-                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+</div>
 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
@@ -577,36 +473,7 @@
         document.querySelector(".ten-mon").innerText = parents(e.target).find(function (c) {
             return c.tagName == "TR"
         }).children[2].innerText;
-        document.querySelector(".ten-lop").innerText = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[1].innerText;
-        document.querySelector(".ma-lop").innerText = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[0].innerText;
       })
-    })
-    var cnbh = document.querySelectorAll(".cnbh");
-    cnbh.forEach(function(t){
-      t.addEventListener("click", function(e){
-        document.querySelector(".cnbh1").value = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[0].innerText;
-        document.querySelector(".cnbh2").value = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[1].innerText;
-        document.querySelector(".cnbh3").value = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[2].innerText;
-        document.querySelector(".cnbh4").value = parents(e.target).find(function (c) {
-            return c.tagName == "TR"
-        }).children[3].innerText;
-      })
-    })
-    document.querySelector('.tgv').addEventListener("click", function(e){
-      document.querySelector('.tgv-hidden').classList.toggle("d-none")
-    })
-    document.querySelector('.tsv').addEventListener("click", function(e){
-      document.querySelector('.tsv-hidden').classList.toggle("d-none")
     })
   </script>
 </body>

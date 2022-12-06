@@ -1,4 +1,0 @@
-log-in: 
-  1.sau khi check tài khoản có thể đăng nhập thì set thuộc tính TENDANGNHAP cho cookie = TENDANGNHAP. 
-  2.Gọi phương thức chuyển trang tương ứng với chức vụ. server.funct.LoggedIn("GV"||"SV"||"PDT");
-  3.Tại mỗi site đều phải viết hàm checklogin.
