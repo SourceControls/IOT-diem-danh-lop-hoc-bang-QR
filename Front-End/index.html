@@ -481,35 +481,26 @@
                   <span class="badge bg-gradient-secondary">Tổng số sv</span>
                 </div>
               </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="ps-0">Mã SV</th>
-                    <th class="ps-2">Họ tên</th>
-                    <th class="ps-2">Buổi 1</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                    <th class="ps-2">Buổi [n]</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>x</td>
-                    <td>v</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="ps-0">Mã SV</th>
+                      <th class="ps-2">Họ tên</th>
+                      <th class="ps-2">Buổi 1</th>
+                      <th class="ps-2">Buổi [n]</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ps-0">MSSV1</td>
+                      <td>Nguyễn Văn A</td>
+                      <td>x</td>
+                      <td>v</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <div class="text-center">
                 <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
               </div>
@@ -529,14 +520,17 @@
             </div>
             <div class="card-body">
               <div class="row mb-4">
-                <div class="col-8">
+                <div class="col-12 col-sm-8 mt-2 mb-2">
                   <span class="badge bg-gradient-primary">Mã lớp HP</span>
                   <span class="badge bg-gradient-success">Tên lớp</span>
                   <span class="badge bg-gradient-secondary">Tên môn</span>
                 </div>
-                <!--<div class="col-4 text-end">
-                  <button type="button" class="btn btn-outline-info btn-xs mb-0 tsv">Thêm sinh viên</button>
-                </div>-->
+                <div class="col-12 col-sm-4 text-end">
+                  <form class="bg-gray-100 border-radius-lg d-flex">
+                    <input type="text" class="form-control bg-gray-100 border-0 ps-3" placeholder="Tìm kiếm">
+                    <button class="btn btn-xs bg-gradient-primary my-1 me-1">Tìm</button>
+                  </form>
+                </div>
               </div>
               <!--<div class="tsv-hidden d-none">
                 <form class="row">
@@ -572,73 +566,22 @@
                       <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
                     </td>
                   </tr>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>0987654321</td>
-                    <td>abc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-2.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-danger btn-xs mb-0 w-100">Xóa</button>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
-              <div class="text-center">
+              <div class="text-center mb-4">
                 <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
               </div>
 
-              <h3 class="font-weight-bolder text-dark text-center mt-4">Danh sách</h3>
+              <div class="row">
+                <div class="col-12 col-sm-8"><h3 class="font-weight-bolder text-dark text-left mt-2">Danh sách</h3></div>
+                <div class="col-12 col-sm-4 text-end">
+                  <form class="bg-gray-100 border-radius-lg d-flex mt-2">
+                    <input type="text" class="form-control bg-gray-100 border-0 ps-3" placeholder="Tìm kiếm">
+                    <button class="btn btn-xs bg-gradient-primary my-1 me-1">Tìm</button>
+                  </form>
+                </div>
+              </div>
+              
               <table class="table">
                 <thead>
                   <tr>
@@ -658,54 +601,6 @@
                     <td>aaaaa@gmail.com</td>
                     <td class="align-middle text-center">
                       <img src="/assets/img/team-1.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV3</td>
-                    <td>Nguyễn Văn B</td>
-                    <td>098765621</td>
-                    <td>gaabc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-3.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV3</td>
-                    <td>Nguyễn Văn B</td>
-                    <td>098765621</td>
-                    <td>gaabc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-3.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV3</td>
-                    <td>Nguyễn Văn B</td>
-                    <td>098765621</td>
-                    <td>gaabc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-3.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="ps-0">MSSV3</td>
-                    <td>Nguyễn Văn B</td>
-                    <td>098765621</td>
-                    <td>gaabc@gmail.com</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-3.jpg" class="avatar avatar-sm" alt="user1">
                     </td>
                     <td class="w-10">
                       <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
