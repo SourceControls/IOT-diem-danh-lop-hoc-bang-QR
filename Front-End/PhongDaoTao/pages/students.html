@@ -109,8 +109,8 @@
       <div class="row"> 
         <div class="col-12 col-md-4 col-lg-4">
           <form class="bg-white border-radius-lg d-flex">
-            <input type="text" class="form-control border-0 ps-3" placeholder="Tìm kiếm">
-            <button class="btn bg-gradient-primary my-1 me-1">Tìm</button>
+            <input type="text" class="form-control border-0 ps-3 search-box" placeholder="Tìm kiếm">
+            <button class="btn bg-gradient-primary my-1 me-1 btn-search" type="button">Tìm</button>
           </form>
         </div>
         <div class="col-6 col-md-4 col-lg-4 ms-auto text-end">
@@ -136,82 +136,7 @@
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-sm">
-                        <div class="px-3">
-                          <p class="mb-0">SV01</p>
-                        </div>
-                      </td>
-                      <td>
-                        <h6 class="mb-0 text-sm">John Michael</h6>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">0123456789</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">abc@ptithcm.edu.vn</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <img src="/assets/img/team-2.jpg" class="avatar avatar-lg" alt="user1">
-                      </td>
-                      <td class="align-middle">
-                        <button type="button" class="btn btn-outline-primary btn-xs mb-0 update" data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
-                        <button type="button" class="btn btn-outline-danger btn-xs mb-0">Xóa</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 create" onclick="success()">Cấp TK</button>
-                        <button type="button" class="btn btn-outline-secondary btn-xs mb-0 reset" onclick="success()">Reset MK</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-sm">
-                        <div class="px-3">
-                          <p class="mb-0">SV02</p>
-                        </div>
-                      </td>
-                      <td>
-                        <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">0987654321</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">xyz@ptithcm.edu.vn</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <img src="/assets/img/team-3.jpg" class="avatar avatar-lg" alt="user1">
-                      </td>
-                      <td class="align-middle">
-                        <button type="button" class="btn btn-outline-primary btn-xs mb-0 update" data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
-                        <button type="button" class="btn btn-outline-danger btn-xs mb-0">Xóa</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 create" onclick="success()">Cấp TK</button>
-                        <button type="button" class="btn btn-outline-secondary btn-xs mb-0 reset" onclick="success()">Reset MK</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-sm">
-                        <div class="px-3">
-                          <p class="mb-0">SV03</p>
-                        </div>
-                      </td>
-                      <td>
-                        <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">0246728321</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-secondary">n123a@ptithcm.edu.vn</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <img src="/assets/img/team-4.jpg" class="avatar avatar-lg" alt="user1">
-                      </td>
-                      <td class="align-middle">
-                        <button type="button" class="btn btn-outline-primary btn-xs mb-0 update" data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
-                        <button type="button" class="btn btn-outline-danger btn-xs mb-0">Xóa</button>
-                        <button type="button" class="btn btn-outline-success btn-xs mb-0 create" onclick="success()">Cấp TK</button>
-                        <button type="button" class="btn btn-outline-secondary btn-xs mb-0 reset" onclick="success()">Reset MK</button>
-                      </td>
-                    </tr>
+                  <tbody id="list">
                   </tbody>
                 </table>
               </div>
@@ -257,34 +182,34 @@
               <h3 class="font-weight-bolder text-info text-gradient">Thêm sinh viên</h3>
             </div>
             <div class="card-body">
-              <form role="form text-left" class="row align-items-center">
+              <form role="form text-left" class="row align-items-center" id="add-sv-form">
                 <div class="col-md-5 text-center">
-                  <div class="preview-img avatar-xxl mx-auto mb-2"><img class="avatar avatar-xxl" src="https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg"/></div>
+                  <div class="preview-img avatar-xxl mx-auto mb-2"><img class="avatar avatar-xxl avatar-img" src="https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg"/></div>
                   <label>Ảnh đại diện</label>
                   <div class="input-group mb-3">
-                    <input type="file" class="form-control" accept="image/*" onchange="loadFile(event)">
+                    <input type="file" class="form-control input-add img-input" accept="image/*" onchange="loadFile(event)" name="HINH">
                   </div>
                 </div>
                 <div class="col-md-7">
                   <label>Mã sinh viên</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Mã sinh viên">
+                    <input type="text" class="form-control input-add" placeholder="Mã sinh viên" name="MASV">
                   </div>
                   <label>Họ tên</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Họ tên">
+                    <input type="text" class="form-control input-add" placeholder="Họ tên" name="HOTEN">
                   </div>
                   <label>Số điện thoại</label>
                   <div class="input-group mb-3">
-                    <input type="tel" class="form-control" placeholder="Số điện thoại">
+                    <input type="tel" class="form-control input-add" placeholder="Số điện thoại" name="SDT">
                   </div>
                   <label>Email</label>
                   <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control input-add" placeholder="Email" name="EMAIL">
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Thêm</button>
+                  <button type="submit" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 btn-add">Thêm</button>
                 </div>
               </form>
             </div>
@@ -303,34 +228,34 @@
               <h3 class="font-weight-bolder text-info text-gradient">Cập nhật sinh viên</h3>
             </div>
             <div class="card-body">
-              <form role="form text-left" class="row align-items-center">
+              <form role="form text-left" class="row align-items-center" id="btn-update-form">
                 <div class="col-md-5 text-center">
-                  <div id="input-4" class="preview-img avatar-xxl mx-auto mb-2"></div>
+                  <div id="input-4" class="preview-img avatar-xxl mx-auto mb-2 avatar-img"><img class="avatar avatar-xxl" src="https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg"/></div>
                   <label>Ảnh đại diện</label>
                   <div class="input-group mb-3">
-                    <input type="file" class="form-control" accept="image/*" onchange="loadFile(event)">
+                    <input type="file" class="form-control input-update" id="input_img" accept="image/*" onchange="loadFile(event)" name="HINH">
                   </div>
                 </div>
                 <div class="col-md-7">
                   <label>Mã sinh viên</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Mã sinh viên" id="input-0">
+                    <input type="text" class="form-control input-update" placeholder="Mã sinh viên" id="input-0" name="MASV">
                   </div>
                   <label>Họ tên</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Họ tên" id="input-1">
+                    <input type="text" class="form-control input-update" placeholder="Họ tên" id="input-1" name="HOTEN">
                   </div>
                   <label>Số điện thoại</label>
                   <div class="input-group mb-3">
-                    <input type="tel" class="form-control" placeholder="Số điện thoại" id="input-2">
+                    <input type="tel" class="form-control input-update" placeholder="Số điện thoại" id="input-2" name="SDT">
                   </div>
                   <label>Email</label>
                   <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" id="input-3">
+                    <input type="email" class="form-control input-update" placeholder="Email" id="input-3" name="EMAIL">
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Cập nhật</button>
+                  <button type="submit" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Cập nhật</button>
                 </div>
               </form>
             </div>
@@ -402,6 +327,7 @@
       })
     })
   </script>
+  <script type="module" src="studentResource/script.js"></script>
 </body>
 
 </html>
