@@ -109,12 +109,12 @@
       <div class="row"> 
         <div class="col-12 col-md-4 col-lg-4">
           <form class="bg-white border-radius-lg d-flex">
-            <input type="text" class="form-control border-0 ps-3" placeholder="Tìm kiếm">
+            <input type="text" class="form-control border-0 ps-3 searchLhp" placeholder="Tìm kiếm">
             <button class="btn bg-gradient-primary my-1 me-1">Tìm</button>
           </form>
         </div>
         <div class="col-6 col-md-4 col-lg-4 ms-auto text-end">
-          <button class="kanban-title-button btn btn-sm btn-danger mt-4 mt-lg-2 mb-0 add" data-bs-toggle="modal" data-bs-target="#addModal">Thêm lớp +</button>
+          <button class="kanban-title-button btn btn-sm btn-danger mt-4 mt-lg-2 mb-0 add btn-add" data-bs-toggle="modal" data-bs-target="#addModal">Thêm lớp +</button>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="tbl-lhp">
                     <tr>
                       <td class="text-sm">
                         <div class="px-3">
@@ -206,7 +206,7 @@
                       </td>
                       <td class="align-middle">
                         <button type="button" class="btn btn-outline-primary btn-xs mb-0 edit" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
-                        <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete">Xóa</button>
+                        <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete" data-bs-target="#deleteLhp">Xóa</button>
                         <button type="button" class="btn btn-outline-dark btn-xs mb-0 dssv" data-bs-toggle="modal" data-bs-target="#dssv">DSSV</button>
                         <button type="button" class="btn btn-outline-success btn-xs mb-0 view" data-bs-toggle="modal" data-bs-target="#viewModal">Quản lý buổi học</button>
                       </td>
@@ -262,15 +262,15 @@
                   <form role="form text-left">
                     <label>Mã lớp học phần</label>
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Mã lớp học phần" id="input-1">
+                      <input type="text" class="form-control MALHP-edit" placeholder="Mã lớp học phần" id="input-1" readonly>
                     </div>
                     <label>Tên lớp</label>
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Tên lớp" id="input-2">
+                      <input type="text" class="form-control TENLOP-edit" placeholder="Tên lớp" id="input-2">
                     </div>
                     <label>Tên môn</label>
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Tên môn" id="input-3">
+                      <input type="text" class="form-control TENMON-edit" placeholder="Tên môn" id="input-3">
                     </div>
                     <label>Giảng viên</label>
                     <div class="input-group mb-3">
@@ -360,7 +360,7 @@
                   <span class="badge bg-gradient-secondary ten-mon"></span>
                 </div>
                 <div class="col-3 text-end">
-                  <button type="button" class="btn btn-outline-warning btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#cnbh">Thêm <br/>buổi học</button>
+                  <button type="button" class="btn btn-outline-warning btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#tbh">Thêm <br/>buổi học</button>
                 </div>
                 <div class="col-3 text-end">
                   <button type="button" class="btn btn-outline-success btn-xs mb-0 xemdiemdanh" data-bs-toggle="modal" data-bs-target="#xdd">Xem điểm danh toàn bộ buổi học</button>
@@ -376,7 +376,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbl-buoiHoc">
                   <tr>
                     <td class="ps-0">Công nghệ phần mềm</td>
                     <td>1</td>
@@ -384,7 +384,7 @@
                     <td>5</td>
                     <td class="text-end pe-0">
                       <button type="button" class="btn btn-outline-primary btn-xs mb-0 cnbh" data-bs-toggle="modal" data-bs-target="#cnbh">Cập nhật</button>
-                      <button type="button" class="btn btn-outline-danger btn-xs mb-0">Xóa</button>
+                      <button type="button" class="btn btn-outline-danger btn-xs mb-0" data-bs-target="#deleteLhp">Xóa</button>
                       <button type="button" class="btn btn-outline-success btn-xs mb-0 dsdd" data-bs-toggle="modal" data-bs-target="#dsdd">DSĐD</button>
                     </td>
                   </tr>
@@ -408,22 +408,51 @@
               <form role="form text-left">
                 <label>Mã lớp</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Mã lớp học phần">
+                  <input type="text" class="form-control form-add" placeholder="Mã lớp học phần">
                 </div>
                 <label>Tên lớp</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Tên lớp">
+                  <input type="text" class="form-control form-add" placeholder="Tên lớp">
                 </div>
                 <label>Tên môn</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Tên môn">
+                  <input type="text" class="form-control form-add" placeholder="Tên môn">
                 </div>
                 <label>Giảng viên</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Giảng viên">
+                  <input type="text" class="form-control form-add" placeholder="Giảng viên">
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Thêm</button>
+                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 submit-add">Thêm</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="tbh" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="card card-plain">
+            <div class="card-body">
+              <form role="form text-left">
+                <label>Tiết bắt đầu</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control cnbh2 form-add-bh" placeholder="Tiết bắt đầu" maxlength="2">
+                </div>
+                <label>Phòng</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control cnbh3 form-add-bh" placeholder="Phòng" maxlength="4">
+                </div>
+                <label>Số tiết</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control cnbh4 form-add-bh" placeholder="Số tiết" maxlength="1">
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 btn-add-bh">Thêm</button>
                 </div>
               </form>
             </div>
@@ -439,24 +468,20 @@
           <div class="card card-plain">
             <div class="card-body">
               <form role="form text-left">
-                <label>Tên buổi học</label>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh1" placeholder="Tên buổi học">
-                </div>
                 <label>Tiết bắt đầu</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh2" placeholder="Tiết bắt đầu">
+                  <input type="text" class="form-control cnbh2 form-cnbh" placeholder="Tiết bắt đầu" maxlength="2">
                 </div>
                 <label>Phòng</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh3" placeholder="Phòng">
+                  <input type="text" class="form-control cnbh3 form-cnbh" placeholder="Phòng" maxlength="4">
                 </div>
                 <label>Số tiết</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control cnbh4" placeholder="Số tiết">
+                  <input type="text" class="form-control cnbh4 form-cnbh" placeholder="Số tiết" maxlength="1">
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Thêm</button>
+                  <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 btn-update-bh">Cập nhật</button>
                 </div>
               </form>
             </div>
@@ -476,9 +501,9 @@
             <div class="card-body">
               <div class="row mb-4">
                 <div class="col-12">
-                  <span class="badge bg-gradient-primary">Họ tên gv</span>
-                  <span class="badge bg-gradient-success">Tên lớp - số buổi</span>
-                  <span class="badge bg-gradient-secondary">Tổng số sv</span>
+                  <span class="badge bg-gradient-primary dtAll">Họ tên gv</span>
+                  <span class="badge bg-gradient-success dtAll">Tên lớp - số buổi</span>
+                  <span class="badge bg-gradient-secondary dtAll">Tổng số sv</span>
                 </div>
               </div>
               <div class="table-responsive">
@@ -491,10 +516,13 @@
                       <th class="ps-2">Buổi [n]</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="tbl-allDd">
                     <tr>
                       <td class="ps-0">MSSV1</td>
                       <td>Nguyễn Văn A</td>
+                      <td class="check"></td>
+
+                      </div>
                       <td>x</td>
                       <td>v</td>
                     </tr>
@@ -521,9 +549,9 @@
             <div class="card-body">
               <div class="row mb-4">
                 <div class="col-12 col-sm-8 mt-2 mb-2">
-                  <span class="badge bg-gradient-primary">Mã lớp HP</span>
-                  <span class="badge bg-gradient-success">Tên lớp</span>
-                  <span class="badge bg-gradient-secondary">Tên môn</span>
+                  <span class="badge bg-gradient-primary detailLhp">Mã lớp HP</span>
+                  <span class="badge bg-gradient-success detailLhp">Tên lớp</span>
+                  <span class="badge bg-gradient-secondary detailLhp">Tên môn</span>
                 </div>
                 <div class="col-12 col-sm-4 text-end">
                   <form class="bg-gray-100 border-radius-lg d-flex">
@@ -553,7 +581,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody-dssv-lhp">
                   <tr>
                     <td class="ps-0">MSSV1</td>
                     <td>Nguyễn Văn A</td>
@@ -593,7 +621,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody style="max-height:300px;overflow-y:auto">
+                <tbody style="max-height:300px;overflow-y:auto" class="tbd-dssv">
                   <tr>
                     <td class="ps-0">MSSV2</td>
                     <td>Nguyễn X</td>
@@ -603,7 +631,7 @@
                       <img src="/assets/img/team-1.jpg" class="avatar avatar-sm" alt="user1">
                     </td>
                     <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100">Thêm</button>
+                      <button type="button" class="btn btn-success btn-xs mb-0 w-100 ">Thêm</button>
                     </td>
                   </tr>
                   <tr>
@@ -637,9 +665,9 @@
             <div class="card-body">
               <div class="row mb-4">
                 <div class="col-12">
-                  <span class="badge bg-gradient-primary">Họ tên gv</span>
-                  <span class="badge bg-gradient-success">Tên lớp - số buổi</span>
-                  <span class="badge bg-gradient-secondary">Tổng số sv</span>
+                  <span class="badge bg-gradient-primary detailDd">Họ tên gv</span>
+                  <span class="badge bg-gradient-success detailDd">Tên lớp - số buổi</span>
+                  <span class="badge bg-gradient-secondary detailDd">Tổng số sv</span>
                 </div>
               </div>
               <table class="table">
@@ -648,10 +676,10 @@
                     <th class="ps-0">Mã SV</th>
                     <th class="ps-2">Họ tên</th>
                     <th class="ps-2">Buổi 1</th>
-                    <th class="ps-2">Buổi [n]</th>
+                    <th class="ps-2">Ghi chú</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbl_diemDanhTheoBuoi">
                   <tr>
                     <td class="ps-0">MSSV1</td>
                     <td>Nguyễn Văn A</td>
@@ -669,13 +697,50 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="deleteLhp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="card card-plain">
+            <div class="card-header pb-0 text-center">
+              <h3 class="font-weight-bolder text-info text-gradient">Xác nhận xóa</h3>
+            </div>
+            <div class="card-body">
+              <div class="text-center">
+                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0 btn-del-submit">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="modal fade" id="deleteBh" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="card card-plain">
+            <div class="card-header pb-0 text-center">
+              <h3 class="font-weight-bolder text-info text-gradient">Xác nhận xóa</h3>
+            </div>
+            <div class="card-body">
+              <div class="text-center">
+                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0 btn-delBh">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!--   Core JS Files   -->
   <script src="/assets/js/core/popper.min.js"></script>
   <script src="/assets/js/core/bootstrap.min.js"></script>
   <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script type="module" src="pages/indexResource/LopHocPhan.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
