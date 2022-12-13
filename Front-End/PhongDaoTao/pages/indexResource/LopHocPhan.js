@@ -57,14 +57,12 @@ async function getMaxIdBh() {
   return id
 }
 
-function hidePopUp(popUp) {
-  popUp.forEach((popup) => {
-    if (popup.classList.contains("show")) {
-      popup.classList.remove("show");
-    }
+async function getCtDiemDanh(data) {
+  const ct = await server.getList(server.tbl.CT_DIEMDANH, data).then(result => {
+    return result
   })
+  return ct
 }
-
 
 async function loadListLgv(data = ''){
     const lgv =  server.getList(server.tbl.CT_LOP_GV, data).then((result) => {
@@ -108,6 +106,14 @@ async function getListLsv(data = {}){
   return arrSv
 }
 
+
+async function getIdLsv(data) {
+  const lhp = await server.getList(server.tbl.CT_LOP_SV, data).then(result => {
+    return result[0].IDLSV
+  })
+  return lhp
+}
+
 async function getListDd(data = {}){
   const arrDd = []
   let newArr = []
@@ -139,20 +145,38 @@ async function getListDd(data = {}){
   let lhp = await server.getList(server.tbl.LOPHOCPHAN, idLhp).then(result => {
     return result
   })
-  let dd = await loadListDd(data)
-  for(let i of lsv) {
-    let sv = await loadListSv({MASV: i.MASV})
+  // let dd = await loadListDd(data)
+  // console.log(dd)
+  for(let i = 0; i < lsv.length; i++){
+    let data1 = {
+      MASV: lsv[i].MASV, 
+      MALOPHP: bh[0].MALOPHP
+    }
+    console.log(data1)
+    let idLsv = await getIdLsv(data1)
+    let sv = await loadListSv({MASV: lsv[i].MASV})
+    console.log(idLsv)
+    let ctdd = {
+      IDLSV: idLsv,
+      IDBUOIHOC: data.IDBUOIHOC
+    }
+    console.log(ctdd)
+    let ct = await getCtDiemDanh(ctdd)
+    console.log(ct)
     arrDd.push({
-      MASV: i.MASV,
+      MASV: lsv[i].MASV,
       HOTEN: sv[0].HOTEN,
-      DADIEMDANH: dd.length == 0 ? false : dd[0].DADIEMDANH,
-      GHICHU: dd.length == 0 ? '' : dd[0].GHICHU  ,
+      DADIEMDANH: ct[0] ? ct[0].DADIEMDANH : false,
+      GHICHU: ct[0] ? ct[0].GHICHU : '',
       GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN,
       TENLOP: lhp[0].TENLOP,
       SOBUOI: soBuoi,
       TONGSOSV: lsv.length
     })
   }
+  for(let i of lsv) {
+  }
+  console.log(arrDd)
   return arrDd
 }
 
@@ -167,12 +191,13 @@ async function getAllDd(data) {
   for(let i of bh) {
     let id = i.IDBUOIHOC
     let dd = await loadListDd({IDBUOIHOC: id})
-    console.log(dd)
     newArr.push(...dd)
   }
 
+  let checked = []
     for(let i = 0; i < newArr.length - 1 ; i++){
       let dd = []
+      if(checked.includes(newArr[i].IDLSV)) continue
       for(let j = i + 1; j < newArr.length; j++){
         if(newArr[i].IDLSV == newArr[j].IDLSV){
           dd.push(newArr[j].DADIEMDANH)
@@ -183,6 +208,7 @@ async function getAllDd(data) {
         IDLSV: newArr[i].IDLSV,
         BUOI: dd,
       })
+      checked.push(newArr[i].IDLSV)
     }
   for(let i of dsdd) {
     let id = i.IDLSV
@@ -192,10 +218,8 @@ async function getAllDd(data) {
       HOTEN: lsv[0].HOTEN,
       BUOI: i.BUOI
     }]
-    console.log(lsv)
     sv.push(...data)
   }
-  console.log(sv)
   return sv
 }
 
@@ -211,6 +235,7 @@ async function getListLhp(data = {}) {
     console.log(lhp.length)
     for(let i of lhp){
       let lgv = await loadListLgv({MALOPHP: `${i.MALOPHP}`})
+      console.log(lgv)
       if(lgv.length == 2) {
         newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
       } else {
@@ -292,9 +317,9 @@ async function loadListLSv(KEY) {
     if(count == 0) newArr.push(i)
   }
   dssvLhp.forEach(e => {
-    if(e.HINH.trim() == ""){
-      e.HINH = '/assets/img/team-2.jpg'
-    }
+    // if(e.HINH.trim() == ""){
+    //   e.HINH = '/assets/img/team-2.jpg'
+    // }
     tbdSvLhp.innerHTML += `
     <tr id="${e.MASV}">
     <td class="ps-0">${e.MASV}</td>
@@ -333,6 +358,36 @@ async function loadListLSv(KEY) {
   `
   })
 }
+
+async function getListGv(data) {
+  const tbdGV = document.querySelector('.tbdGV')
+  const lgv = await loadListLgv(data)
+  const gv = await loadListGv()
+  tbdGV.innerHTML = ""
+  let newArr = []
+  for(let i of gv) {
+    let count = 0
+    for(let j of lgv){
+      if(i.MAGV == j.MAGV){
+        count++
+      }
+    }
+    if(count == 0) newArr.push(i)
+  }
+  newArr.forEach(e => {
+    tbdGV.innerHTML += `
+    <tr id="${e.MAGV}">
+    <td class="ps-0">${e.MAGV}</td>
+    <td>${e.HOTEN}</td>
+    <td>
+      <button type="button" class="btn btn-success btn-xs mb-0 addGV">Thêm</button>
+    </td>
+  </tr>
+    `
+  })
+}
+
+
 
 
 
@@ -425,6 +480,7 @@ async function initEvent() {
     const input_add_bh = document.querySelectorAll('.form-add-bh')
     const input_cnbh = document.querySelectorAll('.form-cnbh')
     const xemDd = document.querySelector('.xemdiemdanh')
+    const updateLhp = document.querySelector('.updateLHP')
     function getParentId(e) {
         return e.target.parentElement.parentElement.id;
     }
@@ -482,15 +538,71 @@ async function initEvent() {
     })
 
     // CẬP NHẬT LỚP HỌC PHẦN
-    btn_edit.forEach(btn => {
+    btn_edit.forEach((btn, key) => {
         btn.addEventListener("click", async (e) => {
         let idLhp = getParentId(e)
         console.log(idLhp)
         let lhp = await getListLhp({MALOPHP: idLhp})
+        await getListGv({MALOPHP: idLhp})
+        const add = document.querySelectorAll('.addGV')
+        var rows = document.getElementsByTagName("tbody")[0].rows
+        console.log(rows)
         console.log(lhp[0])
-        document.querySelector('.MALHP-edit').value = lhp[0].MALOPHP.trim()
-        document.querySelector('.TENLOP-edit').value = lhp[0].TENLOP.trim()
-        document.querySelector('.TENMON-edit').value = lhp[0].TENMH.trim()
+        document.querySelector('.MALHP-edit').value = rows[key].getElementsByTagName("td")[0].innerText
+        document.querySelector('.TENLOP-edit').value = rows[key].getElementsByTagName("td")[1].innerText
+        document.querySelector('.TENMON-edit').value = rows[key].getElementsByTagName("td")[2].innerText
+        add.forEach(btn => {
+          btn.addEventListener("click", async e => {
+            let id = await getMaxIdLgv()
+            let idGv = getParentId(e)
+            let lgv = await loadListLgv({MALOPHP: idLhp})
+            if(lgv.length == 2){
+              alert('Mỗi lớp chỉ tối đa 2 giảng viên phụ trách')
+              return
+            }
+
+            let data = {
+              IDLGV: ++id,
+              MALOPHP: idLhp,
+              MAGV: idGv
+            }
+
+            server.insert(server.tbl.CT_LOP_GV, data).then(result => {
+              if(result) {
+                alert('Thêm giảng viên vào lớp học phần thành công')
+              }
+            })
+          })
+        })
+        updateLhp.onclick = async (e) => {
+          if(await isExistBuoiHoc(idLhp)){
+            alert('Lớp học đã có dữ liệu buổi học. Không thể sửa thông tin lớp học phần !!!')
+            return
+          }
+          if(document.querySelector('.TENLOP-edit').value  == ''){
+            alert('Tên lớp không được để trống')
+            return
+          }
+          if(document.querySelector('.TENMON-edit').value == ''){
+            alert('Tên môn không được để trống')
+            return
+          }
+          let data = {
+              query: {
+                MALOPHP: idLhp,
+              },
+              newValue: {
+                TENLOP: document.querySelector('.TENLOP-edit').value,
+                TENMH: document.querySelector('.TENMON-edit').value
+              }
+          }
+          server.update(server.tbl.LOPHOCPHAN, data).then(result => {
+            if(result){
+              alert('Cập nhật lớp học thành công')
+            }
+          })
+
+        }
         })
     })
 
@@ -510,7 +622,7 @@ async function initEvent() {
           server.delete(server.tbl.LOPHOCPHAN, maLhp).then(result => {
             if(result){
               alert('Xóa lớp học phần thành công')
-              window.location.reload()
+              loadListLhp()
             } else {
               alert('Xóa lớp học phần thất bại')
             }
@@ -793,7 +905,7 @@ loadListLhp()
 
 
 const searchLhp = document.querySelector('.searchLhp')
-searchLhp.addEventListener("click", () => {
+searchLhp.addEventListener("change", () => {
   let KEY = searchLhp.value
   let data = {
     TENLOP: { $regex: ".*"+KEY+".*"}
