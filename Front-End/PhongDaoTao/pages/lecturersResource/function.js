@@ -19,7 +19,7 @@ export function capTK(id) {
   } else loaiTk = "PDT";
   let data = {
     TENDN: id,
-    MATKHAU: "123",
+    MATKHAU: id,
     LOAITK: loaiTk,
   };
   server.insert(server.tbl.TAIKHOAN, data).then((result) => {
@@ -42,7 +42,7 @@ export function resetMK(id) {
       TENDN: id,
     },
     newValue: {
-      MATKHAU: '123'
+      MATKHAU: id
     },
   };
   server.update(server.tbl.TAIKHOAN, data).then((result) => {

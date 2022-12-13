@@ -60,6 +60,7 @@ async function initEvent() {
     add_sv_form.addEventListener("submit", async (e) => {
       console.log("submited add SV");
       e.preventDefault();
+      e.stopImmediatePropagation()
       const sv = Object.fromEntries(new FormData(e.target));
       if (input_add[0].value.length == 0) {
         alert("Bạn chưa chọn hình ảnh");
@@ -100,7 +101,8 @@ async function initEvent() {
           if (result) {
             alert("Thêm sinh viên thành công");
             loadListSV({});
-            input_add[2].value = input_add[3].value = input_add[4].value = ''
+            input_add[2].value = input_add[3].value = input_add[4].value = input_add[0].value = ''
+            document.querySelector(".avatar-img").src = 'https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg';
           } else alert("Thêm sinh viên thất bại");
         })
         .catch((err) => {});
@@ -141,6 +143,7 @@ async function initEvent() {
       btn_update_form.addEventListener("submit", async (e) => {
         console.log("submited update SV");
         e.preventDefault();
+        e.stopImmediatePropagation()
         const sv = Object.fromEntries(new FormData(e.target));
         if (sv.MASV.length == 0) {
           alert("Mã sinh viên không được để trống");
@@ -208,7 +211,7 @@ async function initEvent() {
         .then((result) => {
           if (result) {
             alert("Xóa sinh viên thành công");
-            window.location.reload();
+            loadListSV({})
           } else {
             alert("Xóa sinh viên thất bại");
           }
@@ -269,7 +272,7 @@ loadListSV({});
 // TÌM KIEM
 let searchBox = document.querySelector(".search-box");
 let btn_search = document.querySelector(".btn-search");
-btn_search.addEventListener("click", () => {
+btn_search.addEventListener("click", (e) => {
   let KEY = searchBox.value;
   if (KEY) {
     loadListSV({
@@ -282,6 +285,25 @@ btn_search.addEventListener("click", () => {
   else
   alert('Bạn chưa nhập thông tin cần tìm!')
 });
+searchBox.addEventListener('keypress', (e)=>{
+
+  if(e.key === 'Enter'){
+    e.preventDefault()
+    let KEY = searchBox.value;
+    if (KEY) {
+      loadListSV({
+        $or: [
+          { MASV: { $regex: ".*" + KEY.trim() + ".*", $options: "i" } },
+          { HOTEN: { $regex: ".*" + KEY.trim() + ".*", $options: "i" } },
+        ],
+      });
+    }
+    else{
+    alert('Bạn chưa nhập thông tin cần tìm!')
+    e.preventDefault()
+    }
+  }
+})
 searchBox.addEventListener("keyup",()=>{
   let KEY = searchBox.value;
   if(KEY.length==0)

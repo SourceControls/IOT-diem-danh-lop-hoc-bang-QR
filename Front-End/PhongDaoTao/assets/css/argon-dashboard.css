@@ -20175,8 +20175,9 @@ fieldset:disabled .btn {
 }
 
 .avatar-xxl {
-  width: 110px !important;
-  height: 110px !important;
+  width: 255px !important;
+  height: 257px !important;
+  object-fit: cover;
 }
 
 .avatar-xxl.avatar-raised {
@@ -20193,9 +20194,10 @@ fieldset:disabled .btn {
 }
 
 .avatar-lg {
-  width: 58px !important;
-  height: 58px !important;
+  width: 73px !important;
+  height: 75px !important;
   font-size: 0.875rem;
+  object-fit: cover;
 }
 
 .avatar-lg.avatar-raised {
