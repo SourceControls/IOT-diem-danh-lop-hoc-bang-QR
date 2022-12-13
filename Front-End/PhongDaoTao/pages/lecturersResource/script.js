@@ -5,9 +5,13 @@ import uploadImg from '../../components/Image/main.js'
 async function loadList(KEY) {
   let list = await server.getList(server.tbl.GIANGVIEN, KEY);
   let HTMLlist = document.querySelector("#list");
-  console.log(list);
+  // console.log(list);
+  const newList = list.sort((a,b)=>{
+    if(a.MAGV< b.MAGV) return -1;
+    return 1;
+  })
   let out = "";
-  for (let gv of list) {
+  for (let gv of newList) {
     out += `
         <tr>
         <td class="text-sm">
@@ -38,10 +42,19 @@ async function loadList(KEY) {
   }
   HTMLlist.innerHTML = out;
 }
+// async function list() {
+//   let list = await server.getList(server.tbl.GIANGVIEN, {});
+//   const newList = list.sort((a,b)=>{
+//     if(a.MAGV< b.MAGV) return -1;
+//     return 1;
+//   })
+// return newList
+// }
 
 async function initEvent() {
   // THEM GV
   let input_add = document.querySelectorAll(".input-add");
+  func.newId('GIANGVIEN')
   function ThemGv() {
     const imageInput_AddPopup = input_add[0];
     const image_AddPopup = document.querySelector(".avatar-img");
@@ -52,6 +65,7 @@ async function initEvent() {
       var file = imageInput_AddPopup.files[0];
       image_AddPopup.src = URL.createObjectURL(file);
     });
+    // input_add[1].value = func.newId('GIANGVIEN')
     add_gv_form.addEventListener("submit", async (e) => {
       console.log("submited add GV");
       e.preventDefault();
@@ -60,10 +74,11 @@ async function initEvent() {
         alert("Bạn chưa chọn hình ảnh");
         return;
       }
-      if (gv.MAGV.length == 0) {
-        alert("Mã giảng viên không được để trống");
-        return;
-      }
+      // if (gv.MAGV.length == 0) {
+      //   alert("Mã giảng viên không được để trống");
+      //   return;
+      // }
+      // gv.MAGV = func.newId('GIANGVIEN')
       if (gv.HOTEN.length == 0) {
         alert("Họ tên giảng viên không được để trống");
         return;
@@ -88,12 +103,13 @@ async function initEvent() {
 
       if (gv.HINH.name != "") gv.HINH = await uploadImg(gv.HINH);
       else gv.HINH = image_AddPopup.src;
-
+      console.log(gv.MAGV)
       server
         .insert(server.tbl.GIANGVIEN, gv)
         .then((result) => {
           if (result) {
             alert("Thêm giảng viên thành công");
+            input_add[2].value = input_add[3].value = input_add[4].value = ''
             loadListGV({});
           } else alert("Thêm giảng viên thất bại");
         })
@@ -114,6 +130,8 @@ async function initEvent() {
       input_update[2].value = rows[x].getElementsByTagName("td")[1].innerText;
       input_update[3].value = rows[x].getElementsByTagName("td")[2].innerText;
       input_update[4].value = rows[x].getElementsByTagName("td")[3].innerText;
+    }) 
+    }
 
       btn_update_form.addEventListener("click", () => {
         if (input_update[1].value.length == 0)
@@ -156,8 +174,6 @@ async function initEvent() {
             .catch((err) => {});
         }
       });
-    });
-  }
   //   XOA GIANG VIEN
   let btn_delete = document.querySelectorAll(".btn-delete");
   for (var i = 0; i < btn_delete.length; i++) {
@@ -229,6 +245,7 @@ loadListGV({});
 // TÌM KIEM
 let searchBox = document.querySelector(".search-box");
 let btn_search = document.querySelector(".btn-search");
+
 btn_search.addEventListener("click", () => {
   let KEY = searchBox.value;
   if (KEY) {
@@ -239,4 +256,11 @@ btn_search.addEventListener("click", () => {
       ],
     });
   }
+  else
+  alert('Bạn chưa nhập thông tin cần tìm!')
 });
+searchBox.addEventListener("keyup",()=>{
+  let KEY = searchBox.value;
+  if(KEY.length==0)
+  loadListGV({})
+})

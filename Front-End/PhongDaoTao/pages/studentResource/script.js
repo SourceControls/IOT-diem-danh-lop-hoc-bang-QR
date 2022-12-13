@@ -5,8 +5,12 @@ import uploadImg from "../../components/Image/main.js";
 async function loadList(KEY) {
   let list = await server.getList(server.tbl.SINHVIEN, KEY);
   let HTMLlist = document.querySelector("#list");
+  const newList = list.sort((a,b)=>{
+    if(a.MASV< b.MASV) return -1;
+    return 1;
+  })
   let out = "";
-  for (let sv of list) {
+  for (let sv of newList) {
     out += `
         <tr>
                       <td class="text-sm">
@@ -52,6 +56,7 @@ async function initEvent() {
       var file = imageInput_AddPopup.files[0];
       image_AddPopup.src = URL.createObjectURL(file);
     });
+    func.newId('SINHVIEN')
     add_sv_form.addEventListener("submit", async (e) => {
       console.log("submited add SV");
       e.preventDefault();
@@ -60,10 +65,10 @@ async function initEvent() {
         alert("Bạn chưa chọn hình ảnh");
         return;
       }
-      if (sv.MASV.length == 0) {
-        alert("Mã sinh viên không được để trống");
-        return;
-      }
+      // if (sv.MASV.length == 0) {
+      //   alert("Mã sinh viên không được để trống");
+      //   return;
+      // }
       if (sv.HOTEN.length == 0) {
         alert("Họ tên sinh viên không được để trống");
         return;
@@ -95,6 +100,7 @@ async function initEvent() {
           if (result) {
             alert("Thêm sinh viên thành công");
             loadListSV({});
+            input_add[2].value = input_add[3].value = input_add[4].value = ''
           } else alert("Thêm sinh viên thất bại");
         })
         .catch((err) => {});
@@ -178,7 +184,7 @@ async function initEvent() {
           },
         };
 
-        console.log(sv.HINH)
+        // console.log(sv.HINH)
        let result =  await server.update(server.tbl.SINHVIEN, data)
        if (result) {
         alert("Cập nhật sinh viên thành công");
@@ -243,7 +249,7 @@ async function initEvent() {
           TENDN: rows[x].getElementsByTagName("td")[0].innerText,
         })
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           if (result.length > 0) alert("Sinh viên đã có tài khoản!");
           else {
             func.capTK(rows[x].getElementsByTagName("td")[0].innerText);
@@ -263,7 +269,7 @@ loadListSV({});
 // TÌM KIEM
 let searchBox = document.querySelector(".search-box");
 let btn_search = document.querySelector(".btn-search");
-searchBox.addEventListener("keyup", () => {
+btn_search.addEventListener("click", () => {
   let KEY = searchBox.value;
   if (KEY) {
     loadListSV({
@@ -273,4 +279,11 @@ searchBox.addEventListener("keyup", () => {
       ],
     });
   }
+  else
+  alert('Bạn chưa nhập thông tin cần tìm!')
 });
+searchBox.addEventListener("keyup",()=>{
+  let KEY = searchBox.value;
+  if(KEY.length==0)
+  loadListSV({})
+})
