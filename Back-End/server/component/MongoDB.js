@@ -63,7 +63,7 @@ class MongoDB {
       db.close();
       console.log("Updated: ", rs);
       return new Promise((resolve, reject) => {
-        resolve(rs.modifiedCount != 0);
+        resolve(rs.matchedCount != 0);
       })
     } catch (error) {
       console.log(error.message);

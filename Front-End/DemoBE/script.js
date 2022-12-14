@@ -21,12 +21,12 @@ import { server } from '../components/server/main.js' //phải import cái này
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
 
 let data = {
-  TENDN: 'GV01'
 };
 
 //result là 1 mảng object, có 0-n phần tử
-server.getList(server.tbl.TAIKHOAN, data).then((result) => {
+server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
   console.log(result);
+  console.log(result.length);
 })
 
 
