@@ -69,6 +69,7 @@ async function initEvent() {
     add_gv_form.addEventListener("submit", async (e) => {
       console.log("submited add GV");
       e.preventDefault();
+      e.stopImmediatePropagation()
       const gv = Object.fromEntries(new FormData(e.target));
       if (gv.HINH.length == 0) {
         alert("Bạn chưa chọn hình ảnh");
@@ -133,7 +134,8 @@ async function initEvent() {
     }) 
     }
 
-      btn_update_form.addEventListener("click", () => {
+      btn_update_form.addEventListener("click", (e) => {
+        e.stopImmediatePropagation()
         if (input_update[1].value.length == 0)
           alert("Mã giảng viên không được để trống");
         else if (input_update[2].value.length == 0)
@@ -187,7 +189,7 @@ async function initEvent() {
         .then((result) => {
           if (result) {
             alert("Xóa giảng viên thành công");
-            window.location.reload();
+            loadListGV({})
           } else alert("Xoá giảng viên thất bại");
         })
         .catch((err) => {});
@@ -259,6 +261,25 @@ btn_search.addEventListener("click", () => {
   else
   alert('Bạn chưa nhập thông tin cần tìm!')
 });
+searchBox.addEventListener('keypress', (e)=>{
+
+  if(e.key === 'Enter'){
+    e.preventDefault()
+    let KEY = searchBox.value;
+    if (KEY) {
+      loadListGV({
+        $or: [
+          { MAGV: { $regex: ".*" + KEY.trim() + ".*", $options: "i" } },
+          { HOTEN: { $regex: ".*" + KEY.trim() + ".*", $options: "i" } },
+        ],
+      });
+    }
+    else{
+    alert('Bạn chưa nhập thông tin cần tìm!')
+    e.preventDefault()
+    }
+  }
+})
 searchBox.addEventListener("keyup",()=>{
   let KEY = searchBox.value;
   if(KEY.length==0)
