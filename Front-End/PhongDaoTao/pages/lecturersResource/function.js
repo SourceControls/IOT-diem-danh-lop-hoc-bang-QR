@@ -65,7 +65,7 @@ export function newId(tbl){
     return 1;
     })
     id = Number(list[list.length-1].MAGV.split('V')[1]) + Number(1)
-    input_add[1].value = 'GV0'+ id
+    input_add[0].value = 'GV0'+ id
   });
 }
 if(tbl == 'SINHVIEN'){

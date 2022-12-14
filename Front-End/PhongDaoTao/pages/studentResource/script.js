@@ -206,20 +206,37 @@ async function initEvent() {
       let data = {
         MASV: rows[x].getElementsByTagName("td")[0].innerText,
       };
-      server
-        .delete(server.tbl.SINHVIEN, data)
-        .then((result) => {
-          if (result) {
-            alert("Xóa sinh viên thành công");
-            loadListSV({})
-          } else {
-            alert("Xóa sinh viên thất bại");
-          }
-        })
-        .catch((err) => {});
-    });
-  }
+      let tk = {
+        TENDN: rows[x].getElementsByTagName("td")[0].innerText
+      }
 
+      server.getList(server.tbl.CT_LOP_SV, data).then((result)=>{
+        if(result.length>0){
+          alert("Không thể xóa sinh viên đang có lớp học!")
+          // console.log(result.length)
+        } else{
+          server.getList(server.tbl.TAIKHOAN, tk).then((result)=>{
+            // console.log(result)
+            if(result.length>0){
+              server.delete(server.tbl.TAIKHOAN, tk).then((result)=>{}).catch((error)=>{})
+            }
+            server
+            .delete(server.tbl.SINHVIEN, data)
+            .then((result) => {
+              console.log(result)
+              if (result) {
+                alert("Xóa sinh viên thành công");
+                loadListSV({})
+              } else {
+                alert("Xóa sinh viên thất bại");
+              }
+            })
+            .catch((err) => {});
+          })
+        }
+      })   
+    })
+  }
   // RESET MK
   var rows = document.getElementsByTagName("tbody")[0].rows;
   let btn_reset = document.querySelectorAll(".btn-reset");

@@ -28,9 +28,6 @@ async function loadList(KEY) {
         <td class="align-middle text-center text-sm">
           <span class="text-secondary">${gv.EMAIL}</span>
         </td>
-        <td class="align-middle text-center">
-          <img src=${gv.HINH} class="avatar avatar-lg" alt="user1">
-        </td>
         <td class="align-middle">
           <button type="button" class="btn btn-outline-primary btn-xs mb-0 btn-update " data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
           <button type="button" class="btn btn-outline-danger btn-xs mb-0 btn-delete">Xóa</button>
@@ -71,15 +68,6 @@ async function initEvent() {
       e.preventDefault();
       e.stopImmediatePropagation()
       const gv = Object.fromEntries(new FormData(e.target));
-      if (gv.HINH.length == 0) {
-        alert("Bạn chưa chọn hình ảnh");
-        return;
-      }
-      // if (gv.MAGV.length == 0) {
-      //   alert("Mã giảng viên không được để trống");
-      //   return;
-      // }
-      // gv.MAGV = func.newId('GIANGVIEN')
       if (gv.HOTEN.length == 0) {
         alert("Họ tên giảng viên không được để trống");
         return;
@@ -102,15 +90,12 @@ async function initEvent() {
       }
       //nếu k có ảnh thì set ảnh mặc định
 
-      if (gv.HINH.name != "") gv.HINH = await uploadImg(gv.HINH);
-      else gv.HINH = image_AddPopup.src;
-      console.log(gv.MAGV)
       server
         .insert(server.tbl.GIANGVIEN, gv)
         .then((result) => {
           if (result) {
             alert("Thêm giảng viên thành công");
-            input_add[2].value = input_add[3].value = input_add[4].value = ''
+            input_add[1].value = input_add[2].value = input_add[3].value = ''
             loadListGV({});
           } else alert("Thêm giảng viên thất bại");
         })
@@ -127,10 +112,10 @@ async function initEvent() {
     let x = i;
     btn_update[i].addEventListener("click", (event) => {
       // SET INPUT VALUE
-      input_update[1].value = rows[x].getElementsByTagName("td")[0].innerText;
-      input_update[2].value = rows[x].getElementsByTagName("td")[1].innerText;
-      input_update[3].value = rows[x].getElementsByTagName("td")[2].innerText;
-      input_update[4].value = rows[x].getElementsByTagName("td")[3].innerText;
+      input_update[0].value = rows[x].getElementsByTagName("td")[0].innerText;
+      input_update[1].value = rows[x].getElementsByTagName("td")[1].innerText;
+      input_update[2].value = rows[x].getElementsByTagName("td")[2].innerText;
+      input_update[3].value = rows[x].getElementsByTagName("td")[3].innerText;
     }) 
     }
 
@@ -184,15 +169,35 @@ async function initEvent() {
       let data = {
         MAGV: rows[x].getElementsByTagName("td")[0].innerText,
       };
-      server
-        .delete(server.tbl.GIANGVIEN, data)
-        .then((result) => {
-          if (result) {
-            alert("Xóa giảng viên thành công");
-            loadListGV({})
-          } else alert("Xoá giảng viên thất bại");
-        })
-        .catch((err) => {});
+      let tk = {
+        TENDN: rows[x].getElementsByTagName("td")[0].innerText
+      }
+
+      server.getList(server.tbl.CT_LOP_GV, data).then((result)=>{
+        if(result.length>0){
+          alert("Không thể xóa giảng viên đang dạy!")
+          // console.log(result.length)
+        } else{
+          server.getList(server.tbl.TAIKHOAN, tk).then((result)=>{
+            // console.log(result)
+            if(result.length>0){
+              server.delete(server.tbl.TAIKHOAN, tk).then((result)=>{}).catch((error)=>{})
+            }
+            server
+            .delete(server.tbl.GIANGVIEN, data)
+            .then((result) => {
+              // console.log(result)
+              if (result) {
+                alert("Xóa giảng viên thành công");
+                loadListGV({})
+              } else {
+                alert("Xóa giảng viên thất bại");
+              }
+            })
+            .catch((err) => {});
+          })
+        }
+      }) 
     });
   }
 
