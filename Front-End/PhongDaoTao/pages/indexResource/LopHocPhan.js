@@ -1,5 +1,16 @@
 import { server } from '../../../../components/server/main.js'
 
+function hidePopUp(pop_up){
+  const modal = document.querySelector('.modal-backdrop')
+  console.log(modal)
+  pop_up.forEach((popup) => {
+    if (popup.classList.contains("show")) {
+      modal.classList.remove("show")
+      popup.classList.remove("show")
+    }
+  })
+}
+
 async function isExistLhp(data){
     const lhp = await server.getList(server.tbl.LOPHOCPHAN, {MALOPHP: data}).then(result => {
         return result.length
@@ -64,7 +75,7 @@ async function getCtDiemDanh(data) {
   return ct
 }
 
-async function loadListLgv(data = ''){
+async function loadListLgv(data = {}){
     const lgv =  server.getList(server.tbl.CT_LOP_GV, data).then((result) => {
       return result
     })
@@ -99,9 +110,13 @@ async function getListLsv(data = {}){
   const lhp = await server.getList(server.tbl.CT_LOP_SV, data).then(result => {
     return result
   })
+  let sv = await loadListSv()
   for(let i of lhp){
-    let sv = await loadListSv({MASV: `${i.MASV}`})
-    arrSv.push(...sv)
+    for(let j of sv){
+      if(i.MASV == j.MASV){
+        arrSv.push(j)
+      }
+    }
   }
   return arrSv
 }
@@ -115,70 +130,95 @@ async function getIdLsv(data) {
 }
 
 async function getListDd(data = {}){
-  const arrDd = []
-  let newArr = []
+  let arrDd = []
+  // let newArr = []
+  let ct = await getCtDiemDanh(data)
   const bh = await server.getList(server.tbl.BUOIHOC, data).then(result => {
     return result
   })
   let idLhp = {
     MALOPHP: bh[0].MALOPHP
   }
-  const soBuoi = await server.getList(server.tbl.BUOIHOC, idLhp).then(result => {
-    return result.length
-  })
-  const lsv = await server.getList(server.tbl.CT_LOP_SV, idLhp).then(result => {
+  // let a = await getListLhp(idLhp)
+  // const soBuoi = await server.getList(server.tbl.BUOIHOC, idLhp).then(result => {
+  //   return result.length
+  // })
+  // const lgv = await loadListLgv(idLhp)
+  // if(lgv.length == 2) {
+  //   newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
+  // } else {
+  //   newArr = [...lgv]
+  // }
+  // let gv = await loadListGv({MAGV: newArr[0].MAGV})
+  // let gv1 = ""
+  // let check = false
+  // if(newArr[0].hasOwnProperty('MAGV1')){
+  //   check = true
+  //   gv1 = await loadListGv({MAGV: `${newArr[0].MAGV1}`})
+  // }
+  // let lhp = await server.getList(server.tbl.LOPHOCPHAN, idLhp).then(result => {
+  //   return result
+  // })
+  // // let dd = await loadListDd(data)
+  // // console.log(dd)
+  // for(let i = 0; i < lsv.length; i++){
+  //   let data1 = {
+  //     MASV: lsv[i].MASV, 
+  //     MALOPHP: bh[0].MALOPHP
+  //   }
+  //   console.log(data1)
+  //   let idLsv = await getIdLsv(data1)
+  //   let sv = await loadListSv({MASV: lsv[i].MASV})
+  //   console.log(idLsv)
+  //   let ctdd = {
+  //     IDLSV: idLsv,
+  //     IDBUOIHOC: data.IDBUOIHOC
+  //   }
+  //   console.log(ctdd)
+  //   let ct = await getCtDiemDanh(ctdd)
+  //   console.log(ct)
+  //   arrDd.push({
+  //     MASV: lsv[i].MASV,
+  //     HOTEN: sv[0].HOTEN,
+  //     DADIEMDANH: ct[0] ? ct[0].DADIEMDANH : false,
+  //     GHICHU: ct[0] ? ct[0].GHICHU : '',
+  //     GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN,
+  //     TENLOP: lhp[0].TENLOP,
+  //     SOBUOI: soBuoi,
+  //     TONGSOSV: lsv.length
+  //   })
+  // }
+  let dt = []
+  let t = []
+  let idlsv = await server.getList(server.tbl.CT_LOP_SV, {}).then(result => {
     return result
   })
-  const lgv = await loadListLgv(idLhp)
-  if(lgv.length == 2) {
-    newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
-  } else {
-    newArr = [...lgv]
-  }
-  let gv = await loadListGv({MAGV: newArr[0].MAGV})
-  let gv1 = ""
-  let check = false
-  if(newArr[0].hasOwnProperty('MAGV1')){
-    check = true
-    gv1 = await loadListGv({MAGV: `${newArr[0].MAGV1}`})
-  }
-  let lhp = await server.getList(server.tbl.LOPHOCPHAN, idLhp).then(result => {
-    return result
-  })
-  // let dd = await loadListDd(data)
-  // console.log(dd)
-  for(let i = 0; i < lsv.length; i++){
-    let data1 = {
-      MASV: lsv[i].MASV, 
-      MALOPHP: bh[0].MALOPHP
+  let sv = await loadListSv()
+  for(let i of ct){
+    for(let j of idlsv){
+      if(i.IDLSV == j.IDLSV){
+        t.push({...i, ...j})
+        break
+      }
     }
-    console.log(data1)
-    let idLsv = await getIdLsv(data1)
-    let sv = await loadListSv({MASV: lsv[i].MASV})
-    console.log(idLsv)
-    let ctdd = {
-      IDLSV: idLsv,
-      IDBUOIHOC: data.IDBUOIHOC
+  }
+  for(let i of t){
+    for(let j of sv){
+      if(i.MASV == j.MASV){
+        arrDd.push({...i, ...j})
+        break
+      }
     }
-    console.log(ctdd)
-    let ct = await getCtDiemDanh(ctdd)
-    console.log(ct)
-    arrDd.push({
-      MASV: lsv[i].MASV,
-      HOTEN: sv[0].HOTEN,
-      DADIEMDANH: ct[0] ? ct[0].DADIEMDANH : false,
-      GHICHU: ct[0] ? ct[0].GHICHU : '',
-      GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN,
-      TENLOP: lhp[0].TENLOP,
-      SOBUOI: soBuoi,
-      TONGSOSV: lsv.length
-    })
   }
-  for(let i of lsv) {
-  }
-  console.log(arrDd)
+  // dt.push({
+  //   SOBUOI: soBuoi,
+  //   TONGSOSV: arrDd.length,
+  //   // TENLOP: a[0].TENLOP,
+  //   // GV: a[0].GV
+  // })
   return arrDd
 }
+
 
 async function getAllDd(data) {
   let newArr = []
@@ -227,37 +267,76 @@ async function getAllDd(data) {
 
 
 async function getListLhp(data = {}) {
-    const arrLhp = []
     let newArr = []
     const lhp = await server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
       return result
     })
-    console.log(lhp.length)
-    for(let i of lhp){
-      let lgv = await loadListLgv({MALOPHP: `${i.MALOPHP}`})
-      console.log(lgv)
-      if(lgv.length == 2) {
-        newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
-      } else {
-        newArr = [...lgv]
-      }
-      for(let a of newArr) {
-        let gv = await loadListGv({MAGV: `${a.MAGV}`})
-          let gv1 = ""
-          let check = false
-          if(a.hasOwnProperty('MAGV1')){
-            check = true
-            gv1 = await loadListGv({MAGV: `${a.MAGV1}`})
-          }
-          arrLhp.push({
-            MALOPHP: i.MALOPHP,
-            TENLOP: i.TENLOP,
-            TENMH: i.TENMH,
-            GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN
-          })
+    let t = []
+    let t1 = []
+    let lgv = await loadListLgv()
+    let gv = await loadListGv()
+    for(let i of lgv){
+      for(let j of gv){
+        if(i.MAGV == j.MAGV){
+          t.push({...i, ...j})
+          break
+        }
       }
     }
-    return arrLhp
+    for(let i of t){
+      for(let j of lhp){
+        if(i.MALOPHP == j.MALOPHP){
+          t1.push({...i, ...j})
+          break
+        }
+      }
+    }
+
+    let checked = []
+    for(let i = 0; i < t1.length; i++){
+      let dd = []
+      if(checked.includes(t1[i].MALOPHP)) continue
+      for(let j = i + 1; j < t1.length; j++){
+        if(t1[i].MALOPHP == t1[j].MALOPHP){
+          dd.push(t1[j].HOTEN)
+        }
+      }
+      dd.unshift(t1[i].HOTEN)
+      newArr.push({
+        MALOPHP: t1[i].MALOPHP,
+        TENLOP: t1[i].TENLOP,
+        TENMH: t1[i].TENMH,
+        GV: dd
+      })
+      checked.push(t1[i].MALOPHP)
+    }
+
+    
+    // for(let i of lhp){
+    //   let lgv = await loadListLgv({MALOPHP: `${i.MALOPHP}`})
+    //   console.log(lgv)
+    //   if(lgv.length == 2) {
+    //     newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
+    //   } else {
+    //     newArr = [...lgv]
+    //   }
+    //   for(let a of newArr) {
+    //     let gv = await loadListGv({MAGV: `${a.MAGV}`})
+    //       let gv1 = ""
+    //       let check = false
+    //       if(a.hasOwnProperty('MAGV1')){
+    //         check = true
+    //         gv1 = await loadListGv({MAGV: `${a.MAGV1}`})
+    //       }
+    //       arrLhp.push({
+    //         MALOPHP: i.MALOPHP,
+    //         TENLOP: i.TENLOP,
+    //         TENMH: i.TENMH,
+    //         GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN
+    //       })
+    //   }
+    // }
+    return newArr
   }
 
 async function getListBh(data = {}) {
@@ -269,16 +348,16 @@ async function getListBh(data = {}) {
 
 
 async function loadList(KEY) {
+     let lhp1 = await getListLhp(KEY)
     const tblLopHocPhan = document.querySelector('.tbl-lhp')
     tblLopHocPhan.innerHTML = ""
-    let lhp1 = await getListLhp(KEY)
     lhp1.map(e => {
       tblLopHocPhan.innerHTML += `
                    <tr id="${e.MALOPHP}">
                       <td>${e.MALOPHP}</td>
                       <td>${e.TENLOP}</td>
                       <td>${e.TENMH}</td>
-                      <td>${e.GV.length == 2 ? e.GV[0] + "<br>" + e.GV[1] : e.GV}</td>
+                      <td>${e.GV.length == 2 ? e.GV[0] + "</br>" + e.GV[1] : e.GV}</td>
                       <td class="align-middle">
                       <button type="button" class="btn btn-outline-primary btn-xs mb-0 edit btn-edit" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
                       <button type="button" class="btn btn-outline-danger btn-xs mb-0 delete btn-del" data-bs-toggle="modal" data-bs-target="#deleteLhp">Xóa</button>
@@ -290,74 +369,6 @@ async function loadList(KEY) {
     })
 }
 
-async function loadListLSv(KEY) {
-  const tbdSvLhp = document.querySelector('.tbody-dssv-lhp')
-  const tbdDssv = document.querySelector('.tbd-dssv')
-  const dt = document.querySelectorAll('.detailLhp')
-  tbdDssv.innerHTML = ""
-  tbdSvLhp.innerHTML = ""
-  let dssv = await loadListSv()
-  let dssvLhp = await getListLsv({MALOPHP: KEY})
-  let lhp = await server.getList(server.tbl.LOPHOCPHAN, {MALOPHP: KEY}).then(result => {
-    return result
-  })
-
-  dt[0].innerHTML = lhp[0].MALOPHP
-  dt[1].innerHTML = lhp[0].TENLOP
-  dt[2].innerHTML = lhp[0].TENMH
-
-  let newArr = []
-  for(let i of dssv) {
-    let count = 0
-    for(let j of dssvLhp){
-      if(i.MASV == j.MASV){
-        count++
-      }
-    }
-    if(count == 0) newArr.push(i)
-  }
-  dssvLhp.forEach(e => {
-    // if(e.HINH.trim() == ""){
-    //   e.HINH = '/assets/img/team-2.jpg'
-    // }
-    tbdSvLhp.innerHTML += `
-    <tr id="${e.MASV}">
-    <td class="ps-0">${e.MASV}</td>
-    <td>${e.HOTEN}</td>
-    <td>${e.SDT}</td>
-    <td>${e.EMAIL}</td>
-    <td class="align-middle text-center">
-      <img src="${e.HINH}" class="avatar avatar-sm" alt="user1">
-    </td>
-    <td class="w-10">
-      <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
-    </td>
-  </tr>
-    `
-  })
-
-
-
-
-  newArr.forEach(e => {
-    // if(e.HINH.trim() == ""){
-    //   e.HINH = '/assets/img/team-1.jpg'
-    // }
-    tbdDssv.innerHTML += `
-    <tr id="${e.MASV}">
-                    <td class="ps-0">${e.MASV}</td>
-                    <td>${e.HOTEN}</td>
-                    <td>${e.SDT}</td>
-                    <td>${e.EMAIL}</td>
-                    <td class="align-middle text-center">
-                      <img src="/assets/img/team-1.jpg" class="avatar avatar-sm" alt="user1">
-                    </td>
-                    <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100 btn-add-sv">Thêm</button>
-                    </td>
-  `
-  })
-}
 
 async function getListGv(data) {
   const tbdGV = document.querySelector('.tbdGV')
@@ -419,15 +430,19 @@ async function loadListBh(data) {
 }
 
 
-async function loadListDiemDanh(data) {
+async function loadListDiemDanh(data, gv, tenLop) {
   const tbDD = document.querySelector('.tbl_diemDanhTheoBuoi')
   const dt = document.querySelectorAll('.detailDd')
   tbDD.innerHTML = ""
-  let dd = await getListDd(({IDBUOIHOC: data}))
+  let dd = await getListDd({IDBUOIHOC: data})
+  dt[0].innerHTML = `${gv.length == 2 ? gv[0] + "<br>" + gv[1] : gv[0]}`
+  dt[1].innerHTML = `${tenLop}`
+  dt[2].innerHTML = `${dd.length}`
+  if(dd.length == 0){
+    tbDD.innerHTML += `<span style="text-align: center; color: red;">Chưa có thông tin điểm danh</span>`
+    return
+  }
   dd.forEach(e => {
-    dt[0].innerHTML = `${e.GV.length == 2 ? e.GV[0] + "<br>" + e.GV[1] : e.GV}`
-    dt[1].innerHTML = `${e.TENLOP + ' - ' + e.SOBUOI}`
-    dt[2].innerHTML = `${e.TONGSOSV}`
     tbDD.innerHTML += `
         <tr id=${e.MASV}>
           <td class="ps-0">${e.MASV}</td>
@@ -437,6 +452,22 @@ async function loadListDiemDanh(data) {
         </tr>
     `
   })
+}
+
+
+async function loadDataGv(data) {
+  const gvdt = document.querySelector('#input-4')
+  gvdt.innerHTML = ""
+  let gv = await loadListLgv({MALOPHP: data})
+        gv.forEach(async e => {
+          let dt = await server.getList(server.tbl.GIANGVIEN, {MAGV: e.MAGV})
+          gvdt.innerHTML += `
+          <div  id=${e.MAGV} style="display: flex; justify-content: space-between">
+            <p style="margin-right:40px">${dt[0].HOTEN}</p>
+            <span class="deleteGV" style="cursor: pointer">X</span>
+          </div>
+          `
+        })
 }
 
 async function loadAllListDiemDanh(data) {
@@ -481,10 +512,83 @@ async function initEvent() {
     const input_cnbh = document.querySelectorAll('.form-cnbh')
     const xemDd = document.querySelector('.xemdiemdanh')
     const updateLhp = document.querySelector('.updateLHP')
+    let gv = []
+    let tenLop = ""
+    let maLop = ""
+    let tenMon = ""
+    console.log(pop_up)
     function getParentId(e) {
         return e.target.parentElement.parentElement.id;
     }
 
+    async function loadListLSv(KEY, maLop, tenLop, tenMon) {
+      const tbdSvLhp = document.querySelector('.tbody-dssv-lhp')
+      const tbdDssv = document.querySelector('.tbd-dssv')
+      const dt = document.querySelectorAll('.detailLhp')
+      tbdDssv.innerHTML = ""
+      tbdSvLhp.innerHTML = ""
+      let dssv = await loadListSv()
+      let dssvLhp = await getListLsv({MALOPHP: KEY})
+      // let lhp = await server.getList(server.tbl.LOPHOCPHAN, {MALOPHP: KEY}).then(result => {
+      //   return result
+      // })
+      dt[0].innerHTML = maLop
+      dt[1].innerHTML = tenLop
+      dt[2].innerHTML = tenMon
+    
+      let newArr = []
+      for(let i of dssv) {
+        let count = 0
+        for(let j of dssvLhp){
+          if(i.MASV == j.MASV){
+            count++
+          }
+        }
+        if(count == 0) newArr.push(i)
+      }
+    
+      if(dssvLhp.length == 0){
+        tbdSvLhp.innerHTML += `
+        <span style="text-align: center; color: red;">Chưa có thông tin sinh viên</span>
+        `
+      }
+      if(newArr.length == 0){
+        tbdDssv.innerHTML += `
+        <span style="text-align: center; color: red;">Chưa có thông tin sinh viên</span>
+        `
+      }
+      dssvLhp.forEach(e => {
+        // if(e.HINH.trim() == ""){
+        //   e.HINH = '/assets/img/team-2.jpg'
+        // }
+        tbdSvLhp.innerHTML += `
+        <tr id="${e.MASV}">
+        <td class="ps-0">${e.MASV}</td>
+        <td>${e.HOTEN}</td>
+        <td>${e.SDT}</td>
+        <td>${e.EMAIL}</td>
+        <td class="w-10">
+          <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
+        </td>
+      </tr>
+        `
+      })
+      newArr.forEach(e => {
+        // if(e.HINH.trim() == ""){
+        //   e.HINH = '/assets/img/team-1.jpg'
+        // }
+        tbdDssv.innerHTML += `
+        <tr id="${e.MASV}">
+                        <td class="ps-0">${e.MASV}</td>
+                        <td>${e.HOTEN}</td>
+                        <td>${e.SDT}</td>
+                        <td>${e.EMAIL}</td>
+                        <td class="w-10">
+                          <button type="button" class="btn btn-success btn-xs mb-0 w-100 btn-add-sv"">Thêm</button>
+                        </td>
+      `
+      })
+    }
     // THÊM LỚP HỌC PHẦN
     submit_add.addEventListener("click", async () => {
         let id = await getMaxIdLgv()
@@ -532,7 +636,8 @@ async function initEvent() {
 
         if(gv && ctlgv) {
           alert('Thêm lớp học phần thành công')
-          window.location.reload()
+          hidePopUp(pop_up)
+          loadListLhp()
         }
 
     })
@@ -543,6 +648,7 @@ async function initEvent() {
         let idLhp = getParentId(e)
         console.log(idLhp)
         let lhp = await getListLhp({MALOPHP: idLhp})
+        await loadDataGv(idLhp)
         await getListGv({MALOPHP: idLhp})
         const add = document.querySelectorAll('.addGV')
         var rows = document.getElementsByTagName("tbody")[0].rows
@@ -551,11 +657,37 @@ async function initEvent() {
         document.querySelector('.MALHP-edit').value = rows[key].getElementsByTagName("td")[0].innerText
         document.querySelector('.TENLOP-edit').value = rows[key].getElementsByTagName("td")[1].innerText
         document.querySelector('.TENMON-edit').value = rows[key].getElementsByTagName("td")[2].innerText
+        const del = document.querySelectorAll('.deleteGV')
+        console.log(del)
+        del.forEach(btn => {
+          btn.addEventListener("click", async e => {
+            if(await isExistBuoiHoc(idLhp)){
+              alert('Lớp học đã có dữ liệu buổi học. Không thể sửa thông tin lớp học phần !!!')
+              return
+            }
+            let magv = e.target.parentElement.id
+            let data = {
+              MALOPHP: idLhp,
+              MAGV: magv
+            } 
+            server.delete(server.tbl.CT_LOP_GV, data).then(result => {
+              if(result) {
+                alert('Xóa giảng viên thành công')
+                const el = document.getElementById(magv)
+                el.remove()
+              }
+            })
+          })
+        })
         add.forEach(btn => {
           btn.addEventListener("click", async e => {
             let id = await getMaxIdLgv()
             let idGv = getParentId(e)
             let lgv = await loadListLgv({MALOPHP: idLhp})
+            if(await isExistBuoiHoc(idLhp)){
+              alert('Lớp học đã có dữ liệu buổi học. Không thể sửa thông tin lớp học phần !!!')
+              return
+            }
             if(lgv.length == 2){
               alert('Mỗi lớp chỉ tối đa 2 giảng viên phụ trách')
               return
@@ -567,9 +699,10 @@ async function initEvent() {
               MAGV: idGv
             }
 
-            server.insert(server.tbl.CT_LOP_GV, data).then(result => {
+            server.insert(server.tbl.CT_LOP_GV, data).then(async result => {
               if(result) {
                 alert('Thêm giảng viên vào lớp học phần thành công')
+                await loadDataGv()
               }
             })
           })
@@ -599,6 +732,8 @@ async function initEvent() {
           server.update(server.tbl.LOPHOCPHAN, data).then(result => {
             if(result){
               alert('Cập nhật lớp học thành công')
+              hidePopUp(pop_up)
+              loadListLhp()
             }
           })
 
@@ -614,6 +749,18 @@ async function initEvent() {
         btn_submit.onclick = async () => {
           if(await isExistBuoiHoc(idLhp)){
             alert('Lớp học đã có dữ liệu buổi học. Không thể xóa !!!')
+            hidePopUp(pop_up)
+            return
+          }
+          if(await isExistSv({MALOPHP: idLhp})){
+            alert('Lớp học đã có dữ liệu sinh viên. Không thể xóa!!!')
+            hidePopUp(pop_up)
+            return
+          }
+          let gv = await loadListLgv({MALOPHP: idLhp})
+          if(gv.length > 0) {
+            alert('Lớp học đã có dữ liệu giảng viên. Không thể xóa!!!')
+            hidePopUp(pop_up)
             return
           }
           let maLhp = {
@@ -622,26 +769,95 @@ async function initEvent() {
           server.delete(server.tbl.LOPHOCPHAN, maLhp).then(result => {
             if(result){
               alert('Xóa lớp học phần thành công')
+              hidePopUp(pop_up)
               loadListLhp()
             } else {
               alert('Xóa lớp học phần thất bại')
+              hidePopUp(pop_up)
             }
           })
         }
       })
     })
-
+    // function addSv(idLhp){
+    //   const btn_add_sv = document.querySelectorAll('.btn-add-sv')
+    //   btn_add_sv.forEach((btn1, index) => {
+    //     btn1.addEventListener("click", async (e) => {
+    //       var rows = document.getElementsByTagName("tbody")[5].rows
+    //       console.log(rows)
+    //       let masv = rows[index].getElementsByTagName("td")[0].innerText
+    //       let hoTen = rows[index].getElementsByTagName("td")[1].innerText
+    //       let sdt = rows[index].getElementsByTagName("td")[2].innerText
+    //       let email = rows[index].getElementsByTagName("td")[3].innerText
+    //       console.log(rows)
+    //       let id = await getMaxIdLsv()
+    //       let idSv = getParentId(e)
+    //       console.log(idSv)
+    //       if(await isExistBuoiHoc(idLhp)){
+    //         alert('Lớp học đã có dữ liệu buổi học. Không thể thêm sinh viên !!!')
+    //         return
+    //       }
+    //       let data = {
+    //         MALOPHP: idLhp,
+    //         MASV: idSv
+    //       }
+    //       if(await isExistSv(data)){
+    //         alert('Sinh viên đã tồn tại trong lớp !!!!')
+    //         return
+    //       }
+    //       let ctLopSv = {
+    //         IDLSV: ++id,
+    //         MALOPHP: idLhp,
+    //         MASV: idSv
+    //       }
+    //       await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+    //         if(result){
+    //           alert('Thêm sinh viên vào lớp học thành công')
+    //         //   let row = tbdSvLhp.insertRow(-1)
+    //         //   let cell1 = row.insertCell(0);
+    //         //   let cell2 = row.insertCell(1);
+    //         //   let cell3 = row.insertCell(2);
+    //         //   let cell4 = row.insertCell(3);
+    //         //   let cell5 = row.insertCell(4);
+    //         //   cell1.innerHTML = masv
+    //         //   cell2.innerHTML = hoTen
+    //         //   cell3.innerHTML = sdt
+    //         //   cell4.innerHTML = email
+    //         //   cell5.innerHTML = `<td class="w-10">
+    //         //   <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
+    //         // </td>`
+    //         await loadListLSv(idLhp, maLop, tenLop, tenMon)
+    //         loadListLhp()
+    //         }
+    //       })
+    //     })
+    //   })
+    // }
     // XEM DANH SÁCH SINH VIÊN
-    btn_dssv.forEach(btn => {
+    btn_dssv.forEach((btn, key) => {
       btn.addEventListener("click", async (e) => {
+        var rows = document.getElementsByTagName("tbody")[0].rows
+        maLop = rows[key].getElementsByTagName("td")[0].innerText
+        tenLop = rows[key].getElementsByTagName("td")[1].innerText
+        tenMon = rows[key].getElementsByTagName("td")[2].innerText
         let idLhp = getParentId(e)
-        await loadListLSv(idLhp)
+        console.log(idLhp)
+        await loadListLSv(idLhp, maLop, tenLop, tenMon)
         const btn_add_sv = document.querySelectorAll('.btn-add-sv')
         const btn_del_sv = document.querySelectorAll('.btn-del-sv')
-        console.log(btn_add_sv)
+        const tbdSvLhp = document.querySelector('.tbody-dssv-lhp')
+        const tbdDssv = document.querySelector('.tbd-dssv')
+        // addSv(idLhp)
         // thêm sinh viên vào lớp
-        btn_add_sv.forEach(btn1 => {
+        btn_add_sv.forEach((btn1, index) => {
           btn1.addEventListener("click", async (e) => {
+            var rows = document.getElementsByTagName("tbody")[5].rows
+            console.log(rows)
+            let masv = rows[index].getElementsByTagName("td")[0].innerText
+            let hoTen = rows[index].getElementsByTagName("td")[1].innerText
+            let sdt = rows[index].getElementsByTagName("td")[2].innerText
+            let email = rows[index].getElementsByTagName("td")[3].innerText
+            console.log(rows)
             let id = await getMaxIdLsv()
             let idSv = getParentId(e)
             console.log(idSv)
@@ -662,20 +878,32 @@ async function initEvent() {
               MALOPHP: idLhp,
               MASV: idSv
             }
-            let ctLsv = await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(result => {
-              return result
+            await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+              if(result){
+                alert('Thêm sinh viên vào lớp học thành công')
+              //   let row = tbdSvLhp.insertRow(-1)
+              //   let cell1 = row.insertCell(0);
+              //   let cell2 = row.insertCell(1);
+              //   let cell3 = row.insertCell(2);
+              //   let cell4 = row.insertCell(3);
+              //   let cell5 = row.insertCell(4);
+              //   cell1.innerHTML = masv
+              //   cell2.innerHTML = hoTen
+              //   cell3.innerHTML = sdt
+              //   cell4.innerHTML = email
+              //   cell5.innerHTML = `<td class="w-10">
+              //   <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
+              // </td>`
+              // await loadListLSv(idLhp, maLop, tenLop, tenMon)
+              loadListLhp()
+              }
             })
-
-            if(ctLsv){
-              alert('Thêm sinh viên vào lớp học thành công')
-              return
-            }
           })
         })
-
         // Xóa sinh viên khỏi lớp
         btn_del_sv.forEach(btn => {
           btn.addEventListener("click", async (e) => {
+            console.log('alllllll')
             let idSv = getParentId(e)
             console.log(idSv)
             if(await isExistBuoiHoc(idLhp)){
@@ -686,24 +914,26 @@ async function initEvent() {
               MALOPHP: idLhp,
               MASV: idSv
             }
-            let ctLsv = await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(result => {
-              return result
-            })
-
-            if(ctLsv){
+            await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+              if(result){
               alert('Xóa sinh viên thành công')
-              await loadListLSv(idLhp)
-            }
+              await loadListLSv(idLhp, maLop, tenLop, tenMon)
+              btn_add_sv = document.querySelectorAll('.btn-add-sv')
+              btn_del_sv = document.querySelectorAll('.btn-del-sv')
+              }
+            })
           })
         })
-
-
       })
     })
 
     // XEM DANH SÁCH BUỔI HỌC
-    btn_buoiHoc.forEach(btn => {
+    btn_buoiHoc.forEach((btn,key) => {
       btn.addEventListener("click", async (e) => {
+        var rows = document.getElementsByTagName("tbody")[0].rows
+        maLop = rows[key].getElementsByTagName("td")[0].innerText
+        tenLop = rows[key].getElementsByTagName("td")[1].innerText
+        gv = (rows[key].getElementsByTagName("td")[3].innerText).split('\n')
         let idLhp = getParentId(e)
         // let lhp = await getListLhp({MALOPHP: idLhp})
         // console.log(lhp)
@@ -817,9 +1047,10 @@ async function initEvent() {
                 if(result){
     
                   alert('Xóa buổi học thành công')
-                  window.location.reload()
+                  hidePopUp(pop_up)
                 } else {
                   alert('Xóa lớp học phần thất bại')
+                  hidePopUp(pop_up)
                 }
               })
             }
@@ -827,9 +1058,9 @@ async function initEvent() {
         })
         dsdd.forEach(btn => {
           btn.addEventListener("click", async (e) => {
-            let idBh = getParentId(e)
-            console.log(idBh)
-            await loadListDiemDanh(parseInt(idBh))
+            let idbh = getParentId(e)
+            console.log(gv)
+            await loadListDiemDanh(parseInt(idbh), gv, tenLop)
           })
         })
 
@@ -902,6 +1133,8 @@ async function loadListLhp(KEY) {
 }
 
 loadListLhp()
+
+
 
 
 const searchLhp = document.querySelector('.searchLhp')
