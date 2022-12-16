@@ -14,8 +14,23 @@
 
 import { server } from '../components/server/main.js' //phải import cái này
 // server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
-
-
+var multiPromise = async function () {
+  const prm0 = new Promise((resolve, rejects) => {
+    let x = server.getList(server.tbl.LOPHOCPHAN, {});
+    resolve(x)
+  })
+  const prm1 = new Promise((resolve, rejects) => {
+    let x = server.getList(server.tbl.LOPHOCPHAN, {});
+    resolve(x)
+  })
+  const prm2 = new Promise((resolve, rejects) => {
+    let x = server.getList(server.tbl.LOPHOCPHAN, {});
+    resolve(x)
+  })
+  var x = await Promise.all([prm0, prm1, prm2])
+  console.log(x);
+}
+multiPromise();
 //GET
 //query để trống thì nó match all
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
@@ -83,11 +98,11 @@ import { server } from '../components/server/main.js' //phải import cái này
 
 //===================================  GET QR IMAGE  ==================================
 
-import getQRSrc from '../components/QR/main.js';
-// i là thẻ IMG
-var i = document.querySelector('.QR-img');
-//200 là size của QR.
-getQRSrc('BUOI01', 'LSV01', '200').then((src) => {
-  i.src = src;
-  console.log(src);
-});
+// import getQRSrc from '../components/QR/main.js';
+// // i là thẻ IMG
+// var i = document.querySelector('.QR-img');
+// //200 là size của QR.
+// getQRSrc('BUOI01', 'LSV01', '200').then((src) => {
+//   i.src = src;
+//   console.log(src);
+// });
