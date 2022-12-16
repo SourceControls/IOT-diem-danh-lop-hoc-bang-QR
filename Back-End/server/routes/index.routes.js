@@ -21,8 +21,9 @@ function routes(app) {
   app.use('/CT_LOP_SV', CT_LOP_SVRouters);
   app.use('/CT_DiemDanh', CT_DiemDanhRouters);
   app.use('/sensor', sensorRouters);
+  app.use('/site', siteRouters);
   //API chung
-  app.use('/', siteRouters);
+  app.use('/', (req, res) => { res.send("Hello") });
 
 
 

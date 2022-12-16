@@ -20,14 +20,14 @@ import { server } from '../components/server/main.js' //phải import cái này
 //query để trống thì nó match all
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression
 
-let data = {
-};
+// let data = {
+// };
 
-//result là 1 mảng object, có 0-n phần tử
-server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
-  console.log(result);
-  console.log(result.length);
-})
+// //result là 1 mảng object, có 0-n phần tử
+// server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
+//   console.log(result);
+//   console.log(result.length);
+// })
 
 
 //INSERT
@@ -83,11 +83,11 @@ server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
 
 //===================================  GET QR IMAGE  ==================================
 
-// import getQRSrc from '../components/QR/main.js';
-// // i là thẻ IMG
-// var i = document.querySelector('.QR-img');
-// //200 là size của QR.
-// getQRSrc('BUOI01', 'LSV01', '200').then((src) => {
-//   i.src = src;
-//   console.log(src);
-// });
+import getQRSrc from '../components/QR/main.js';
+// i là thẻ IMG
+var i = document.querySelector('.QR-img');
+//200 là size của QR.
+getQRSrc('BUOI01', 'LSV01', '200').then((src) => {
+  i.src = src;
+  console.log(src);
+});
