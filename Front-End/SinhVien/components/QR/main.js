@@ -4,7 +4,7 @@ export default function getQRSrc(IDBUOIHOC, IDLSV, size) {
       .then((res) => res.json())
       .then((res) => res.ip);
 
-    var serverIP = await fetch('http://192.168.1.6:8080/site/getServerIP')
+    var serverIP = await fetch('http://localhost:8080/site/getServerIP')
       .then((res) => res.json())
       .then((res) => res.data);
     navigator.geolocation.getCurrentPosition(function (p) {
