@@ -87,7 +87,7 @@
     <!-- End Navbar -->
     <div class="container-fluid px-4 pt-4">
       <div class="row">
-        <div class="col-xl-3 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-4 mb-xl-0 mb-4 classHpn">
           <button type="button" class="btn btn-success mb-0 w-100 h-100 border-radius-lg" data-bs-toggle="modal" data-bs-target="#qr">
             <p class="text-lg font-weight-bold">Buổi học đang diễn ra</p>
             <div class="text-sm font-weight-normal">Tên lớp - phòng - tên môn</div>
@@ -95,9 +95,9 @@
           </button>
         </div>
         <div class="col-xl-3 col-sm-4 mb-xl-0 mb-4">
-          <div class="card bg-success text-white min-height-150 border-radius-lg">
+          <div class="card bg-success text-white min-height-150 border-radius-lg ">
             <div class="card-body p-3 d-flex">
-              <div class="numbers text-center m-auto">
+              <div class="numbers text-center m-auto classHpn1">
                 <p class="text-lg font-weight-bold">Buổi học sắp diễn ra</p>
                 <div class="text-sm font-weight-normal">Tên lớp - phòng - tên môn</div>
                 <div class="text-sm font-weight-normal">Tên gv - sdt - email</div>
@@ -152,8 +152,8 @@
       <div class="modal-content">
         <div class="modal-body p-0">
           <div class="card card-plain">
-            <div class="card-body text-center">
-              <div class="d-block"><img src="https://qrcg-free-editor.qr-code-generator.com/main/assets/images/websiteQRCode_noFrame.png" class="avatar avatar-xxl"/></div>
+            <div class="card-body text-center ">
+              <div class="d-block"><img src="https://qrcg-free-editor.qr-code-generator.com/main/assets/images/websiteQRCode_noFrame.png" class="avatar avatar-xxl qrCode"/></div>
               <button class="btn btn-danger mt-4">Download QR</button>
             </div>
           </div>
@@ -167,6 +167,9 @@
   <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script type="module" src="/pages/indexResource/sinhVien.js"></script>
+  <!-- <script src="/pages/indexResource/Time.js"></script> -->
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
