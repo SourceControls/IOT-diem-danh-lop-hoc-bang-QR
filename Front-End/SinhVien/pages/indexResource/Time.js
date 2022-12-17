@@ -8,8 +8,8 @@ export default function isHappening(tietBd, soTiet){
     }
     // let hours = today.getHours()
     // var mins = today.getMinutes()
-    let hours = 16
-    let mins = 46
+    let hours = 15
+    let mins = 44
     let hoursStart = time[tietBd][0]
     let minsStart = time[tietBd][1]
     let hoursEnd = time[tietBd + soTiet][0]

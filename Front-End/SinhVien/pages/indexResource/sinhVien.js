@@ -50,13 +50,13 @@ var loadLh = async function (data) {
     if(bh.length == 0){
         classHpn.innerHTML += `
         <button class="btn btn-success mb-0 w-100 h-100 border-radius-lg qrBtn">
-                <p class="text-lg font-weight-bold">Không có buổi học trong hôm nay</p>
+                <p class="text-lg font-weight-bold">Không có buổi học nào đang diễn ra</p>
                 <div class="text-sm font-weight-normal"></div>
                 <div class="text-sm font-weight-normal"></div>
         </button>
         `
         classHpn1.innerHTML += `
-                <p class="text-lg font-weight-bold">Không có buổi học trong hôm nay</p>
+                <p class="text-lg font-weight-bold">Không có buổi học nào sắp diễn ra</p>
                 <div class="text-sm font-weight-normal"></div>
                 <div class="text-sm font-weight-normal"></div>
         `
@@ -87,6 +87,10 @@ var loadLh = async function (data) {
             }
         }
     }
+    if(!check){
+        id = ''
+        id1 = list[0].MALOPHP
+    }
     for(let d of dtLhp){
         if(d.MALOPHP == id){
             lhp.push({...d})
@@ -103,16 +107,26 @@ var loadLh = async function (data) {
     }
     idLsv = list[0].IDLSV
     idBh = list[0].IDBUOIHOC
-    classHpn.innerHTML += `
-        <button id="${list[0].IDLSV} ${list[0].IDBUOIHOC}" type="button" class="btn btn-success mb-0 w-100 h-100 border-radius-lg qrBtn" data-bs-toggle="modal" data-bs-target="#qr">
-                <p class="text-lg font-weight-bold">Buổi học đang diễn ra</p>
-                <div class="text-sm font-weight-normal">${lhp[0].TENLOP} - ${list[0].PHONG} - ${lhp[0].TENMH}</div>
-                <div class="text-sm font-weight-normal">${gv2[0].HOTEN + ' - ' + gv2[0].SDT + ' - ' + gv2[0].EMAIL }</div>
+    if(!id){
+        classHpn.innerHTML += `
+        <button class="btn btn-success mb-0 w-100 h-100 border-radius-lg qrBtn">
+                <p class="text-lg font-weight-bold">Không có buổi học nào đang diễn ra</p>
+                <div class="text-sm font-weight-normal"></div>
+                <div class="text-sm font-weight-normal"></div>
         </button>
-    `
+        `
+    } else {
+        classHpn.innerHTML += `
+            <button id="${list[0].IDLSV} ${list[0].IDBUOIHOC}" type="button" class="btn btn-success mb-0 w-100 h-100 border-radius-lg qrBtn" data-bs-toggle="modal" data-bs-target="#qr">
+                    <p class="text-lg font-weight-bold">Buổi học đang diễn ra</p>
+                    <div class="text-sm font-weight-normal">${lhp[0].TENLOP} - ${list[0].PHONG} - ${lhp[0].TENMH}</div>
+                    <div class="text-sm font-weight-normal">${gv2[0].HOTEN + ' - ' + gv2[0].SDT + ' - ' + gv2[0].EMAIL }</div>
+            </button>
+        `
+    }
     if(!id1){
         classHpn1.innerHTML += `
-                <p class="text-lg font-weight-bold">Không có buổi học trong hôm nay</p>
+                <p class="text-lg font-weight-bold">Không có buổi học nào sắp diễn ra</p>
                 <div class="text-sm font-weight-normal"></div>
                 <div class="text-sm font-weight-normal"></div>
         `
