@@ -105,7 +105,7 @@
       import {server} from '../../components/server/main.js';
 
       const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
-      console.log(listTaiKhoan);
+      alert(listTaiKhoan.length);
       var form = document.querySelector('form');
       form.onsubmit = (e) => {
         e.preventDefault();
