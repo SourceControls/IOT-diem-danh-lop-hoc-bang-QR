@@ -13,24 +13,25 @@
 //===================================  SERVER  ==================================
 
 import { server } from '../components/server/main.js' //phải import cái này
-// server.fuct.taoDanhSachDiemDanh("MALOP01", "BUOI02");
-var multiPromise = async function () {
-  const prm0 = new Promise((resolve, rejects) => {
-    let x = server.getList(server.tbl.LOPHOCPHAN, {});
-    resolve(x)
-  })
-  const prm1 = new Promise((resolve, rejects) => {
-    let x = server.getList(server.tbl.LOPHOCPHAN, {});
-    resolve(x)
-  })
-  const prm2 = new Promise((resolve, rejects) => {
-    let x = server.getList(server.tbl.LOPHOCPHAN, {});
-    resolve(x)
-  })
-  var x = await Promise.all([prm0, prm1, prm2])
-  console.log(x);
-}
-multiPromise();
+// var multiPromise = async function () {
+//   const prm0 = new Promise((resolve, rejects) => {
+//     let x = server.getList(server.tbl.LOPHOCPHAN, {});
+//     resolve(x)
+//   })
+//   const prm1 = new Promise((resolve, rejects) => {
+//     let x = server.getList(server.tbl.LOPHOCPHAN, {});
+//     resolve(x)
+//   })
+//   const prm2 = new Promise((resolve, rejects) => {
+//     let x = server.getList(server.tbl.LOPHOCPHAN, {});
+//     resolve(x)
+//   })
+//   var x = await Promise.all([prm0, prm1, prm2])
+//   console.log(x);
+// }
+// multiPromise();
+
+
 //GET
 //query để trống thì nó match all
 //match những tài khoản có tên đăng nhập là GV01, có thể sử dụng regular expression

@@ -25,8 +25,6 @@ function routes(app) {
   //API chung
   app.use('/', (req, res) => { res.send("Hello") });
 
-
-
 }
 
 
