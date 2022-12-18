@@ -346,6 +346,10 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control cnbh4 form-add-bh" placeholder="Số tiết" maxlength="1">
                 </div>
+                <label>Ngày học</label>
+                <div class="input-group mb-3">
+                  <input type="date" class="form-control cnbh5 form-add-bh" >
+                </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 btn-add-bh">Thêm</button>
                 </div>
@@ -375,6 +379,10 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control cnbh4 form-cnbh" placeholder="Số tiết" maxlength="1">
                 </div>
+                <label>Ngày học</label>
+                <div class="input-group mb-3">
+                  <input type="date" class="form-control cnbh4 form-cnbh">
+                </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0 btn-update-bh">Cập nhật</button>
                 </div>
@@ -403,12 +411,10 @@
               </div>
               <div class="table-responsive">
                 <table class="table">
-                  <thead>
-                    <tr>
+                  <thead class="thead">
+                    <tr class="test csvAllDd">
                       <th class="ps-0">Mã SV</th>
                       <th class="ps-2">Họ tên</th>
-                      <th class="ps-2">Buổi 1</th>
-                      <th class="ps-2">Buổi [n]</th>
                     </tr>
                   </thead>
                   <tbody class="tbl-allDd">
@@ -416,7 +422,7 @@
                 </table>
               </div>
               <div class="text-center">
-                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
+                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0 exportCsvAllDd">Xuất PDF</button>
               </div>
             </div>
           </div>
@@ -441,7 +447,7 @@
                 </div>
                 <div class="col-12 col-sm-4 text-end">
                   <form class="bg-gray-100 border-radius-lg d-flex">
-                    <input type="text" class="form-control bg-gray-100 border-0 ps-3" placeholder="Tìm kiếm">
+                    <input type="text" class="form-control bg-gray-100 border-0 ps-3 searchSvInClass" placeholder="Tìm kiếm">
                     <button class="btn btn-xs bg-gradient-primary my-1 me-1">Tìm</button>
                   </form>
                 </div>
@@ -458,12 +464,11 @@
               </div>-->
               <table class="table">
                 <thead>
-                  <tr>
+                  <tr class="csv">
                     <th class="ps-0">Mã SV</th>
                     <th class="ps-2">Họ tên</th>
                     <th class="ps-2">SĐT</th>
                     <th class="ps-2">Email</th>
-                    <!-- <th class="px-2 text-center">Hình ảnh</th> -->
                     <th></th>
                   </tr>
                 </thead>
@@ -472,14 +477,14 @@
                 </tbody>
               </table>
               <div class="text-center mb-4">
-                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
+                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0 exportCsv">Xuất PDF</button>
               </div>
 
               <div class="row">
                 <div class="col-12 col-sm-8"><h3 class="font-weight-bolder text-dark text-left mt-2">Danh sách</h3></div>
                 <div class="col-12 col-sm-4 text-end">
                   <form class="bg-gray-100 border-radius-lg d-flex mt-2">
-                    <input type="text" class="form-control bg-gray-100 border-0 ps-3" placeholder="Tìm kiếm">
+                    <input type="text" class="form-control bg-gray-100 border-0 ps-3 searchSv" placeholder="Tìm kiếm">
                     <button class="btn btn-xs bg-gradient-primary my-1 me-1">Tìm</button>
                   </form>
                 </div>
@@ -523,7 +528,7 @@
               </div>
               <table class="table">
                 <thead>
-                  <tr>
+                  <tr class="csvDd">
                     <th class="ps-0">Mã SV</th>
                     <th class="ps-2">Họ tên</th>
                     <th class="ps-2">Buổi 1</th>
@@ -534,7 +539,7 @@
                 </tbody>
               </table>
               <div class="text-center">
-                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0">Xuất PDF</button>
+                <button type="button" class="btn btn-round bg-warning text-white btn-lg mt-4 mb-0 exportCsvDd">Xuất PDF</button>
               </div>
             </div>
           </div>
