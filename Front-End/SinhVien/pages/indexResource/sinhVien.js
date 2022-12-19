@@ -11,6 +11,14 @@ let data1 = {
 let idLsv = ""
 let idBh = ""
 
+async function loadNos(data){
+    const nos = document.querySelector('.nos')
+    const avos = document.querySelector('.avos')
+    let sv = await server.getList(server.tbl.SINHVIEN, {MASV: maSv})
+    nos.innerHTML = sv[0].HOTEN
+    avos.src = sv[0].HINH
+}
+
 var loadLh = async function (data) {
     const classHpn = document.querySelector('.classHpn')
     const classHpn1 = document.querySelector('.classHpn1')
@@ -172,6 +180,7 @@ function initEvent() {
 
 async function loadData(KEY) {
     await loadLh(KEY)
+    loadNos(maSv)
     initEvent()
 }
 
