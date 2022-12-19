@@ -1,17 +1,17 @@
-import { server } from '../../../../components/server/main.js'
+import { server } from '../../../components/server/main.js'
 
 
-let data = {  
+let data = {
   MALOPHP: 'MALOP01'
-  };
+};
 
 
 
 
-  
-  //result là 1 mảng object, có 0-n phần tử
-async function loadListLgv(data = ''){
-  const lgv =  server.getList(server.tbl.CT_LOP_GV, data).then((result) => {
+
+//result là 1 mảng object, có 0-n phần tử
+async function loadListLgv(data = '') {
+  const lgv = server.getList(server.tbl.CT_LOP_GV, data).then((result) => {
     return result
   })
   return lgv
@@ -94,27 +94,27 @@ export default async function getListLhp1(data = {}) {
   const lhp = await server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {
     return result
   })
-  for(let i of lhp){
-    let lgv = await loadListLgv({MALOPHP: `${i.MALOPHP}`})
-    if(lgv.length == 2) {
-      newArr = [{...lgv[0], MAGV1: lgv[1].MAGV}]
+  for (let i of lhp) {
+    let lgv = await loadListLgv({ MALOPHP: `${i.MALOPHP}` })
+    if (lgv.length == 2) {
+      newArr = [{ ...lgv[0], MAGV1: lgv[1].MAGV }]
     } else {
       newArr = [...lgv]
     }
-    for(let a of newArr) {
-      let gv = await loadListGv({MAGV: `${a.MAGV}`})
-        let gv1 = ""
-        let check = false
-        if(a.hasOwnProperty('MAGV1')){
-          check = true
-          gv1 = await loadListGv({MAGV: `${a.MAGV1}`})
-        }
-        arrLhp.push({
-          MALOPHP: i.MALOPHP,
-          TENLOP: i.TENLOP,
-          TENMH: i.TENMH,
-          GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN
-        })
+    for (let a of newArr) {
+      let gv = await loadListGv({ MAGV: `${a.MAGV}` })
+      let gv1 = ""
+      let check = false
+      if (a.hasOwnProperty('MAGV1')) {
+        check = true
+        gv1 = await loadListGv({ MAGV: `${a.MAGV1}` })
+      }
+      arrLhp.push({
+        MALOPHP: i.MALOPHP,
+        TENLOP: i.TENLOP,
+        TENMH: i.TENMH,
+        GV: check ? [gv[0].HOTEN, gv1[0].HOTEN] : gv[0].HOTEN
+      })
     }
   }
   return arrLhp

@@ -1,4 +1,4 @@
-import { server } from "../../components/server/main.js";
+import { server } from "../../../components/server/main.js";
 import * as load from "../javascript/loadList.js";
 
 export async function listBuoiHoc(data = {}, con) {
@@ -21,24 +21,24 @@ export async function listBuoiHoc(data = {}, con) {
   );
 
 
-    var result = list2.filter(function (el) {
-      return !el.IDLGVSUBMITTED;
-    });
+  var result = list2.filter(function (el) {
+    return !el.IDLGVSUBMITTED;
+  });
 
-    if (con.length != 0) {
-      let filter = result.filter((e) => {
-        return Object.values(e).some((value) => {
-          return value.toString().toLowerCase().includes(con.toLowerCase( ));
-        });
+  if (con.length != 0) {
+    let filter = result.filter((e) => {
+      return Object.values(e).some((value) => {
+        return value.toString().toLowerCase().includes(con.toLowerCase());
       });
-  return filter;
-    }
+    });
+    return filter;
+  }
 
-    // return result;
-    return list1;
+  // return result;
+  return list1;
 }
 
-export async function listSVDD(mh = {}, bh={}, con) {
+export async function listSVDD(mh = {}, bh = {}, con) {
   const listSV = await load.listSV({});
   const listCTDD = await load.listCTDD(bh);
   const listLSV = await load.listLSV(mh);
@@ -71,10 +71,10 @@ export async function listSVDD(mh = {}, bh={}, con) {
   // return filter;
   //   }
 
-    // return listCTDD;
-    return list2;
-    // return list1;
-    // return listLSV;
+  // return listCTDD;
+  return list2;
+  // return list1;
+  // return listLSV;
 }
 // console.log(listSVDD({'MALOPHP': 'MALOP01'}, {'IDBUOIHOC': 2},''))
 // console.log(await load.listCTDD({'IDBUOIHOC': 2}))

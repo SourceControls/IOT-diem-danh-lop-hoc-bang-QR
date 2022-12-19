@@ -1,4 +1,4 @@
-import { server } from "../../components/server/main.js";
+import { server } from "../../../components/server/main.js";
 
 export async function listLHP(data = {}) {
   const lhp = server.getList(server.tbl.LOPHOCPHAN, data).then((result) => {

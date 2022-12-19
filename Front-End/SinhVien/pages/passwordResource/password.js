@@ -1,6 +1,6 @@
-import { server } from '../../../../components/server/main.js'
+import { server } from '../../../components/server/main.js'
 
-let masv = 'SV04'
+let masv = 'SV01'
 
 async function checkPass(pass) {
     let data = {
@@ -13,7 +13,7 @@ async function checkPass(pass) {
     return rs
 }
 
-function initEvent(){
+function initEvent() {
     const oldPass = document.querySelector('.oldPassword')
     const newPass = document.querySelector('.newPassword')
     const submitPass = document.querySelector('.submitPassword')
@@ -21,12 +21,12 @@ function initEvent(){
     submit.onclick = async () => {
         let pass = oldPass.value
         let newP = newPass.value
-        let submitP = submitPass.value 
-        if(await checkPass(pass) == 0){
+        let submitP = submitPass.value
+        if (await checkPass(pass) == 0) {
             alert('Sai mật khẩu cũ')
             return
         }
-        if(newP !== submitP){
+        if (newP !== submitP) {
             alert('Mật khẩu mới và xác nhận mật khẩu mới không khớp')
             return
         }
@@ -39,7 +39,7 @@ function initEvent(){
             }
         }
         server.update(server.tbl.TAIKHOAN, data).then(result => {
-            if(result){
+            if (result) {
                 alert('Đổi mật khẩu thành công')
                 return
             }

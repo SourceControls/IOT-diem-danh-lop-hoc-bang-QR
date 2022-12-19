@@ -1,12 +1,12 @@
 import { server } from "../../../components/server/main.js";
 import * as func from "../lecturersResource/function.js";
-import uploadImg from "../../components/Image/main.js";
+import uploadImg from "../../../components/Image/main.js";
 
 async function loadList(KEY) {
   let list = await server.getList(server.tbl.SINHVIEN, KEY);
   let HTMLlist = document.querySelector("#list");
-  const newList = list.sort((a,b)=>{
-    if(a.MASV< b.MASV) return -1;
+  const newList = list.sort((a, b) => {
+    if (a.MASV < b.MASV) return -1;
     return 1;
   })
   let out = "";
@@ -105,7 +105,7 @@ async function initEvent() {
             document.querySelector(".avatar-img").src = 'https://www.fao.org/fileadmin/templates/experts-feed-safety/images/profile-img03.jpg';
           } else alert("Thêm sinh viên thất bại");
         })
-        .catch((err) => {});
+        .catch((err) => { });
     });
   }
   ThemSv();
@@ -134,70 +134,70 @@ async function initEvent() {
         input_update[2].value = rows[x].getElementsByTagName("td")[1].innerText;
         input_update[3].value = rows[x].getElementsByTagName("td")[2].innerText;
         input_update[4].value = rows[x].getElementsByTagName("td")[3].innerText;
-        server.getList(server.tbl.SINHVIEN, {'MASV':rows[x].getElementsByTagName("td")[0].innerText}).then((rs)=>{
+        server.getList(server.tbl.SINHVIEN, { 'MASV': rows[x].getElementsByTagName("td")[0].innerText }).then((rs) => {
           // console.log(rs)
           image_AddPopup.src = rs[0].HINH;
         })
       });
     }
-      btn_update_form.addEventListener("submit", async (e) => {
-        console.log("submited update SV");
-        e.preventDefault();
-        e.stopImmediatePropagation()
-        const sv = Object.fromEntries(new FormData(e.target));
-        if (sv.MASV.length == 0) {
-          alert("Mã sinh viên không được để trống");
-          return;
-        }
-        if (sv.HOTEN.length == 0) {
-          alert("Họ tên sinh viên không được để trống");
-          return;
-        }
-        if (sv.SDT.length == 0) {
-          alert("SĐT không được để trống");
-          return;
-        }
-        if (sv.EMAIL.length == 0) {
-          alert("Email không được để trống");
-          return;
-        }
-        if (!func.validateEmail(sv.EMAIL)) {
-          alert("Email không hợp lệ");
-          return;
-        }
-        if (!func.validateSDT(sv.SDT)) {
-          alert("SĐT không hợp lệ");
-          return;
-        }
-        if (sv.HINH.name != "") 
+    btn_update_form.addEventListener("submit", async (e) => {
+      console.log("submited update SV");
+      e.preventDefault();
+      e.stopImmediatePropagation()
+      const sv = Object.fromEntries(new FormData(e.target));
+      if (sv.MASV.length == 0) {
+        alert("Mã sinh viên không được để trống");
+        return;
+      }
+      if (sv.HOTEN.length == 0) {
+        alert("Họ tên sinh viên không được để trống");
+        return;
+      }
+      if (sv.SDT.length == 0) {
+        alert("SĐT không được để trống");
+        return;
+      }
+      if (sv.EMAIL.length == 0) {
+        alert("Email không được để trống");
+        return;
+      }
+      if (!func.validateEmail(sv.EMAIL)) {
+        alert("Email không hợp lệ");
+        return;
+      }
+      if (!func.validateSDT(sv.SDT)) {
+        alert("SĐT không hợp lệ");
+        return;
+      }
+      if (sv.HINH.name != "")
         sv.HINH = await uploadImg(sv.HINH);
-        
-        else sv.HINH = document.querySelector(".avatar-img img").src;
-        //nếu k có ảnh thì set ảnh mặc định
-        let data = {
-          query: {
-            MASV: sv.MASV,
-          },
-          newValue: {
-            MASV: sv.MASV,
-            HOTEN: sv.HOTEN,
-            SDT: sv.SDT,
-            EMAIL: sv.EMAIL,
-            HINH: sv.HINH,
-          },
-        };
 
-        // console.log(sv.HINH)
-       let result =  await server.update(server.tbl.SINHVIEN, data)
-       if (result) {
+      else sv.HINH = document.querySelector(".avatar-img img").src;
+      //nếu k có ảnh thì set ảnh mặc định
+      let data = {
+        query: {
+          MASV: sv.MASV,
+        },
+        newValue: {
+          MASV: sv.MASV,
+          HOTEN: sv.HOTEN,
+          SDT: sv.SDT,
+          EMAIL: sv.EMAIL,
+          HINH: sv.HINH,
+        },
+      };
+
+      // console.log(sv.HINH)
+      let result = await server.update(server.tbl.SINHVIEN, data)
+      if (result) {
         alert("Cập nhật sinh viên thành công");
         loadListSV({});
-      } else {alert("Cập nhật sinh viên thất bại"); return}
-      });
-    }
+      } else { alert("Cập nhật sinh viên thất bại"); return }
+    });
+  }
   CapNhatSv();
 
-  
+
   //   XOA SINH VIEN
   let btn_delete = document.querySelectorAll(".btn-delete");
   for (var i = 0; i < btn_delete.length; i++) {
@@ -210,31 +210,31 @@ async function initEvent() {
         TENDN: rows[x].getElementsByTagName("td")[0].innerText
       }
 
-      server.getList(server.tbl.CT_LOP_SV, data).then((result)=>{
-        if(result.length>0){
+      server.getList(server.tbl.CT_LOP_SV, data).then((result) => {
+        if (result.length > 0) {
           alert("Không thể xóa sinh viên đang có lớp học!")
           // console.log(result.length)
-        } else{
-          server.getList(server.tbl.TAIKHOAN, tk).then((result)=>{
+        } else {
+          server.getList(server.tbl.TAIKHOAN, tk).then((result) => {
             // console.log(result)
-            if(result.length>0){
-              server.delete(server.tbl.TAIKHOAN, tk).then((result)=>{}).catch((error)=>{})
+            if (result.length > 0) {
+              server.delete(server.tbl.TAIKHOAN, tk).then((result) => { }).catch((error) => { })
             }
             server
-            .delete(server.tbl.SINHVIEN, data)
-            .then((result) => {
-              console.log(result)
-              if (result) {
-                alert("Xóa sinh viên thành công");
-                loadListSV({})
-              } else {
-                alert("Xóa sinh viên thất bại");
-              }
-            })
-            .catch((err) => {});
+              .delete(server.tbl.SINHVIEN, data)
+              .then((result) => {
+                console.log(result)
+                if (result) {
+                  alert("Xóa sinh viên thành công");
+                  loadListSV({})
+                } else {
+                  alert("Xóa sinh viên thất bại");
+                }
+              })
+              .catch((err) => { });
           })
         }
-      })   
+      })
     })
   }
   // RESET MK
@@ -300,11 +300,11 @@ btn_search.addEventListener("click", (e) => {
     });
   }
   else
-  alert('Bạn chưa nhập thông tin cần tìm!')
+    alert('Bạn chưa nhập thông tin cần tìm!')
 });
-searchBox.addEventListener('keypress', (e)=>{
+searchBox.addEventListener('keypress', (e) => {
 
-  if(e.key === 'Enter'){
+  if (e.key === 'Enter') {
     e.preventDefault()
     let KEY = searchBox.value;
     if (KEY) {
@@ -315,14 +315,14 @@ searchBox.addEventListener('keypress', (e)=>{
         ],
       });
     }
-    else{
-    alert('Bạn chưa nhập thông tin cần tìm!')
-    e.preventDefault()
+    else {
+      alert('Bạn chưa nhập thông tin cần tìm!')
+      e.preventDefault()
     }
   }
 })
-searchBox.addEventListener("keyup",()=>{
+searchBox.addEventListener("keyup", () => {
   let KEY = searchBox.value;
-  if(KEY.length==0)
-  loadListSV({})
+  if (KEY.length == 0)
+    loadListSV({})
 })

@@ -1,13 +1,13 @@
 import { server } from "../../../components/server/main.js";
 import * as func from "./function.js";
-import uploadImg from '../../components/Image/main.js'
+import uploadImg from '../../../components/Image/main.js'
 
 async function loadList(KEY) {
   let list = await server.getList(server.tbl.GIANGVIEN, KEY);
   let HTMLlist = document.querySelector("#list");
   // console.log(list);
-  const newList = list.sort((a,b)=>{
-    if(a.MAGV< b.MAGV) return -1;
+  const newList = list.sort((a, b) => {
+    if (a.MAGV < b.MAGV) return -1;
     return 1;
   })
   let out = "";
@@ -99,7 +99,7 @@ async function initEvent() {
             loadListGV({});
           } else alert("Thêm giảng viên thất bại");
         })
-        .catch((err) => {});
+        .catch((err) => { });
     });
   }
   ThemGv();
@@ -116,48 +116,48 @@ async function initEvent() {
       input_update[1].value = rows[x].getElementsByTagName("td")[1].innerText;
       input_update[2].value = rows[x].getElementsByTagName("td")[2].innerText;
       input_update[3].value = rows[x].getElementsByTagName("td")[3].innerText;
-    }) 
-    }
+    })
+  }
 
-      btn_update_form.addEventListener("click", (e) => {
-        e.stopImmediatePropagation()
-        if (input_update[1].value.length == 0)
-          alert("Họ tên giảng viên không được để trống");
-        else if (input_update[2].value.length == 0)
-          alert("SĐT không được để trống");
-        else if (input_update[3].value.length == 0)
-          alert("Email không được để trống");
-        else if (!func.validateEmail(input_update[3].value))
-          alert("Email không hợp lệ");
-        else if (!func.validateSDT(input_update[2].value))
-          alert("SĐT không hợp lệ");
-        else {
-          let data = {
-            query: {
-              MAGV: input_update[0].value,
-            },
-            newValue: {
-              HOTEN: input_update[1].value,
-              SDT: input_update[2].value,
-              EMAIL: input_update[3].value
-            },
-          };
-          // console.log(data);
-          server
-            .update(server.tbl.GIANGVIEN, data)
-            .then((result) => {
-              // console.log(result);
-              if (result) {
-                alert("Cập nhật giảng viên thành công");
-                loadListGV({});
-              } else {
-                alert("Cập nhật giảng viên thất bại");
-                // console.log(data)
-              }
-            })
-            .catch((err) => {});
-        }
-      });
+  btn_update_form.addEventListener("click", (e) => {
+    e.stopImmediatePropagation()
+    if (input_update[1].value.length == 0)
+      alert("Họ tên giảng viên không được để trống");
+    else if (input_update[2].value.length == 0)
+      alert("SĐT không được để trống");
+    else if (input_update[3].value.length == 0)
+      alert("Email không được để trống");
+    else if (!func.validateEmail(input_update[3].value))
+      alert("Email không hợp lệ");
+    else if (!func.validateSDT(input_update[2].value))
+      alert("SĐT không hợp lệ");
+    else {
+      let data = {
+        query: {
+          MAGV: input_update[0].value,
+        },
+        newValue: {
+          HOTEN: input_update[1].value,
+          SDT: input_update[2].value,
+          EMAIL: input_update[3].value
+        },
+      };
+      // console.log(data);
+      server
+        .update(server.tbl.GIANGVIEN, data)
+        .then((result) => {
+          // console.log(result);
+          if (result) {
+            alert("Cập nhật giảng viên thành công");
+            loadListGV({});
+          } else {
+            alert("Cập nhật giảng viên thất bại");
+            // console.log(data)
+          }
+        })
+        .catch((err) => { });
+    }
+  });
   //   XOA GIANG VIEN
   let btn_delete = document.querySelectorAll(".btn-delete");
   for (var i = 0; i < btn_delete.length; i++) {
@@ -170,31 +170,31 @@ async function initEvent() {
         TENDN: rows[x].getElementsByTagName("td")[0].innerText
       }
 
-      server.getList(server.tbl.CT_LOP_GV, data).then((result)=>{
-        if(result.length>0){
+      server.getList(server.tbl.CT_LOP_GV, data).then((result) => {
+        if (result.length > 0) {
           alert("Không thể xóa giảng viên đang dạy!")
           // console.log(result.length)
-        } else{
-          server.getList(server.tbl.TAIKHOAN, tk).then((result)=>{
+        } else {
+          server.getList(server.tbl.TAIKHOAN, tk).then((result) => {
             // console.log(result)
-            if(result.length>0){
-              server.delete(server.tbl.TAIKHOAN, tk).then((result)=>{}).catch((error)=>{})
+            if (result.length > 0) {
+              server.delete(server.tbl.TAIKHOAN, tk).then((result) => { }).catch((error) => { })
             }
             server
-            .delete(server.tbl.GIANGVIEN, data)
-            .then((result) => {
-              // console.log(result)
-              if (result) {
-                alert("Xóa giảng viên thành công");
-                loadListGV({})
-              } else {
-                alert("Xóa giảng viên thất bại");
-              }
-            })
-            .catch((err) => {});
+              .delete(server.tbl.GIANGVIEN, data)
+              .then((result) => {
+                // console.log(result)
+                if (result) {
+                  alert("Xóa giảng viên thành công");
+                  loadListGV({})
+                } else {
+                  alert("Xóa giảng viên thất bại");
+                }
+              })
+              .catch((err) => { });
           })
         }
-      }) 
+      })
     });
   }
 
@@ -261,11 +261,11 @@ btn_search.addEventListener("click", () => {
     });
   }
   else
-  alert('Bạn chưa nhập thông tin cần tìm!')
+    alert('Bạn chưa nhập thông tin cần tìm!')
 });
-searchBox.addEventListener('keypress', (e)=>{
+searchBox.addEventListener('keypress', (e) => {
 
-  if(e.key === 'Enter'){
+  if (e.key === 'Enter') {
     e.preventDefault()
     let KEY = searchBox.value;
     if (KEY) {
@@ -276,14 +276,14 @@ searchBox.addEventListener('keypress', (e)=>{
         ],
       });
     }
-    else{
-    alert('Bạn chưa nhập thông tin cần tìm!')
-    e.preventDefault()
+    else {
+      alert('Bạn chưa nhập thông tin cần tìm!')
+      e.preventDefault()
     }
   }
 })
-searchBox.addEventListener("keyup",()=>{
+searchBox.addEventListener("keyup", () => {
   let KEY = searchBox.value;
-  if(KEY.length==0)
-  loadListGV({})
+  if (KEY.length == 0)
+    loadListGV({})
 })

@@ -1,4 +1,4 @@
-import { server } from "../../components/server/main.js";
+import { server } from "../../../components/server/main.js";
 import * as load from "../javascript/joinList.js";
 
 async function loadList(GV = {}, con) {
@@ -44,7 +44,7 @@ async function loadList(GV = {}, con) {
   }
   HTMLlist.innerHTML = out;
 }
-async function loadListDD(MH = {}, BH={}, con) {
+async function loadListDD(MH = {}, BH = {}, con) {
   let list = await load.listSVDD(MH, BH, con);
   console.log(list);
   let HTMLlist = document.querySelector(".tabledd");
@@ -73,19 +73,19 @@ async function initEvent() {
   // function tiet(x){
   //   if()
   // }
-  async function getMaLHP(i){
-    let list = await load.listBuoiHoc({'MAGV': 'GV05'}, '')
-    loadListDD({'MALOPHP': list[i].MALOPHP},{'IDBUOIHOC': Number(rows[i].getElementsByTagName("td")[0].innerText)},'')
+  async function getMaLHP(i) {
+    let list = await load.listBuoiHoc({ 'MAGV': 'GV05' }, '')
+    loadListDD({ 'MALOPHP': list[i].MALOPHP }, { 'IDBUOIHOC': Number(rows[i].getElementsByTagName("td")[0].innerText) }, '')
   }
-    var rows = document.getElementsByTagName("tbody")[0].rows;
-    let btndd = document.querySelectorAll(".btn-dd2")
-    for (var i = 0; i < rows.length; i++) {
-      let x = i
-      btndd[i].addEventListener("click", (e) => {
-        getMaLHP(x)
-        document.querySelector(".ddText").innerText = `Giảng viên:\tGV01\nLớp: ${rows[x].getElementsByTagName("td")[1].innerText}\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${rows[x].getElementsByTagName("td")[5].innerText}`
-      })
-    }
+  var rows = document.getElementsByTagName("tbody")[0].rows;
+  let btndd = document.querySelectorAll(".btn-dd2")
+  for (var i = 0; i < rows.length; i++) {
+    let x = i
+    btndd[i].addEventListener("click", (e) => {
+      getMaLHP(x)
+      document.querySelector(".ddText").innerText = `Giảng viên:\tGV01\nLớp: ${rows[x].getElementsByTagName("td")[1].innerText}\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${rows[x].getElementsByTagName("td")[5].innerText}`
+    })
+  }
   let BHonAir = document.querySelector(".BHonAir");
   let BH = await load.listBuoiHoc({ MAGV: "GV05" }, "");
   var result = BH.filter(function (el) {

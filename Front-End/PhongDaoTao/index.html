@@ -590,7 +590,7 @@
   <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script type="module" src="pages/indexResource/LopHocPhan.js"></script>
+  <script type="module" src="./pages/indexResource/LopHocPhan.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -662,9 +662,9 @@
         }).children[3].innerText;
       })
     })
-    document.querySelector('.tgv').addEventListener("click", function(e){
-      document.querySelector('.tgv-hidden').classList.toggle("d-none")
-    })
+    // document.querySelector('.tgv').addEventListener("click", function(e){
+    //   document.querySelector('.tgv-hidden').classList.toggle("d-none")
+    // })
     document.querySelector('.tsv').addEventListener("click", function(e){
       document.querySelector('.tsv-hidden').classList.toggle("d-none")
     })

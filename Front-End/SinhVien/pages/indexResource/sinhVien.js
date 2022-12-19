@@ -1,5 +1,5 @@
-import { server } from '../../../../components/server/main.js'
-import getQRSrc from "../../../../components/QR/main.js"
+import { server } from '../../../components/server/main.js'
+import getQRSrc from "../../../components/QR/main.js"
 import isHappening from './Time.js'
 
 var today = new Date()
