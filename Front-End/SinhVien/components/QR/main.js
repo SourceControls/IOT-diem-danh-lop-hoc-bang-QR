@@ -3,7 +3,6 @@ export default function getQRSrc(IDBUOIHOC, IDLSV, size) {
     var deviceIP = await fetch('https://api.ipify.org?format=json')
       .then((res) => res.json())
       .then((res) => res.ip);
-
     var serverIP = await fetch('http://localhost:8080/site/getServerIP')
       .then((res) => res.json())
       .then((res) => res.data);
