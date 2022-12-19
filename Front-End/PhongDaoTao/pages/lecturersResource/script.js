@@ -122,27 +122,24 @@ async function initEvent() {
       btn_update_form.addEventListener("click", (e) => {
         e.stopImmediatePropagation()
         if (input_update[1].value.length == 0)
-          alert("Mã giảng viên không được để trống");
-        else if (input_update[2].value.length == 0)
           alert("Họ tên giảng viên không được để trống");
-        else if (input_update[3].value.length == 0)
+        else if (input_update[2].value.length == 0)
           alert("SĐT không được để trống");
-        else if (input_update[4].value.length == 0)
+        else if (input_update[3].value.length == 0)
           alert("Email không được để trống");
-        else if (!func.validateEmail(input_update[4].value))
+        else if (!func.validateEmail(input_update[3].value))
           alert("Email không hợp lệ");
-        else if (!func.validateSDT(input_update[3].value))
+        else if (!func.validateSDT(input_update[2].value))
           alert("SĐT không hợp lệ");
         else {
           let data = {
             query: {
-              MAGV: input_update[1].value,
+              MAGV: input_update[0].value,
             },
             newValue: {
-              MAGV: input_update[1].value,
-              HOTEN: input_update[2].value,
-              SDT: input_update[3].value,
-              EMAIL: input_update[4].value
+              HOTEN: input_update[1].value,
+              SDT: input_update[2].value,
+              EMAIL: input_update[3].value
             },
           };
           // console.log(data);
