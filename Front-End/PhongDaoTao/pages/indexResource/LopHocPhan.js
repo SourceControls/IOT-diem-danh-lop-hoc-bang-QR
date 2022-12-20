@@ -631,7 +631,7 @@ async function loadListLSv(KEY, maLop, tenLop, tenMon) {
                     <td>${e.SDT}</td>
                     <td>${e.EMAIL}</td>
                     <td class="w-10">
-                      <button type="button" class="btn btn-success btn-xs mb-0 w-100 btn-add-sv"">Thêm</button>
+                      <button class="btn btn-success btn-xs mb-0 w-100 btn-add-sv">Thêm</button>
                     </td>
   `
   })
@@ -703,7 +703,8 @@ function downloadCSVFile(csv_data, fileName) {
   temp_link.click();
   document.body.removeChild(temp_link);
 }
-
+let idLhpDsSv = ""
+let idLhpGv = ""
 async function initEvent() {
   const btn_edit = document.querySelectorAll('.btn-edit')
   const btn_del = document.querySelectorAll('.btn-del')
@@ -723,6 +724,14 @@ async function initEvent() {
   const exportCsv = document.querySelector('.exportCsv')
   const exportCsvDd = document.querySelector('.exportCsvDd')
   const exportCsvAllDd = document.querySelector('.exportCsvAllDd')
+  let btn_add_sv = ""
+  let btn_del_sv = ""
+  console.log("dâdad")
+  function load(){
+    btn_add_sv = document.querySelectorAll('.btn-add-sv')
+    btn_del_sv = document.querySelectorAll('.btn-del-sv')
+    console.log('alalalal')
+  }
   let gv = []
   let tenLop = ""
   let maLop = ""
@@ -789,71 +798,85 @@ async function initEvent() {
 
   }
 
+  function deleteGV(idLhp){
+    const del = document.querySelectorAll('.deleteGV')
+    del.forEach(btn => {
+      btn.onclick =  async e => {
+        let magv = e.target.parentElement.id
+        console.log(magv)
+        let data = {
+          MALOPHP: idLhp,
+          MAGV: magv
+        }
+        server.delete(server.tbl.CT_LOP_GV, data).then(async result => {
+          if (result) {
+            alert('Xóa giảng viên thành công')
+            const el = document.getElementById(magv)
+            el.remove()
+            await getListGv({MALOPHP: idLhp})
+            initEvent()
+          }
+        })
+      }
+    })
+  }
+  function addGv(idLhp){
+    const add = document.querySelectorAll('.addGV')
+    add.forEach(btn => {
+      btn.onclick =  async e => {
+        let id = await getMaxIdLgv()
+        let idGv = getParentId(e)
+        console.log(idGv)
+        let lgv = await loadListLgv({ MALOPHP: idLhp })
+        if (lgv.length == 2) {
+          alert('Mỗi lớp chỉ tối đa 2 giảng viên phụ trách')
+          return
+        }
+
+        let data = {
+          IDLGV: ++id,
+          MALOPHP: idLhp,
+          MAGV: idGv
+        }
+
+        server.insert(server.tbl.CT_LOP_GV, data).then(async result => {
+          if (result) {
+            alert('Thêm giảng viên vào lớp học phần thành công')
+            await loadDataGv(idLhp)
+            await getListGv({MALOPHP: idLhp})
+            initEvent()
+          }
+        })
+      }
+    })
+  }
+  addGv(idLhpGv)
+  deleteGV(idLhpGv)
   // CẬP NHẬT LỚP HỌC PHẦN
   btn_edit.forEach((btn, key) => {
-    btn.addEventListener("click", async (e) => {
-      let idLhp = getParentId(e)
-      console.log(idLhp)
+    btn.onclick =  async (e) => {
+      idLhpGv = getParentId(e)
+      console.log(idLhpGv)
       // let lhp = await getListLhp({MALOPHP: idLhp})
       // await loadDataGv(idLhp)
       // await getListGv({MALOPHP: idLhp})
       const prm0 = new Promise((resolve, rejects) => {
-        let x = loadDataGv(idLhp)
+        let x = loadDataGv(idLhpGv)
         resolve(x)
       })
       const prm1 = new Promise((resolve, rejects) => {
-        let x = getListGv({ MALOPHP: idLhp })
+        let x = getListGv({ MALOPHP: idLhpGv })
         resolve(x)
       })
       await Promise.all([prm0, prm1])
-      const add = document.querySelectorAll('.addGV')
+      // const add = document.querySelectorAll('.addGV')
       var rows = document.getElementsByTagName("tbody")[0].rows
       console.log(rows)
       document.querySelector('.MALHP-edit').value = rows[key].getElementsByTagName("td")[0].innerText
       document.querySelector('.TENLOP-edit').value = rows[key].getElementsByTagName("td")[1].innerText
       document.querySelector('.TENMON-edit').value = rows[key].getElementsByTagName("td")[2].innerText
-      const del = document.querySelectorAll('.deleteGV')
-      console.log(del)
-      del.forEach(btn => {
-        btn.addEventListener("click", async e => {
-          let magv = e.target.parentElement.id
-          let data = {
-            MALOPHP: idLhp,
-            MAGV: magv
-          }
-          server.delete(server.tbl.CT_LOP_GV, data).then(result => {
-            if (result) {
-              alert('Xóa giảng viên thành công')
-              const el = document.getElementById(magv)
-              el.remove()
-            }
-          })
-        })
-      })
-      add.forEach(btn => {
-        btn.addEventListener("click", async e => {
-          let id = await getMaxIdLgv()
-          let idGv = getParentId(e)
-          let lgv = await loadListLgv({ MALOPHP: idLhp })
-          if (lgv.length == 2) {
-            alert('Mỗi lớp chỉ tối đa 2 giảng viên phụ trách')
-            return
-          }
-
-          let data = {
-            IDLGV: ++id,
-            MALOPHP: idLhp,
-            MAGV: idGv
-          }
-
-          server.insert(server.tbl.CT_LOP_GV, data).then(async result => {
-            if (result) {
-              alert('Thêm giảng viên vào lớp học phần thành công')
-              loadDataGv(idLhp)
-            }
-          })
-        })
-      })
+      addGv(idLhpGv)
+      deleteGV(idLhpGv)
       updateLhp.onclick = async (e) => {
         // if(await isExistBuoiHoc(idLhp)){
         //   alert('Lớp học đã có dữ liệu buổi học. Không thể sửa thông tin lớp học phần !!!')
@@ -885,7 +908,7 @@ async function initEvent() {
         })
 
       }
-    })
+    }
   })
 
   // XÓA LỚP HỌC PHẦN
@@ -915,6 +938,104 @@ async function initEvent() {
       }
     })
   })
+  function addSv(idLhp){
+    const btn_add_sv = document.querySelectorAll('.btn-add-sv')
+    const tbdSvLhp = document.querySelector('.tbody-dssv-lhp')
+    btn_add_sv.forEach((btn1, index) => {
+      btn1.addEventListener("click", async (e) => {
+        btn1.disabled = true
+        var rows = document.getElementsByTagName("tbody")[5].rows
+        console.log(rows)
+        let masv = rows[index].getElementsByTagName("td")[0].innerText
+        let hoTen = rows[index].getElementsByTagName("td")[1].innerText
+        let sdt = rows[index].getElementsByTagName("td")[2].innerText
+        let email = rows[index].getElementsByTagName("td")[3].innerText
+        console.log(rows)
+        let id = await getMaxIdLsv()
+        let idSv = getParentId(e)
+        console.log(idSv)
+        if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+          btn1.disabled = false
+          alert('Lớp học đã có dữ liệu điểm danh. Không thể thêm sinh viên !!!')
+          return
+        }
+        // if(await isExistBuoiHoc(idLhp)){
+        //   alert('Lớp học đã có dữ liệu buổi học. Không thể thêm sinh viên !!!')
+        //   return
+        // }
+        let dd = server.await
+        let data = {
+          MALOPHP: idLhp,
+          MASV: idSv
+        }
+        if(await isExistSv(data)){
+          alert('Sinh viên đã tồn tại trong lớp !!!!')
+          return
+        }
+        let ctLopSv = {
+          IDLSV: ++id,
+          MALOPHP: idLhp,
+          MASV: idSv
+        }
+        await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+          if (result) {
+            alert('Thêm sinh viên vào lớp học thành công')
+            btn1.disabled = false
+            //   let row = tbdSvLhp.insertRow(-1)
+            //   console.log(row)
+            //   let cell1 = row.insertCell(0);
+            //   let cell2 = row.insertCell(1);
+            //   let cell3 = row.insertCell(2);
+            //   let cell4 = row.insertCell(3);
+            //   let cell5 = row.insertCell(4);
+            //   cell1.innerHTML = masv
+            //   cell2.innerHTML = hoTen
+            //   cell3.innerHTML = sdt
+            //   cell4.innerHTML = email
+            //   cell5.innerHTML = `<td class="w-10">
+            //   <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
+            // </td>`
+            await loadListLSv(idLhp, maLop, tenLop, tenMon)
+            initEvent()
+          }
+        })
+      })
+    })
+  }
+  function deleteSv(idLhp){
+  const btn_del_sv = document.querySelectorAll('.btn-del-sv')
+  btn_del_sv.forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        btn.disabled = true
+        let idSv = getParentId(e)
+        console.log(idSv)
+    
+        // if(await isExistBuoiHoc(idLhp)){
+        //   alert('Lớp học đã có dữ liệu buổi học. Không thể xóa sinh viên !!!')
+        //   return
+        // }
+        if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+          btn.disabled = false
+          alert('Lớp học đã có dữ liệu điểm danh. Không thể xóa sinh viên !!!')
+          return
+        }
+        let ctLopSv = {
+          MALOPHP: idLhp,
+          MASV: idSv
+        }
+        await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+          if (result) {
+            alert('Xóa sinh viên thành công')
+            btn.disabled = false
+            await loadListLSv(idLhp, maLop, tenLop, tenMon)
+            initEvent()
+          }
+        })
+      })
+    })
+  }
+  addSv(idLhpDsSv)
+  deleteSv(idLhpDsSv)
   // XEM DANH SÁCH SINH VIÊN
   btn_dssv.forEach((btn, key) => {
     btn.addEventListener("click", async (e) => {
@@ -922,11 +1043,12 @@ async function initEvent() {
       maLop = rows[key].getElementsByTagName("td")[0].innerText
       tenLop = rows[key].getElementsByTagName("td")[1].innerText
       tenMon = rows[key].getElementsByTagName("td")[2].innerText
-      let idLhp = getParentId(e)
-      console.log(idLhp)
-      await loadListLSv(idLhp, maLop, tenLop, tenMon)
-      const btn_add_sv = document.querySelectorAll('.btn-add-sv')
-      const btn_del_sv = document.querySelectorAll('.btn-del-sv')
+      idLhpDsSv = getParentId(e)
+      console.log(idLhpDsSv)
+      await loadListLSv(idLhpDsSv, maLop, tenLop, tenMon)
+      // const btn_add_sv = document.querySelectorAll('.btn-add-sv')
+      // const btn_del_sv = document.querySelectorAll('.btn-del-sv')
+      load()
       const tbdSvLhp = document.querySelector('.tbody-dssv-lhp')
       const tbdDssv = document.querySelector('.tbd-dssv')
       // addSv(idLhp)
@@ -936,91 +1058,125 @@ async function initEvent() {
         tableToCSV('DSSV', false, '.csv')
         exportCsv.disabled = false
       })
-      btn_add_sv.forEach((btn1, index) => {
-        btn1.addEventListener("click", async (e) => {
-          btn1.disabled = true
-          var rows = document.getElementsByTagName("tbody")[5].rows
-          console.log(rows)
-          let masv = rows[index].getElementsByTagName("td")[0].innerText
-          let hoTen = rows[index].getElementsByTagName("td")[1].innerText
-          let sdt = rows[index].getElementsByTagName("td")[2].innerText
-          let email = rows[index].getElementsByTagName("td")[3].innerText
-          console.log(rows)
-          let id = await getMaxIdLsv()
-          let idSv = getParentId(e)
-          console.log(idSv)
-          if (await isExistDiemDanh({ MALOPHP: idLhp })) {
-            btn1.disabled = false
-            alert('Lớp học đã có dữ liệu điểm danh. Không thể thêm sinh viên !!!')
-            return
-          }
-          // if(await isExistBuoiHoc(idLhp)){
-          //   alert('Lớp học đã có dữ liệu buổi học. Không thể thêm sinh viên !!!')
-          //   return
-          // }
-          // let dd = server.await
-          // let data = {
-          //   MALOPHP: idLhp,
-          //   MASV: idSv
-          // }
-          // if(await isExistSv(data)){
-          //   alert('Sinh viên đã tồn tại trong lớp !!!!')
-          //   return
-          // }
-          let ctLopSv = {
-            IDLSV: ++id,
-            MALOPHP: idLhp,
-            MASV: idSv
-          }
-          await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
-            if (result) {
-              alert('Thêm sinh viên vào lớp học thành công')
-              btn1.disabled = false
-              //   let row = tbdSvLhp.insertRow(-1)
-              //   let cell1 = row.insertCell(0);
-              //   let cell2 = row.insertCell(1);
-              //   let cell3 = row.insertCell(2);
-              //   let cell4 = row.insertCell(3);
-              //   let cell5 = row.insertCell(4);
-              //   cell1.innerHTML = masv
-              //   cell2.innerHTML = hoTen
-              //   cell3.innerHTML = sdt
-              //   cell4.innerHTML = email
-              //   cell5.innerHTML = `<td class="w-10">
-              //   <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
-              // </td>`
-              // await loadListLSv(idLhp, maLop, tenLop, tenMon)
-            }
-          })
-        })
-      })
+      addSv(idLhpDsSv)
+      deleteSv(idLhpDsSv)
+      // btn_add_sv.forEach((btn1, index) => {
+      //   btn1.addEventListener("click", async (e) => {
+      //     btn1.disabled = true
+      //     var rows = document.getElementsByTagName("tbody")[5].rows
+      //     console.log(rows)
+      //     let masv = rows[index].getElementsByTagName("td")[0].innerText
+      //     let hoTen = rows[index].getElementsByTagName("td")[1].innerText
+      //     let sdt = rows[index].getElementsByTagName("td")[2].innerText
+      //     let email = rows[index].getElementsByTagName("td")[3].innerText
+      //     console.log(rows)
+      //     let id = await getMaxIdLsv()
+      //     let idSv = getParentId(e)
+      //     console.log(idSv)
+      //     if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+      //       btn1.disabled = false
+      //       alert('Lớp học đã có dữ liệu điểm danh. Không thể thêm sinh viên !!!')
+      //       return
+      //     }
+      //     // if(await isExistBuoiHoc(idLhp)){
+      //     //   alert('Lớp học đã có dữ liệu buổi học. Không thể thêm sinh viên !!!')
+      //     //   return
+      //     // }
+      //     let dd = server.await
+      //     let data = {
+      //       MALOPHP: idLhp,
+      //       MASV: idSv
+      //     }
+      //     if(await isExistSv(data)){
+      //       alert('Sinh viên đã tồn tại trong lớp !!!!')
+      //       return
+      //     }
+      //     let ctLopSv = {
+      //       IDLSV: ++id,
+      //       MALOPHP: idLhp,
+      //       MASV: idSv
+      //     }
+      //     await server.insert(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+      //       if (result) {
+      //         alert('Thêm sinh viên vào lớp học thành công')
+      //         btn1.disabled = false
+      //           let row = tbdSvLhp.insertRow(-1)
+      //           let cell1 = row.insertCell(0);
+      //           let cell2 = row.insertCell(1);
+      //           let cell3 = row.insertCell(2);
+      //           let cell4 = row.insertCell(3);
+      //           let cell5 = row.insertCell(4);
+      //           cell1.innerHTML = masv
+      //           cell2.innerHTML = hoTen
+      //           cell3.innerHTML = sdt
+      //           cell4.innerHTML = email
+      //           cell5.innerHTML = `<td class="w-10">
+      //           <button type="button" class="btn btn-danger btn-xs mb-0 w-100 btn-del-sv">Xóa</button>
+      //         </td>`
+      //         load()
+      //         console.log(btn_del_sv.length)
+      //         initEvent()
+      //         console.log(btn_del_sv.length)
+      //         // await loadListLSv(idLhp, maLop, tenLop, tenMon)
+      //       }
+      //     })
+      //   })
+      // })
+
       // Xóa sinh viên khỏi lớp
-      btn_del_sv.forEach(btn => {
-        btn.addEventListener("click", async (e) => {
-          btn.disabled = true
-          let idSv = getParentId(e)
-          console.log(idSv)
-          // if(await isExistBuoiHoc(idLhp)){
-          //   alert('Lớp học đã có dữ liệu buổi học. Không thể xóa sinh viên !!!')
-          //   return
-          // }
-          if (await isExistDiemDanh({ MALOPHP: idLhp })) {
-            btn.disabled = false
-            alert('Lớp học đã có dữ liệu điểm danh. Không thể xóa sinh viên !!!')
-            return
-          }
-          let ctLopSv = {
-            MALOPHP: idLhp,
-            MASV: idSv
-          }
-          await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
-            if (result) {
-              alert('Xóa sinh viên thành công')
-              btn.disabled = false
-            }
-          })
-        })
-      })
+      // for(let i = 0; i < btn_del_sv.length; i++){
+      //   console.log(btn_del_sv.length)
+      //   btn_del_sv[i].onclick = async e => {
+      //     btn_del_sv[i].disabled = true
+      //     let idSv = getParentId(e)
+      //     console.log(idSv)
+      //     // if(await isExistBuoiHoc(idLhp)){
+      //     //   alert('Lớp học đã có dữ liệu buổi học. Không thể xóa sinh viên !!!')
+      //     //   return
+      //     // }
+      //     if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+      //       btn_del_sv[i].disabled = false
+      //       alert('Lớp học đã có dữ liệu điểm danh. Không thể xóa sinh viên !!!')
+      //       return
+      //     }
+      //     let ctLopSv = {
+      //       MALOPHP: idLhp,
+      //       MASV: idSv
+      //     }
+      //     await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+      //       if (result) {
+      //         alert('Xóa sinh viên thành công')
+      //         btn_del_sv[i].disabled = false
+      //       }
+      //     })
+      //   }
+      // }
+      // btn_del_sv.forEach(btn => {
+      //   btn.addEventListener("click", async (e) => {
+      //     btn.disabled = true
+      //     let idSv = getParentId(e)
+      //     console.log(idSv)
+      //     // if(await isExistBuoiHoc(idLhp)){
+      //     //   alert('Lớp học đã có dữ liệu buổi học. Không thể xóa sinh viên !!!')
+      //     //   return
+      //     // }
+      //     if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+      //       btn.disabled = false
+      //       alert('Lớp học đã có dữ liệu điểm danh. Không thể xóa sinh viên !!!')
+      //       return
+      //     }
+      //     let ctLopSv = {
+      //       MALOPHP: idLhp,
+      //       MASV: idSv
+      //     }
+      //     await server.delete(server.tbl.CT_LOP_SV, ctLopSv).then(async result => {
+      //       if (result) {
+      //         alert('Xóa sinh viên thành công')
+      //         btn.disabled = false
+      //       }
+      //     })
+      //   })
+      // })
     })
   })
 

@@ -107,12 +107,13 @@
     // Thêm cái này ở đầu mỗi file
     <!-- <script>
       if (!window.localStorage.getItem('TENDN')) {
-        window.location.replace('./pages/sign-in.html');
+        window.location.replace('../sign-in.html');
       }
     </script> -->
     <script type="module" async>
       import {server} from './components/server/main.js';
       const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
+      console.log(listTaiKhoan);
       var form = document.querySelector('form');
       form.onsubmit = (e) => {
         e.preventDefault();
