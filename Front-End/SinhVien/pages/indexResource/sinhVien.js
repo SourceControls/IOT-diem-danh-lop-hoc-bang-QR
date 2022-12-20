@@ -2,6 +2,7 @@ import { server } from '../../../components/server/main.js'
 import getQRSrc from "../../../components/QR/main.js"
 import isHappening from './Time.js'
 
+let maSv = window.localStorage.getItem('TENDN')
 var today = new Date()
 var time = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 let data1 = {
@@ -9,6 +10,14 @@ let data1 = {
 }
 let idLsv = ""
 let idBh = ""
+
+async function loadNos(data){
+    const nos = document.querySelector('.nos')
+    const avos = document.querySelector('.avos')
+    let sv = await server.getList(server.tbl.SINHVIEN, {MASV: maSv})
+    nos.innerHTML = sv[0].HOTEN
+    avos.src = sv[0].HINH
+}
 
 var loadLh = async function (data) {
     const classHpn = document.querySelector('.classHpn')
@@ -74,6 +83,7 @@ var loadLh = async function (data) {
         if (a.TIETBD < b.TIETBD) return -1
         return 1
     })
+    let phong = ''
     for (let l = 0; l < list.length; l++) {
         if (check) break
         if (isHappening(list[l].TIETBD, list[l].SOTIET)) {
@@ -84,12 +94,15 @@ var loadLh = async function (data) {
                 id1 = ''
             } else {
                 id1 = list[l].MALOPHP
+                phong = ''
             }
         }
     }
     if (!check) {
         id = ''
         id1 = list[0].MALOPHP
+        phong = list[0].PHONG
+
     }
     for (let d of dtLhp) {
         if (d.MALOPHP == id) {
@@ -148,7 +161,7 @@ var loadLh = async function (data) {
     }
     classHpn1.innerHTML += `
         <p class="text-lg font-weight-bold">Buổi học sắp diễn ra</p>
-        <div class="text-sm font-weight-normal">${lhp1[0].TENLOP} - ${list[1].PHONG} - ${lhp1[0].TENMH}</div>
+        <div class="text-sm font-weight-normal">${lhp1[0].TENLOP} - ${phong == '' ? list[1].PHONG : phong} - ${lhp1[0].TENMH}</div>
          <div class="text-sm font-weight-normal">${gv3[0].HOTEN + ' - ' + gv3[0].SDT + ' - ' + gv3[0].EMAIL}</div>
     `
 }
@@ -167,10 +180,11 @@ function initEvent() {
 
 async function loadData(KEY) {
     await loadLh(KEY)
+    loadNos(maSv)
     initEvent()
 }
 
-loadData('SV04')
+loadData(maSv)
 // loadLh('SV04')
 
 
