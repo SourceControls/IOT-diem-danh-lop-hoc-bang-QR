@@ -15,7 +15,7 @@ class IO {
     var server = this.server;
     var giangVienPositions = IO.giangVienPositions;
     server = app.listen(port, function () {
-      console.log("App running");
+      console.log("App running: " + port);
     });
     io = require('socket.io')(server, { cors: { origin: '*' } });
     io.on('connection', (socket) => {
