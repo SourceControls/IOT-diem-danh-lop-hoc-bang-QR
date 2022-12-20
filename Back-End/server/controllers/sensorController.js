@@ -8,7 +8,7 @@ class SensorControllers {
     var myobj = { ...req.query };
     console.log("SensorData: ", myobj);
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
-    // http://localhost/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
+    // https://localhost:8080/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
 
     try {
 
