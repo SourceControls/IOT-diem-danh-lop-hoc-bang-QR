@@ -14,9 +14,6 @@ class IO {
     var io = this.io;
     var server = this.server;
     var giangVienPositions = IO.giangVienPositions;
-    app.options('/*', (_, res) => {
-      res.sendStatus(200);
-    });
     server = app.listen(port, function () {
       console.log("App running: " + port);
     });

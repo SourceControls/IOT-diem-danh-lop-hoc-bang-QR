@@ -1,6 +1,6 @@
 import excute from "./Excutor.js";
 import funct from "./funct.js";
-const domain = "https://iot-f77z.onrender.com"
+const domain = "13.228.225.19"
 
 class Server {
   funct = funct;
