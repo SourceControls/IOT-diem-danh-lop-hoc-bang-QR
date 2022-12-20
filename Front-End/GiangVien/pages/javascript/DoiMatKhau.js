@@ -1,4 +1,4 @@
-import * as loadlist from "../../../GiangVien/pages/javascript/loadList.js";
+import * as loadlist from "../javascript/loadList.js";
 import { server } from "../../../components/server/main.js";
  // CHANGE PASS
  var GV = window.localStorage.getItem('TENDN')

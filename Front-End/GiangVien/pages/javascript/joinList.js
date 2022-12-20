@@ -6,7 +6,7 @@ export async function listBuoiHoc(data = {}, con) {
   const listLGV = await load.listLGV(data);
   const listLHP = await load.listLHP({});
 
-  const cMap = new Map(listBH.map((o) => [o.MALOPHP, o]));
+  const cMap = new Map(listLHP.map((o) => [o.MALOPHP, o]));
   const list1 = listLGV.reduce(
     (a, o) =>
       cMap.has(o.MALOPHP) ? [...a, { ...o, ...cMap.get(o.MALOPHP) }] : a,
@@ -14,7 +14,7 @@ export async function listBuoiHoc(data = {}, con) {
   );
 
   const kMap = new Map(list1.map((o) => [o.MALOPHP, o]));
-  const list2 = listLHP.reduce(
+  const list2 = listBH.reduce(
     (a, o) =>
       kMap.has(o.MALOPHP) ? [...a, { ...o, ...kMap.get(o.MALOPHP) }] : a,
     []
@@ -34,8 +34,8 @@ export async function listBuoiHoc(data = {}, con) {
     return filter;
   }
 
-  // return result;
-  return list1;
+  return result;
+  // return list1;
 }
 
 export async function listSVDD(mh = {}, bh = {}, con) {
@@ -62,18 +62,18 @@ export async function listSVDD(mh = {}, bh = {}, con) {
   //     return !el.IDLGVSUBMITTED;
   //   });
 
-  //   if (con.length != 0) {
-  //     let filter = result.filter((e) => {
-  //       return Object.values(e).some((value) => {
-  //         return value.toString().toLowerCase().includes(con.toLowerCase( ));
-  //       });
-  //     });
-  // return filter;
-  //   }
+    if (con.length != 0) {
+      let filter = list2.filter((e) => {
+        return Object.values(e).some((value) => {
+          return value.toString().toLowerCase().includes(con.toLowerCase( ));
+        });
+      });
+  return filter;
+    }
 
   // return listCTDD;
+  // return filter;
   return list2;
-  // return list1;
   // return listLSV;
 }
 // console.log(listSVDD({'MALOPHP': 'MALOP01'}, {'IDBUOIHOC': 2},''))

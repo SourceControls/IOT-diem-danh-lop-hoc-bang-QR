@@ -34,8 +34,16 @@ export async function listSV(data = {}) {
   });
   return bh;
 }
+
 export async function listCTDD(data = {}) {
   const bh = server.getList(server.tbl.CT_DIEMDANH, data).then((result) => {
+    return result;
+  });
+  return bh;
+}
+
+export async function listTK(data = {}) {
+  const bh = server.getList(server.tbl.TAIKHOAN, data).then((result) => {
     return result;
   });
   return bh;

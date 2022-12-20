@@ -20179,14 +20179,13 @@ fieldset:disabled .btn {
   width: 200px !important;
   height: 200px !important;
 }
-
 .avatar-xxl.avatar-raised {
   margin-top: -55px;
 }
 
 .avatar-xl {
-  width: 74px !important;
-  height: 74px !important;
+  width: 170px !important;
+  height: 160px !important;
 }
 
 .avatar-xl.avatar-raised {
