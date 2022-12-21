@@ -97,7 +97,7 @@ async function initEvent() {
         let KEY = searchBox1.value;
         e.preventDefault();
         if (KEY) {
-          getMaLHP(k,KEY)
+          getMaLHP(k, KEY)
         } else {
           alert("Bạn chưa nhập thông tin cần tìm!");
           return
@@ -109,7 +109,7 @@ async function initEvent() {
           e.preventDefault();
           let KEY = searchBox1.value;
           if (KEY) {
-            getMaLHP(k,KEY)
+            getMaLHP(k, KEY)
           } else {
             alert("Bạn chưa nhập thông tin cần tìm!");
             e.preventDefault();
@@ -120,14 +120,12 @@ async function initEvent() {
       searchBox1.addEventListener("keyup", () => {
         let KEY = searchBox1.value;
         if (KEY.length == 0)
-        getMaLHP(k,"")
+          getMaLHP(k, "")
       });
 
-      document.querySelector(".ddText").innerText = `Giảng viên:\t${GV}\nLớp: ${
-        rows[x].getElementsByTagName("td")[1].innerText
-      }\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${
-        rows[x].getElementsByTagName("td")[5].innerText
-      }`;
+      document.querySelector(".ddText").innerText = `Giảng viên:\t${GV}\nLớp: ${rows[x].getElementsByTagName("td")[1].innerText
+        }\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${rows[x].getElementsByTagName("td")[5].innerText
+        }`;
     });
   }
   let BHonAir = document.querySelector(".BHonAir");
@@ -174,9 +172,8 @@ async function initEvent() {
             mark += 1;
           } else {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${
-              newList[i + 1].NGAY
-            }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${newList[i + 1].NGAY
+              }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
             mark += 1;
           }
         }
