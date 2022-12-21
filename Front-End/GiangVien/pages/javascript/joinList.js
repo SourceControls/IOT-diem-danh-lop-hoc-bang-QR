@@ -20,7 +20,6 @@ export async function listBuoiHoc(data = {}, con) {
     []
   );
 
-
   var result = list2.filter(function (el) {
     return !el.IDLGVSUBMITTED;
   });
@@ -45,31 +44,28 @@ export async function listSVDD(mh = {}, bh = {}, con) {
 
   const cMap = new Map(listLSV.map((o) => [o.MASV, o]));
   const list1 = listSV.reduce(
-    (a, o) =>
-      cMap.has(o.MASV) ? [...a, { ...o, ...cMap.get(o.MASV) }] : a,
+    (a, o) => (cMap.has(o.MASV) ? [...a, { ...o, ...cMap.get(o.MASV) }] : a),
     []
   );
 
   const kMap = new Map(list1.map((o) => [o.IDLSV, o]));
   const list2 = listCTDD.reduce(
-    (a, o) =>
-      kMap.has(o.IDLSV) ? [...a, { ...o, ...kMap.get(o.IDLSV) }] : a,
+    (a, o) => (kMap.has(o.IDLSV) ? [...a, { ...o, ...kMap.get(o.IDLSV) }] : a),
     []
   );
-
 
   //   var result = list2.filter(function (el) {
   //     return !el.IDLGVSUBMITTED;
   //   });
 
-    if (con.length != 0) {
-      let filter = list2.filter((e) => {
-        return Object.values(e).some((value) => {
-          return value.toString().toLowerCase().includes(con.toLowerCase( ));
-        });
+  if (con.length != 0) {
+    let filter = list2.filter((e) => {
+      return Object.values(e).some((value) => {
+        return value.toString().toLowerCase().includes(con.toLowerCase());
       });
-  return filter;
-    }
+    });
+    return filter;
+  }
 
   // return listCTDD;
   // return filter;
@@ -78,6 +74,3 @@ export async function listSVDD(mh = {}, bh = {}, con) {
 }
 // console.log(listSVDD({'MALOPHP': 'MALOP01'}, {'IDBUOIHOC': 2},''))
 // console.log(await load.listCTDD({'IDBUOIHOC': 2}))
-
-
-

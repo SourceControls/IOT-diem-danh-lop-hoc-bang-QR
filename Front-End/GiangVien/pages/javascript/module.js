@@ -47,7 +47,7 @@ async function loadList(GV = {}, con) {
 }
 async function loadListDD(MH = {}, BH = {}, con) {
   let list = await load.listSVDD(MH, BH, con);
-  // console.log(list);
+  console.log(list);
   let HTMLlist = document.querySelector(".tabledd");
   const newList = list.sort((a, b) => {
     if (a.MASV < b.MASV) return -1;
@@ -79,53 +79,29 @@ async function initEvent() {
     loadListDD(
       { MALOPHP: list[i].MALOPHP },
       { IDBUOIHOC: Number(rows[i].getElementsByTagName("td")[0].innerText) },
-      ""
+      key
     );
   }
   var rows = document.getElementsByTagName("tbody")[0].rows;
   let btndd = document.querySelectorAll(".btn-dd2");
+  let btnddHappening = document.querySelector(".btn-dd-happening");
+  // btnddHappening.addEventListener("click",(e)=>{
+  //   loadListDD(
+  //     { MALOPHP: list[i].MALOPHP },
+  //     { IDBUOIHOC: Number(rows[i].getElementsByTagName("td")[0].innerText) },
+  //     ""
+  //   );
+  // })
   for (var i = 0; i < rows.length; i++) {
     let x = i;
     btndd[i].addEventListener("click", (e) => {
       getMaLHP(x, "");
 
-      let searchBox1 = document.querySelector(".search-box1");
-      let btn_search1 = document.querySelector(".btn-search1");
-      let k = x
-      btn_search1.addEventListener("click", (e) => {
-        // alert("")
-        let KEY = searchBox1.value;
-        e.preventDefault();
-        if (KEY) {
-          getMaLHP(k, KEY)
-        } else {
-          alert("Bạn chưa nhập thông tin cần tìm!");
-          return
-        }
-      });
-      searchBox1.addEventListener("keypress", (e) => {
-        // alert('')
-        if (e.key === "Enter") {
-          e.preventDefault();
-          let KEY = searchBox1.value;
-          if (KEY) {
-            getMaLHP(k, KEY)
-          } else {
-            alert("Bạn chưa nhập thông tin cần tìm!");
-            e.preventDefault();
-          }
-        }
-      });
-
-      searchBox1.addEventListener("keyup", () => {
-        let KEY = searchBox1.value;
-        if (KEY.length == 0)
-          getMaLHP(k, "")
-      });
-
-      document.querySelector(".ddText").innerText = `Giảng viên:\t${GV}\nLớp: ${rows[x].getElementsByTagName("td")[1].innerText
-        }\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${rows[x].getElementsByTagName("td")[5].innerText
-        }`;
+      document.querySelector(".ddText").innerText = `Giảng viên:\t${GV}\nLớp: ${
+        rows[x].getElementsByTagName("td")[1].innerText
+      }\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${
+        rows[x].getElementsByTagName("td")[5].innerText
+      }`;
     });
   }
   let BHonAir = document.querySelector(".BHonAir");
@@ -141,7 +117,6 @@ async function initEvent() {
   var result = BH.filter(function (el) {
     return el.NGAY == today;
   });
-
   var result2 = BH.filter(function (el) {
     return el.NGAY > today;
   });
@@ -154,7 +129,8 @@ async function initEvent() {
     return 1;
   });
 
-  // console.log(newList);
+  // console.log(BH);
+  console.log(newList);
   // console.log(BH);
   if (newList.length > 1) {
     let mark = 0;
@@ -163,17 +139,168 @@ async function initEvent() {
         if (i == 0) {
           BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
           BHonAir1.innerText = `Môn học:\t${newList[1].TENMH}\nNgày: ${newList[1].NGAY}\nTiết bắt đầu: ${newList[1].TIETBD}`;
+          btnddHappening.style.display = "block";
+          loadListDD(
+            { MALOPHP: newList[i].MALOPHP },
+            { IDBUOIHOC: newList[i].IDBUOIHOC },
+            ""
+          );
+          let searchBox1 = document.querySelector(".search-box1");
+          let btn_search1 = document.querySelector(".btn-search1");
+          btn_search1.addEventListener("click", (e) => {
+            let KEY = searchBox1.value;
+            console.log(KEY)
+            e.preventDefault();
+            if (KEY) {
+              loadListDD(
+                { MALOPHP: newList[i].MALOPHP },
+                { IDBUOIHOC: newList[i].IDBUOIHOC },
+                KEY
+              );
+            } else {
+              alert("Bạn chưa nhập thông tin cần tìm!");
+              return;
+            }
+          });
+          searchBox1.addEventListener("keypress", (e) => {
+            // alert('')
+            if (e.key === "Enter") {
+              e.preventDefault();
+              let KEY = searchBox1.value;
+              if (KEY) {
+                loadListDD(
+                  { MALOPHP: newList[i].MALOPHP },
+                  { IDBUOIHOC: newList[i].IDBUOIHOC },
+                  KEY
+                );
+              } else {
+                alert("Bạn chưa nhập thông tin cần tìm!");
+                e.preventDefault();
+              }
+            }
+          });
+
+          searchBox1.addEventListener("keyup", () => {
+            let KEY = searchBox1.value;
+            if (KEY.length == 0)
+            loadListDD(
+              { MALOPHP: newList[i].MALOPHP },
+              { IDBUOIHOC: newList[i].IDBUOIHOC },
+              ''
+            );
+          });
           mark += 1;
         }
         if (i > 0) {
           if (i == newList.length - 1) {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
             BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+            btnddHappening.style.display = "block";
+            loadListDD(
+              { MALOPHP: newList[i].MALOPHP },
+              { IDBUOIHOC: newList[i].IDBUOIHOC },
+              ""
+            );
+            let searchBox1 = document.querySelector(".search-box1");
+            let btn_search1 = document.querySelector(".btn-search1");
+            btn_search1.addEventListener("click", (e) => {
+              let KEY = searchBox1.value;
+              console.log(KEY)
+              e.preventDefault();
+              if (KEY) {
+                loadListDD(
+                  { MALOPHP: newList[i].MALOPHP },
+                  { IDBUOIHOC: newList[i].IDBUOIHOC },
+                  KEY
+                );
+              } else {
+                alert("Bạn chưa nhập thông tin cần tìm!");
+                return;
+              }
+            });
+            searchBox1.addEventListener("keypress", (e) => {
+              // alert('')
+              if (e.key === "Enter") {
+                e.preventDefault();
+                let KEY = searchBox1.value;
+                if (KEY) {
+                  loadListDD(
+                    { MALOPHP: newList[i].MALOPHP },
+                    { IDBUOIHOC: newList[i].IDBUOIHOC },
+                    KEY
+                  );
+                } else {
+                  alert("Bạn chưa nhập thông tin cần tìm!");
+                  e.preventDefault();
+                }
+              }
+            });
+  
+            searchBox1.addEventListener("keyup", () => {
+              let KEY = searchBox1.value;
+              if (KEY.length == 0)
+              loadListDD(
+                { MALOPHP: newList[i].MALOPHP },
+                { IDBUOIHOC: newList[i].IDBUOIHOC },
+                ''
+              );
+            });
             mark += 1;
           } else {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${newList[i + 1].NGAY
-              }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${
+              newList[i + 1].NGAY
+            }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            btnddHappening.style.display = "block";
+            loadListDD(
+              { MALOPHP: newList[i].MALOPHP },
+              { IDBUOIHOC: newList[i].IDBUOIHOC },
+              ""
+            );
+            let searchBox1 = document.querySelector(".search-box1");
+            let btn_search1 = document.querySelector(".btn-search1");
+            btn_search1.addEventListener("click", (e) => {
+              let KEY = searchBox1.value;
+              console.log(KEY)
+              e.preventDefault();
+              if (KEY) {
+                loadListDD(
+                  { MALOPHP: newList[i].MALOPHP },
+                  { IDBUOIHOC: newList[i].IDBUOIHOC },
+                  KEY
+                );
+              } else {
+                alert("Bạn chưa nhập thông tin cần tìm!");
+                return;
+              }
+            });
+            searchBox1.addEventListener("keypress", (e) => {
+              // alert('')
+              if (e.key === "Enter") {
+                e.preventDefault();
+                let KEY = searchBox1.value;
+                if (KEY) {
+                  loadListDD(
+                    { MALOPHP: newList[i].MALOPHP },
+                    { IDBUOIHOC: newList[i].IDBUOIHOC },
+                    KEY
+                  );
+                } else {
+                  alert("Bạn chưa nhập thông tin cần tìm!");
+                  e.preventDefault();
+                }
+              }
+            });
+  
+            searchBox1.addEventListener("keyup", () => {
+              let KEY = searchBox1.value;
+              if (KEY.length == 0)
+              loadListDD(
+                { MALOPHP: newList[i].MALOPHP },
+                { IDBUOIHOC: newList[i].IDBUOIHOC },
+                ''
+              );
+            });
             mark += 1;
           }
         }
@@ -182,20 +309,28 @@ async function initEvent() {
     if (mark == 0) {
       BHonAir.innerText = `Hiện chưa có buổi học`;
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      btnddHappening.style.display = "none";
     }
   }
   if (newList.length == 1) {
     if (isHappen(newList[0].TIETBD, newList[0].SOTIET)) {
       BHonAir.innerText = `Môn học:\t${newList[0].TENMH}\nNgày: ${newList[0].NGAY}\nTiết bắt đầu: ${newList[0].TIETBD}`;
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      loadListDD(
+        { MALOPHP: newList[0].MALOPHP },
+        { IDBUOIHOC: newList[0].IDBUOIHOC },
+        ""
+      );
     } else {
       BHonAir.innerText = `Hiện chưa có buổi học`;
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      btnddHappening.style.display = "none";
     }
   }
   if (newList.length == 0) {
     BHonAir.innerText = `Hiện chưa có buổi học`;
     BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+    btnddHappening.style.display = "none";
   }
   function getDateFromHours(time) {
     time = time.split(":");
@@ -215,8 +350,8 @@ async function initEvent() {
     if (tbd == 2) tbdTime = new moment("08:15", "HH:mm").format("HH:mm");
     if (tbd == 3) tbdTime = new moment("09:00", "HH:mm").format("HH:mm");
     if (tbd == 4) tbdTime = new moment("09:45", "HH:mm").format("HH:mm");
-    if (tbd == 5) tbdTime = new moment("10:00", "HH:mm").format("HH:mm");
-    if (tbd == 6) tbdTime = new moment("10:45", "HH:mm").format("HH:mm");
+    if (tbd == 5) tbdTime = new moment("10:30", "HH:mm").format("HH:mm");
+    if (tbd == 6) tbdTime = new moment("11:15", "HH:mm").format("HH:mm");
     if (tbd == 7) tbdTime = new moment("13:30", "HH:mm").format("HH:mm");
     if (tbd == 8) tbdTime = new moment("14:15", "HH:mm").format("HH:mm");
     if (tbd == 9) tbdTime = new moment("15:00", "HH:mm").format("HH:mm");
