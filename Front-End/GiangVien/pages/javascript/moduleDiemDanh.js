@@ -141,8 +141,6 @@ async function renderDanhSachDiemDanh(needRenderBtnsHuyDiemDanh = false) {
                     <td>${e.HOTEN}</td>
                     <td id="TTDIEMDANH-${e.MASV}">${e.DADIEMDANH}</td>
                     <td>${e.GHICHU}</td>
-                    <td>
-                    </td>
                   </tr>
     `
   });
@@ -264,13 +262,17 @@ socket.on('connected', function (msg) {
 });
 
 socket.on('diemDanh', function (data) {
+  let masv = dsCTLSV.filter(e => e.IDLSV == data.IDLSV)[0].MASV;
+  console.log(masv);
   dsCTDD.forEach(e => {
     if (e.IDBUOIHOC == data.IDBUOIHOC && e.IDLSV == data.IDLSV) {
       e.DADIEMDANH = true;
       e.GHICHU = data.GHICHU;
-
+      document.querySelectorAll(`tr#${masv} td`)[2].innerText = 'Có mặt'
+      document.querySelectorAll(`tr#${masv} td`)[3].innerText = data.GHICHU
     }
+
   })
-  alert("Vừa có sinh viên điểm danh!");
+  alert("Vừa có sinh viên điểm danh!\n" + data.GHICHU);
 })
 

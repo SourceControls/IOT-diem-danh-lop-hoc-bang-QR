@@ -17,7 +17,7 @@ class SensorControllers {
       //cập nhật lại trạng thái điểm danh của sinh viên
 
       let updated = (await doRequest('http://localhost:8080/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
-      if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
+      // if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
       //phát hiện gian lận và cập nhật vào ghi chú nếu có
       let MAGV = (await doRequest('http://localhost:8080/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
       MAGV = MAGV[0].IDLGVSUBMITTED;
