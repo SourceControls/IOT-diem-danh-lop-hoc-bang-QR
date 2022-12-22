@@ -8,11 +8,12 @@ class SensorControllers {
     var myobj = { ...req.query };
     console.log("SensorData: ", myobj);
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
-    // https://localhost:8080/sensor?IDBUOIHOC=BUOI01&IDLSV=LSV01&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
+    // https://localhost:8080/sensor?IDBUOIHOC=2&IDLSV=1&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
 
     try {
 
       //cập nhật lại trạng thái điểm danh của sinh viên
+
       let updated = (await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
       if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
       //phát hiện gian lận và cập nhật vào ghi chú nếu có
