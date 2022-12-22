@@ -4,7 +4,6 @@ import initBtnsDiemDanh from "./moduleDiemDanh.js";
 var GV = window.localStorage.getItem("TENDN");
 async function loadList(GV = {}, con) {
   let list = await load.listBuoiHoc(GV, con);
-  // console.log(list);
   let HTMLlist = document.querySelector("#BHtable");
   const newList = list.sort((a, b) => {
     if (a.IDBUOIHOC < b.IDBUOIHOC) return -1;
@@ -79,7 +78,7 @@ async function initEvent() {
   });
 
   // console.log(BH);
-  console.log(newList);
+  // console.log(newList);
   // console.log(BH);
   if (newList.length > 1) {
     let mark = 0;

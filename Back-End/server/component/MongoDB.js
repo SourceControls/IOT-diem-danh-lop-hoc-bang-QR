@@ -52,7 +52,7 @@ class MongoDB {
       console.log(error.message);
     }
   }
-  update = async (collectionName, query = {}, newValue = {}) => {
+  update = async (collectionName, query = {}, newValue = {}, returnModifiedCount = false) => {
     if (Object.keys(query).length === 0 || Object.keys(newValue).length === 0)
       return false;
     newValue = { $set: newValue };
@@ -63,7 +63,10 @@ class MongoDB {
       db.close();
       console.log("Updated: ", rs);
       return new Promise((resolve, reject) => {
-        resolve(rs.matchedCount != 0);
+        if (returnModifiedCount)
+          resolve(rs.modifiedCount != 0);
+        else
+          resolve(rs.matchedCount != 0);
       })
     } catch (error) {
       console.log(error.message);

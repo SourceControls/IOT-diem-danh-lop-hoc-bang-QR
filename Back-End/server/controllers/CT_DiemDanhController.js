@@ -17,7 +17,7 @@ class CT_DiemDanhControllers {
       .then((rs) => { res.send(rs) })
   }
   update(req, res) {
-    db.update(collectionName, req.body.query, req.body.newValue)
+    db.update(collectionName, req.body.query, req.body.newValue, true)
       .then((rs) => { res.send(rs) });
   }
 }

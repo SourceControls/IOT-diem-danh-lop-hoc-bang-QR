@@ -27,7 +27,8 @@ class SensorControllers {
       if (GHICHU != "");
       await doRequest('http://localhost:8080/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { GHICHU } })
 
-
+      //điểm gửi tin nhắn về cho client thông tin điểm danh
+      require('../server')(myobj.IDLSV, myobj.IDBUOIHOC, GHICHU);
       res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + GHICHU);
     } catch (error) {
       res.send("FAIL!! " + error.message);

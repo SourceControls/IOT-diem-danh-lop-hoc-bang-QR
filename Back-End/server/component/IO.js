@@ -9,7 +9,8 @@ class IO {
     if (!IO.giangVienPositions.hasOwnProperty(MAGV))
       return IO.giangVienPositions.defaultPosition;
     return IO.giangVienPositions[MAGV];
-  }
+  };
+
   init(app, port) {
     var io = this.io;
     var server = this.server;

@@ -1,5 +1,4 @@
 import { server } from "../../../components/server/main.js";
-
 var btnStartDiemDanh = document.querySelector('.btn-start-diem-danh')
 var tblDSDiemDanh = document.querySelector('.tabledd')
 var clockSpan = document.querySelector('.clock span')
@@ -129,7 +128,6 @@ async function renderDanhSachDiemDanh(needRenderBtnsHuyDiemDanh = false) {
   let dsCTLSVTheoBuoi = innerJoin(dsCTLSV, dsCTDDTheoBuoi, 'IDLSV');
   dsSVTheoBuoi = innerJoin(dsSV, dsCTLSVTheoBuoi, 'MASV');
 
-  console.log(dsSVTheoBuoi);
   tblDSDiemDanh.innerHTML = ''
   dsSVTheoBuoi.forEach(e => {
     if (e.DADIEMDANH) {
@@ -142,7 +140,7 @@ async function renderDanhSachDiemDanh(needRenderBtnsHuyDiemDanh = false) {
                     <td>${e.MASV}</td>
                     <td>${e.HOTEN}</td>
                     <td id="TTDIEMDANH-${e.MASV}">${e.DADIEMDANH}</td>
-                    <td></td>
+                    <td>${e.GHICHU}</td>
                     <td>
                     </td>
                   </tr>
@@ -187,7 +185,6 @@ export default function initBtnsDiemDanh() {
 
       let [IDBUOIHOC, TENMON] = b.target.dataset.set.split('&');
       BUOIHOC = (await server.getList(server.tbl.BUOIHOC, { IDBUOIHOC: parseInt(IDBUOIHOC) }))[0];
-      console.log(BUOIHOC);
 
       //thông tin lớp học
       let currentDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
@@ -200,7 +197,6 @@ export default function initBtnsDiemDanh() {
         renderDanhSachDiemDanh();
       }
       else if (!BUOIHOC.SUBMITTED && BUOIHOC.STARTTIME) {
-        console.log(BUOIHOC.STARTTIME);
         //đang điểm danh dở và chưa submit
         let currentHour = (new Date()).getHours();
         let currentMinutes = (new Date()).getMinutes();
@@ -238,4 +234,43 @@ export default function initBtnsDiemDanh() {
   })
 }
 
+
+
+// =========== IO ==============
+
+var socket = io.connect("localhost:8080");
+
+// gửi và nhận vị trí của giảng viên
+var MAGV = window.localStorage.getItem('TENDN');
+socket.on('clientLocation', () => {
+  navigator.geolocation.getCurrentPosition((p) => {
+    console.log({
+      lat: p.coords.latitude,
+      lng: p.coords.longitude
+    });
+    socket.emit('clientLocation', {
+      MAGV,
+      position: {
+        lat: p.coords.latitude,
+        lng: p.coords.longitude
+      }
+    });
+  })
+});
+
+
+socket.on('connected', function (msg) {
+  console.log(msg, { io });
+});
+
+socket.on('diemDanh', function (data) {
+  dsCTDD.forEach(e => {
+    if (e.IDBUOIHOC == data.IDBUOIHOC && e.IDLSV == data.IDLSV) {
+      e.DADIEMDANH = true;
+      e.GHICHU = data.GHICHU;
+
+    }
+  })
+  alert("Vừa có sinh viên điểm danh!");
+})
 
