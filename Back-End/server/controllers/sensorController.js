@@ -6,6 +6,8 @@ class SensorControllers {
   //điểm danh bằng QR.
   insertSensorData = async (req, res) => {
     var myobj = { ...req.query };
+    myobj.IDBUOIHOC = parseInt(myobj.IDBUOIHOC)
+    myobj.IDLSV = parseInt(myobj.IDLSV)
     console.log("SensorData: ", myobj);
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
     // https://localhost:8080/sensor?IDBUOIHOC=2&IDLSV=1&IP=127.0.0.1&lat=10.8489687&lng=106.7960183
