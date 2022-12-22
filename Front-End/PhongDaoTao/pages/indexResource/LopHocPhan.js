@@ -339,19 +339,22 @@ async function checkConstraintDelLhp(MALOPHP) {
     resolve(x)
   })
   const prm1 = new Promise((resolve, rejects) => {
-    let x = server.getList(server.tbl.CT_LOP_GV, { MALOPHP: MALOPHP });
+    let x = server.getList(server.tbl.CT_DIEMDANH,);
     resolve(x)
   })
-  const prm2 = new Promise((resolve, rejects) => {
-    let x = server.getList(server.tbl.CT_LOP_SV, { MALOPHP: MALOPHP });
-    resolve(x)
-  })
-  var x = await Promise.all([prm0, prm1, prm2])
-  let [bh, gv, sv] = [...x]
+  var x = await Promise.all([prm0, prm1])
+  let [bh, dd] = [...x]
+  let check = false
+  for(let i of bh){
+    for(let j of dd){
+      if(i.IDBUOIHOC == j.IDBUOIHOC){
+        check = true
+        break
+      }
+    }
+  }
 
-  console.log(x)
-
-  return bh.length > 0 || gv.length > 0 || sv.length > 0 ? true : false
+  return check
 }
 
 

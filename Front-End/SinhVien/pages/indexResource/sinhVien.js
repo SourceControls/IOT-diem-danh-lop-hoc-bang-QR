@@ -56,7 +56,16 @@ var loadLh = async function (data) {
     let [lsv, bh, dtLhp, gv, gv1] = [...x]
     classHpn.innerHTML = ''
     classHpn1.innerHTML = ''
-    if (bh.length == 0) {
+    console.log(bh)
+    console.log(lsv)
+    for (let a of lsv) {
+        for (let b of bh) {
+            if (a.MALOPHP == b.MALOPHP) {
+                newArr.push({ ...a, ...b })
+            }
+        }
+    }
+    if (newArr.length == 0) {
         classHpn.innerHTML += `
         <button class="btn btn-success mb-0 w-100 h-100 border-radius-lg qrBtn">
                 <p class="text-lg font-weight-bold">Không có buổi học nào đang diễn ra</p>
@@ -71,19 +80,12 @@ var loadLh = async function (data) {
         `
         return
     }
-    for (let a of lsv) {
-        for (let b of bh) {
-            if (a.MALOPHP == b.MALOPHP) {
-                newArr.push({ ...a, ...b })
-            }
-        }
-    }
-    console.log(newArr)
     list = newArr.sort((a, b) => {
         if (a.TIETBD < b.TIETBD) return -1
         return 1
     })
     let phong = ''
+    console.log(list)
     for (let l = 0; l < list.length; l++) {
         if (check) break
         if (isHappening(list[l].TIETBD, list[l].SOTIET)) {
@@ -95,12 +97,14 @@ var loadLh = async function (data) {
             } else {
                 id1 = list[l].MALOPHP
                 phong = ''
+                console.log(list[l].IDBUOIHOC)
             }
         }
     }
-    if (!check) {
+    if (!check && today.getHours() < 17) {
         id = ''
         id1 = list[0].MALOPHP
+        console.log(list[0].IDBUOIHOC)
         phong = list[0].PHONG
 
     }
@@ -184,6 +188,7 @@ async function loadData(KEY) {
     initEvent()
 }
 
+console.log(maSv)
 loadData(maSv)
 // loadLh('SV04')
 
