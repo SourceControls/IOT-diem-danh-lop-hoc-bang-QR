@@ -14,16 +14,16 @@ class SensorControllers {
 
       //cập nhật lại trạng thái điểm danh của sinh viên
 
-      let updated = (await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
+      let updated = (await doRequest('http://localhost:8080/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { DADIEMDANH: true } }))
       if (updated == 0) { res.send("FAIL!! Sinh viên đã điểm danh trước đó"); return; }
       //phát hiện gian lận và cập nhật vào ghi chú nếu có
-      let MAGV = (await doRequest('http://localhost/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
+      let MAGV = (await doRequest('http://localhost:8080/BUOIHOC/GetList', { IDBUOIHOC: myobj.IDBUOIHOC }));
       MAGV = MAGV[0].IDLGVSUBMITTED;
       let studentPosition = { lat: myobj.lat, lng: myobj.lng };
       let giangVienPosition = io.getGiangVienPosition(MAGV);
       var GHICHU = cheatDetector.dectect(myobj.IDBUOIHOC, myobj.IP, giangVienPosition, studentPosition)
       if (GHICHU != "");
-      await doRequest('http://localhost/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { GHICHU } })
+      await doRequest('http://localhost:8080/CT_DiemDanh/Update', { query: { IDBUOIHOC: myobj.IDBUOIHOC, IDLSV: myobj.IDLSV }, newValue: { GHICHU } })
 
 
       res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + GHICHU);
