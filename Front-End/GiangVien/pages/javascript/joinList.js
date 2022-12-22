@@ -21,7 +21,7 @@ export async function listBuoiHoc(data = {}, con) {
   );
 
   var result = list2.filter(function (el) {
-    return !el.IDLGVSUBMITTED;
+    return true;
   });
 
   if (con.length != 0) {

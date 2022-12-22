@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/ptit-logo.png">
   <link rel="icon" type="image/png" href="./assets/img/ptit-logo.png">
-  
+  <style>
+    tbody tr:hover{
+      transition: 0.2s;
+      background-color: rgb(237, 237, 237);
+    }
+  </style>
   <title>
     Lớp học phần
   </title>
@@ -94,7 +99,7 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Buổi học đang diễn ra</p>
                 <p class="mb-4 BHonAir"></p>
-                <button class="btn btn-outline-success btn-xs mb-0 view btn-dd-happening" data-bs-toggle="modal" data-bs-target="#diemdanh">Điểm danh</button>
+                <button class="btn btn-outline-success btn-xs mb-0 view btn-dd-happening btn-dd2" data-bs-toggle="modal" data-bs-target="#diemdanh">Điểm danh</button>
               </div>
             </div>
           </div>
@@ -191,7 +196,7 @@
             <div class="card-body">
               <div class="row mb-4">
                 <div class="col-12 col-sm-4 col-lg-2 d-flex align-items-end dd-img">
-                  <img src="./assets/img/team-2.jpg" class="avatar avatar-xl"/>
+                  <img src="./assets/img/ptit-logo.png" class="avatar avatar-xl sv-img"/>
                 </div>
                 <div class="col-12 col-sm-4 col-lg-3 d-flex align-items-end">
                   <button class="btn btn-danger w-100 mb-0 btn-start-diem-danh">Bắt đầu điểm danh</button>
@@ -201,10 +206,6 @@
                 </div>
                 <div class="col-12 col-sm-4 col-lg-4 text-end">
                   <p class="ddText"></p>
-                  <form class="bg-gray-200 border-radius-lg d-flex">
-                    <input type="text" class="form-control border-0 ps-3 bg-gray-200 search-box1" placeholder="Tìm kiếm">
-                    <button class="btn bg-gradient-primary my-1 me-1 btn-search1">Tìm</button>
-                  </form>
                 </div>
               </div>
               <table class="table">
@@ -214,8 +215,6 @@
                     <th class="ps-2">Họ tên</th>
                     <th class="ps-2">TT điểm danh</th>
                     <th class="ps-2">Ghi chú</th>
-                    <th class="ps-2">SĐT</th>
-                    <th class="ps-2">Email</th>
                     <th></th>
                   </tr>
                 </thead>

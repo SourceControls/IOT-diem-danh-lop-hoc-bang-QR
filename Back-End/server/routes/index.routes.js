@@ -7,7 +7,7 @@ const buoiHocRouters = require('./buoiHoc.routes');
 const CT_LOP_GVRouters = require('./CT_LOP_GV.routes');
 const CT_LOP_SVRouters = require('./CT_LOP_SV.routes');
 const CT_DiemDanhRouters = require('./CT_DiemDanh.routes');
-// const sensorRouters = require('./sensor.routes');
+const sensorRouters = require('./sensor.routes');
 const siteRouters = require('./sites.routes');
 
 function routes(app) {
@@ -20,7 +20,7 @@ function routes(app) {
   app.use('/CT_LOP_GV', CT_LOP_GVRouters);
   app.use('/CT_LOP_SV', CT_LOP_SVRouters);
   app.use('/CT_DiemDanh', CT_DiemDanhRouters);
-  // app.use('/sensor', sensorRouters);
+  app.use('/sensor', sensorRouters);
   app.use('/site', siteRouters);
   //API chung
   app.use('/', (req, res) => { res.send("Hello") });

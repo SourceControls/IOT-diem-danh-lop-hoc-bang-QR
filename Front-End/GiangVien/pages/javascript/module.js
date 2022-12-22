@@ -1,6 +1,6 @@
 import { server } from "../../../components/server/main.js";
 import * as load from "../javascript/joinList.js";
-
+import initBtnsDiemDanh from "./moduleDiemDanh.js";
 var GV = window.localStorage.getItem("TENDN");
 async function loadList(GV = {}, con) {
   let list = await load.listBuoiHoc(GV, con);
@@ -38,72 +38,21 @@ async function loadList(GV = {}, con) {
         <p class="mb-0">${bh.SOTIET}</p>
       </td>
       <td class="align-middle">
-        <button type="button" class="btn btn-outline-success btn-xs mb-0 view btn-dd2" data-bs-toggle="modal" data-bs-target="#diemdanh">Điểm danh</button>
+        <button type="button" data-set="${bh.IDBUOIHOC + '&' + bh.TENMH + '&' + bh.NGAY}" class="btn btn-outline-success btn-xs mb-0 view btn-dd2" data-bs-toggle="modal" data-bs-target="#diemdanh">Điểm danh</button>
       </td>
     </tr>
           `;
   }
   HTMLlist.innerHTML = out;
-}
-async function loadListDD(MH = {}, BH = {}, con) {
-  let list = await load.listSVDD(MH, BH, con);
-  console.log(list);
-  let HTMLlist = document.querySelector(".tabledd");
-  const newList = list.sort((a, b) => {
-    if (a.MASV < b.MASV) return -1;
-    return 1;
-  });
-  let out = "";
-  for (let dd of newList) {
-    out += `
-    <tr>
-    <td class="ps-0">${dd.MASV}</td>
-    <td>${dd.HOTEN}</td>
-    <td class="text-center">${dd.DADIEMDANH}</td>
-    <td>${dd.GHICHU}</td>
-    <td>${dd.SDT}</td>
-    <td>${dd.EMAIL}</td>
-    <td><button class="btn btn-outline-danger btn-xs mb-0">Hủy điểm danh</button></td>
-  </tr>
-          `;
-  }
-  HTMLlist.innerHTML = out;
+  initBtnsDiemDanh();
+
 }
 
 async function initEvent() {
-  // function tiet(x){
-  //   if()
-  // }
-  async function getMaLHP(i, key) {
-    let list = await load.listBuoiHoc({ MAGV: GV }, "");
-    loadListDD(
-      { MALOPHP: list[i].MALOPHP },
-      { IDBUOIHOC: Number(rows[i].getElementsByTagName("td")[0].innerText) },
-      key
-    );
-  }
-  var rows = document.getElementsByTagName("tbody")[0].rows;
-  let btndd = document.querySelectorAll(".btn-dd2");
-  let btnddHappening = document.querySelector(".btn-dd-happening");
-  // btnddHappening.addEventListener("click",(e)=>{
-  //   loadListDD(
-  //     { MALOPHP: list[i].MALOPHP },
-  //     { IDBUOIHOC: Number(rows[i].getElementsByTagName("td")[0].innerText) },
-  //     ""
-  //   );
-  // })
-  for (var i = 0; i < rows.length; i++) {
-    let x = i;
-    btndd[i].addEventListener("click", (e) => {
-      getMaLHP(x, "");
 
-      document.querySelector(".ddText").innerText = `Giảng viên:\t${GV}\nLớp: ${
-        rows[x].getElementsByTagName("td")[1].innerText
-      }\nBuổi:\t${rows[x].getElementsByTagName("td")[0].innerText}\nPhòng:\t${
-        rows[x].getElementsByTagName("td")[5].innerText
-      }`;
-    });
-  }
+  var rows = document.getElementsByTagName("tbody")[0].rows;
+  let btnddHappening = document.querySelector(".btn-dd-happening");
+
   let BHonAir = document.querySelector(".BHonAir");
   let BHonAir1 = document.querySelector(".BHonAir1");
 
@@ -140,55 +89,7 @@ async function initEvent() {
           BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
           BHonAir1.innerText = `Môn học:\t${newList[1].TENMH}\nNgày: ${newList[1].NGAY}\nTiết bắt đầu: ${newList[1].TIETBD}`;
           btnddHappening.style.display = "block";
-          loadListDD(
-            { MALOPHP: newList[i].MALOPHP },
-            { IDBUOIHOC: newList[i].IDBUOIHOC },
-            ""
-          );
-          let searchBox1 = document.querySelector(".search-box1");
-          let btn_search1 = document.querySelector(".btn-search1");
-          btn_search1.addEventListener("click", (e) => {
-            let KEY = searchBox1.value;
-            console.log(KEY)
-            e.preventDefault();
-            if (KEY) {
-              loadListDD(
-                { MALOPHP: newList[i].MALOPHP },
-                { IDBUOIHOC: newList[i].IDBUOIHOC },
-                KEY
-              );
-            } else {
-              alert("Bạn chưa nhập thông tin cần tìm!");
-              return;
-            }
-          });
-          searchBox1.addEventListener("keypress", (e) => {
-            // alert('')
-            if (e.key === "Enter") {
-              e.preventDefault();
-              let KEY = searchBox1.value;
-              if (KEY) {
-                loadListDD(
-                  { MALOPHP: newList[i].MALOPHP },
-                  { IDBUOIHOC: newList[i].IDBUOIHOC },
-                  KEY
-                );
-              } else {
-                alert("Bạn chưa nhập thông tin cần tìm!");
-                e.preventDefault();
-              }
-            }
-          });
-
-          searchBox1.addEventListener("keyup", () => {
-            let KEY = searchBox1.value;
-            if (KEY.length == 0)
-            loadListDD(
-              { MALOPHP: newList[i].MALOPHP },
-              { IDBUOIHOC: newList[i].IDBUOIHOC },
-              ''
-            );
-          });
+          btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
           mark += 1;
         }
         if (i > 0) {
@@ -196,111 +97,14 @@ async function initEvent() {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
             BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
             btnddHappening.style.display = "block";
-            loadListDD(
-              { MALOPHP: newList[i].MALOPHP },
-              { IDBUOIHOC: newList[i].IDBUOIHOC },
-              ""
-            );
-            let searchBox1 = document.querySelector(".search-box1");
-            let btn_search1 = document.querySelector(".btn-search1");
-            btn_search1.addEventListener("click", (e) => {
-              let KEY = searchBox1.value;
-              console.log(KEY)
-              e.preventDefault();
-              if (KEY) {
-                loadListDD(
-                  { MALOPHP: newList[i].MALOPHP },
-                  { IDBUOIHOC: newList[i].IDBUOIHOC },
-                  KEY
-                );
-              } else {
-                alert("Bạn chưa nhập thông tin cần tìm!");
-                return;
-              }
-            });
-            searchBox1.addEventListener("keypress", (e) => {
-              // alert('')
-              if (e.key === "Enter") {
-                e.preventDefault();
-                let KEY = searchBox1.value;
-                if (KEY) {
-                  loadListDD(
-                    { MALOPHP: newList[i].MALOPHP },
-                    { IDBUOIHOC: newList[i].IDBUOIHOC },
-                    KEY
-                  );
-                } else {
-                  alert("Bạn chưa nhập thông tin cần tìm!");
-                  e.preventDefault();
-                }
-              }
-            });
-  
-            searchBox1.addEventListener("keyup", () => {
-              let KEY = searchBox1.value;
-              if (KEY.length == 0)
-              loadListDD(
-                { MALOPHP: newList[i].MALOPHP },
-                { IDBUOIHOC: newList[i].IDBUOIHOC },
-                ''
-              );
-            });
+            btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
             mark += 1;
           } else {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${
-              newList[i + 1].NGAY
-            }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${newList[i + 1].NGAY
+              }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
             btnddHappening.style.display = "block";
-            loadListDD(
-              { MALOPHP: newList[i].MALOPHP },
-              { IDBUOIHOC: newList[i].IDBUOIHOC },
-              ""
-            );
-            let searchBox1 = document.querySelector(".search-box1");
-            let btn_search1 = document.querySelector(".btn-search1");
-            btn_search1.addEventListener("click", (e) => {
-              let KEY = searchBox1.value;
-              console.log(KEY)
-              e.preventDefault();
-              if (KEY) {
-                loadListDD(
-                  { MALOPHP: newList[i].MALOPHP },
-                  { IDBUOIHOC: newList[i].IDBUOIHOC },
-                  KEY
-                );
-              } else {
-                alert("Bạn chưa nhập thông tin cần tìm!");
-                return;
-              }
-            });
-            searchBox1.addEventListener("keypress", (e) => {
-              // alert('')
-              if (e.key === "Enter") {
-                e.preventDefault();
-                let KEY = searchBox1.value;
-                if (KEY) {
-                  loadListDD(
-                    { MALOPHP: newList[i].MALOPHP },
-                    { IDBUOIHOC: newList[i].IDBUOIHOC },
-                    KEY
-                  );
-                } else {
-                  alert("Bạn chưa nhập thông tin cần tìm!");
-                  e.preventDefault();
-                }
-              }
-            });
-  
-            searchBox1.addEventListener("keyup", () => {
-              let KEY = searchBox1.value;
-              if (KEY.length == 0)
-              loadListDD(
-                { MALOPHP: newList[i].MALOPHP },
-                { IDBUOIHOC: newList[i].IDBUOIHOC },
-                ''
-              );
-            });
             mark += 1;
           }
         }
@@ -316,11 +120,6 @@ async function initEvent() {
     if (isHappen(newList[0].TIETBD, newList[0].SOTIET)) {
       BHonAir.innerText = `Môn học:\t${newList[0].TENMH}\nNgày: ${newList[0].NGAY}\nTiết bắt đầu: ${newList[0].TIETBD}`;
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
-      loadListDD(
-        { MALOPHP: newList[0].MALOPHP },
-        { IDBUOIHOC: newList[0].IDBUOIHOC },
-        ""
-      );
     } else {
       BHonAir.innerText = `Hiện chưa có buổi học`;
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
@@ -346,7 +145,7 @@ async function initEvent() {
     });
     let tbdTime;
     let sotTime;
-    if (tbd == 1) tbdTime = new moment("07:30", "HH:mm").format("HH:mm");
+    if (tbd == 1) tbdTime = new moment("07:00", "HH:mm").format("HH:mm");
     if (tbd == 2) tbdTime = new moment("08:15", "HH:mm").format("HH:mm");
     if (tbd == 3) tbdTime = new moment("09:00", "HH:mm").format("HH:mm");
     if (tbd == 4) tbdTime = new moment("09:45", "HH:mm").format("HH:mm");
@@ -358,21 +157,22 @@ async function initEvent() {
 
     let test = moment(tbdTime, "HH:mm");
 
-    if (st == 1) {
-      sotTime = moment(test).add(45, "minutes").format("HH:mm");
-    }
-    if (st == 2) {
-      sotTime = moment(test).add(90, "minutes").format("HH:mm");
-    }
-    if (st == 3) {
-      sotTime = moment(test).add(135, "minutes").format("HH:mm");
-    }
-    if (st == 4) {
-      sotTime = moment(test).add(180, "minutes").format("HH:mm");
-    }
-    if (st == 5) {
-      sotTime = moment(test).add(225, "minutes").format("HH:mm");
-    }
+    // if (st == 1) {
+    //   sotTime = moment(test).add(45, "minutes").format("HH:mm");
+    // }
+    // if (st == 2) {
+    //   sotTime = moment(test).add(90, "minutes").format("HH:mm");
+    // }
+    // if (st == 3) {
+    //   sotTime = moment(test).add(135, "minutes").format("HH:mm");
+    // }
+    // if (st == 4) {
+    //   sotTime = moment(test).add(180, "minutes").format("HH:mm");
+    // }
+    // if (st == 5) {
+    //   sotTime = moment(test).add(225, "minutes").format("HH:mm");
+    // }
+    sotTime = moment(test).add(45 * st, "minutes").format("HH:mm");
     return current >= tbdTime && current <= sotTime;
   }
 }
