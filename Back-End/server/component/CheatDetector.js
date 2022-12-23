@@ -20,14 +20,15 @@ class CheatDetector {
       CheatDetector.listIPInBuoiHoc[IDBUOIHOC].push(IPorMAC);
     }
   }
-  dectect(IDBUOIHOC, IPorMAC, giangVienPosition, studentPosition) {
+  dectect(IDBUOIHOC, IPorMAC, giangVienPosition, sinhVienPosition) {
     this.addBuoiHoc(IDBUOIHOC);
 
     //KHONG HỢP LỆ
     if (CheatDetector.listIPInBuoiHoc[IDBUOIHOC].includes(IPorMAC))
       return "WARN!!!: TRÙNG THIẾT BỊ ĐIỂM DANH"
-
-    let distance = locationCalc(giangVienPosition, studentPosition)
+    if (!giangVienPosition || !giangVienPosition)
+      return "";
+    let distance = locationCalc(giangVienPosition, sinhVienPosition)
     //KHONG HỢP LỆ
     if (distance >= 100)
       return "WARN!!!: KHOẢNG CÁCH THIẾT BỊ KHÔNG HỢP LỆ: " + Math.round(distance) + " (m)";

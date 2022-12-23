@@ -24,7 +24,7 @@ btnStartDiemDanh.onclick = async () => {
   initClock(14, 59);
 
   //tạo dữ liệu CT điểm danh trong csdl
-  let dsIDLSVTheoBuoi = await server.getList(server.tbl.CT_LOP_SV, { MALOPHP: BUOIHOC.MALOPH });
+  let dsIDLSVTheoBuoi = await server.getList(server.tbl.CT_LOP_SV, { MALOPHP: BUOIHOC.MALOPHP });
 
   for (let index = 0; index < dsIDLSVTheoBuoi.length; index++) {
     let e = dsIDLSVTheoBuoi[index];
