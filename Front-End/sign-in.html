@@ -127,7 +127,7 @@
       }
     </script> -->
     <script type="module" async>
-      import {server} from '/IOT-diem-danh-lop-hoc-bang-QR/Front-End/components/server/main.js';
+      import {server} from './components/server/main.js';
 
       const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
       console.log(listTaiKhoan);
