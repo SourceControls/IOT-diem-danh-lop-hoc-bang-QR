@@ -1,5 +1,5 @@
-import excute from "Excutor.js";
-import funct from "funct.js";
+import excute from "./Excutor.js";
+import funct from "./Funct.js";
 const domain = "http://localhost:8080"
 
 class Server {
