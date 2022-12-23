@@ -3,11 +3,12 @@ export default function getQRSrc(IDBUOIHOC, IDLSV, size) {
     var deviceIP = await fetch('https://api.ipify.org?format=json')
       .then((res) => res.json())
       .then((res) => res.ip);
-    var serverIP = await fetch('https://localho/site/getServerIP')
-      .then((res) => res.json())
-      .then((res) => res.data);
+    // var serverIP = await fetch('https://localho/site/getServerIP')
+    //   .then((res) => res.json())
+    //   .then((res) => res.data);
     navigator.geolocation.getCurrentPosition((p) => {
-      resolve({ lat: p.coords.latitude, lng: p.coords.longitude, deviceIP, serverIP });
+      // resolve({ lat: p.coords.latitude, lng: p.coords.longitude, deviceIP, serverIP });
+      resolve({ lat: p.coords.latitude, lng: p.coords.longitude, deviceIP });
     });
   }).then((p) => {
     // https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=192.168.0.1__BUOI01__LSV01__116.108.92.248__10.846578802035475__106.79880896438867
