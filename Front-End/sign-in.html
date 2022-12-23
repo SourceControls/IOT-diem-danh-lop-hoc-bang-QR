@@ -96,9 +96,12 @@
     <script src="SinhVien/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="SinhVien/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script>
-      navigator.geolocation.getCurrentPosition((p) => {
-        alert(p.coords.latitude);
-      });
+      navigator.geolocation.getCurrentPosition(
+        (p) => {
+          alert(p.coords.latitude);
+        },
+        (e) => alert(e.message)
+      );
       var win = navigator.platform.indexOf('Win') > -1;
       if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -124,7 +127,7 @@
       }
     </script> -->
     <script type="module" async>
-      import {server} from './components/server/main.js';
+      import {server} from '/IOT-diem-danh-lop-hoc-bang-QR/components/server/main.js';
 
       const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
       console.log(listTaiKhoan);
