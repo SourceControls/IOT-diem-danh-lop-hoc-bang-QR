@@ -1,7 +1,9 @@
 const io = require('../component/IO');
 const doRequest = require('../component/doRequest');
+let request = require('request');
 const cheatDetector = require('../component/CheatDetector');
-const e = require('express');
+const LEDIP = '192.168.137.225'
+const TIMEALERT = 700;
 class SensorControllers {
   diemDanhBangBluetooth = async (res, myobj) => {
     // http://localhost:8080/sensor?MSV=2&IP=127.0.0.1
@@ -48,10 +50,18 @@ class SensorControllers {
     if (GHICHU != "");
     await doRequest('http://localhost:8080/CT_DiemDanh/Update', { query: { IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: IDLSVTheoMASV }, newValue: { GHICHU } })
     require('../server')(IDLSVTheoMASV, BUOIHOC.IDBUOIHOC, GHICHU);
+
+    request.get('http://' + LEDIP + '/LED=ON');
+    setTimeout(() => {
+      request.get('http://' + LEDIP + '/LED=OFF');
+    }, TIMEALERT)
     res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + GHICHU);
   }
   //điểm danh bằng QR.
   insertSensorData = async (req, res) => {
+
+    console.log(req.query);
+    return;
     var myobj = { ...req.query };
     if (!myobj.IDBUOIHOC) {
       this.diemDanhBangBluetooth(res, myobj);
@@ -63,7 +73,7 @@ class SensorControllers {
     console.log("SensorData: ", myobj);
     //BLUETOTH CÓ THỂ BỎ QUA TRƯỜNG lat và lng, trường IP có thể chứa giá trị của bluetooth
     //khoảng cách ở nhà 230/14-manthieejn
-    // http://localhost:8080/sensor?IDBUOIHOC=2&IDLSV=1&IP=127.0.0.1&lat=10.848936&lng=106.795772
+    // http://localhost:8080/sensor?data=BUOI01__LSV01__116.108.92.248__10.846578802035475__106.79880896438867
 
     //khoảng cách ở trường
     // http://localhost:8080/sensor?IDBUOIHOC=2&IDLSV=2&IP=127.0.0.1&lat=10.848085&lng=106.786452
@@ -101,6 +111,10 @@ class SensorControllers {
 
       //điểm gửi tin nhắn về cho client thông tin điểm danh
       require('../server')(myobj.IDLSV, myobj.IDBUOIHOC, GHICHU);
+      request.get('http://' + LEDIP + '/LED=ON');
+      setTimeout(() => {
+        request.get('http://' + LEDIP + '/LED=OFF');
+      }, TIMEALERT)
       res.send("SUCCESS!! Đã điểm danh 1 sinh viên || " + GHICHU);
     } catch (error) {
       res.send("FAIL!! " + error.message);

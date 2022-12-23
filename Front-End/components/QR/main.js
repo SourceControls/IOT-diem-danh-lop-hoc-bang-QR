@@ -3,7 +3,7 @@ export default function getQRSrc(IDBUOIHOC, IDLSV, size) {
     var deviceIP = await fetch('https://api.ipify.org?format=json')
       .then((res) => res.json())
       .then((res) => res.ip);
-    var serverIP = await fetch('https://iot-f77z.onrender.com/site/getServerIP')
+    var serverIP = await fetch('https://localho/site/getServerIP')
       .then((res) => res.json())
       .then((res) => res.data);
     navigator.geolocation.getCurrentPosition((p) => {
