@@ -937,6 +937,12 @@ async function initEvent() {
               hidePopUp(pop_up)
             }
           })
+          server.delete(server.tbl.CT_LOP_GV, maLhp).then(result => {
+            console.log(result)
+          })
+          server.delete(server.tbl.CT_LOP_SV, maLhp).then(result => {
+            console.log(result)
+          })
         }
       }
     })
