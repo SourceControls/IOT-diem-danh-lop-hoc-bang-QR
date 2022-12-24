@@ -163,6 +163,7 @@ var loadLh = async function (data) {
             }
         }
     }
+    console.log(lhp1)
     classHpn1.innerHTML += `
         <p class="text-lg font-weight-bold">Buổi học sắp diễn ra</p>
         <div class="text-sm font-weight-normal">${lhp1[0].TENLOP} - ${phong == '' ? list[1].PHONG : phong} - ${lhp1[0].TENMH}</div>

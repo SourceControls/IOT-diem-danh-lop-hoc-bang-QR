@@ -1,10 +1,10 @@
 import { server } from '../../../components/server/main.js'
 
-let masv = 'SV01'
+let maSv = window.localStorage.getItem('TENDN')
 
 async function checkPass(pass) {
     let data = {
-        TENDN: masv,
+        TENDN: maSv,
         MATKHAU: pass
     }
     const rs = await server.getList(server.tbl.TAIKHOAN, data).then(result => {
@@ -32,7 +32,7 @@ function initEvent() {
         }
         let data = {
             query: {
-                TENDN: masv
+                TENDN: maSv
             },
             newValue: {
                 MATKHAU: newP

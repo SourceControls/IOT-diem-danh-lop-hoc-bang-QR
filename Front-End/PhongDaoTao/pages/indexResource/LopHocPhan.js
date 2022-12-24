@@ -776,7 +776,7 @@ async function initEvent() {
       MAGV: input_add[3].value.trim()
     }
 
-    if (input_add[3].value.trim() == !'') {
+    if (input_add[3].value.trim() !== '') {
       if (!await isExistGv(input_add[3].value.trim())) {
         alert('Giảng viên không tồn tại')
         return
@@ -895,7 +895,7 @@ async function initEvent() {
         }
         let data = {
           query: {
-            MALOPHP: idLhp,
+            MALOPHP: idLhpGv,
           },
           newValue: {
             TENLOP: document.querySelector('.TENLOP-edit').value,
@@ -1309,7 +1309,14 @@ async function initEvent() {
           console.log(idLhp)
           btn_delBh.onclick = async (e) => {
             btn_delBh.disabled = true
-            if (await isExistDiemDanh({ MALOPHP: idLhp })) {
+            let data = {
+              IDBUOIHOC: idBh
+            }
+            const dd = await server.getList(server.tbl.CT_DIEMDANH, data).then(result => {
+              return result.length
+            })
+
+            if (dd > 0) {
               alert('Buổi học đã có dữ liệu điểm danh. Không thể xóa !!!')
               return
             }

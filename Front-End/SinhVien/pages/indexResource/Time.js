@@ -3,17 +3,14 @@ let time = [[0, 0], [7, 0], [8, 15], [9, 0], [9, 45], [10, 30], [11, 15], [13, 3
 export default function isHappening(tietBd, soTiet){
     let check = false
     var today = new Date()
-    if(tietBd > 5) {
-        tietBd += 1
-    }
-    let hours = today.getHours()
-    let mins = today.getMinutes()
-    // let hours = 8   
-    // let mins = 44
+    // let hours = today.getHours()
+    // let mins = today.getMinutes()
+    let hours = 16   
+    let mins = 44
     let hoursStart = time[tietBd][0]
     let minsStart = time[tietBd][1]
-    let hoursEnd = time[tietBd + soTiet + 1][0]
-    let minsEnd = time[tietBd + soTiet + 1][1]
+    let hoursEnd = time[tietBd + soTiet ][0]
+    let minsEnd = time[tietBd + soTiet ][1]
     console.log(hoursEnd, minsEnd, hoursStart, minsStart)
     if(hours == hoursEnd){
         if(mins <= minsEnd){
@@ -25,6 +22,9 @@ export default function isHappening(tietBd, soTiet){
     return check
 }
 
-console.log(isHappening(2, 4))
-console.log(isHappening(5, 4))
+
+console.log(isHappening(1, 4))
+console.log(isHappening(7, 4))
+
+
 
