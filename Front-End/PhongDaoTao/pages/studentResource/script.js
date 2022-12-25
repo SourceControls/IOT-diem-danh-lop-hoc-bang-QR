@@ -326,3 +326,9 @@ searchBox.addEventListener("keyup", () => {
   if (KEY.length == 0)
     loadListSV({})
 })
+let text = document.querySelector('.admin')
+let ad = window.localStorage.getItem("TENDN");
+
+  server.getList(server.tbl.GIANGVIEN, { 'MAGV': ad }).then((rs) => {
+    text.innerText = `${rs[0].HOTEN}`;
+  });
