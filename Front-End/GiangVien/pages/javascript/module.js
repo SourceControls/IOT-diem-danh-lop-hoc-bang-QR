@@ -86,7 +86,8 @@ async function initEvent() {
       if (isHappen(newList[i].TIETBD, newList[i].SOTIET)) {
         if (i == 0) {
           BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-          BHonAir1.innerText = `Môn học:\t${newList[1].TENMH}\nNgày: ${newList[1].NGAY}\nTiết bắt đầu: ${newList[1].TIETBD}`;
+          if (newList[1])
+            BHonAir1.innerText = `Môn học:\t${newList[1].TENMH}\nNgày: ${newList[1].NGAY}\nTiết bắt đầu: ${newList[1].TIETBD}`;
           btnddHappening.style.display = "block";
           btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
           mark += 1;
@@ -94,14 +95,16 @@ async function initEvent() {
         if (i > 0) {
           if (i == newList.length - 1) {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-            BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+            if (newList2[0])
+              BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
             btnddHappening.style.display = "block";
             btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
             mark += 1;
           } else {
             BHonAir.innerText = `Môn học:\t${newList[i].TENMH}\nNgày: ${newList[i].NGAY}\nTiết bắt đầu: ${newList[i].TIETBD}`;
-            BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${newList[i + 1].NGAY
-              }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
+            if (newList[i + 1])
+              BHonAir1.innerText = `Môn học:\t${newList[i + 1].TENMH}\nNgày: ${newList[i + 1].NGAY
+                }\nTiết bắt đầu: ${newList[i + 1].TIETBD}`;
             btnddHappening.dataset.set = `${newList[i].IDBUOIHOC + '&' + newList[i].TENMH + '&' + newList[i].NGAY}`
             btnddHappening.style.display = "block";
             mark += 1;
@@ -111,14 +114,16 @@ async function initEvent() {
     }
     if (mark == 0) {
       BHonAir.innerText = `Hiện chưa có buổi học`;
-      BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      if (newList2[0])
+        BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
       btnddHappening.style.display = "none";
     }
   }
   if (newList.length == 1) {
     if (isHappen(newList[0].TIETBD, newList[0].SOTIET)) {
       BHonAir.innerText = `Môn học:\t${newList[0].TENMH}\nNgày: ${newList[0].NGAY}\nTiết bắt đầu: ${newList[0].TIETBD}`;
-      BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      if (newList2[0])
+        BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
     } else {
       BHonAir.innerText = `Hiện chưa có buổi học`;
       if (newList2[0])
