@@ -121,13 +121,19 @@ async function initEvent() {
       BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
     } else {
       BHonAir.innerText = `Hiện chưa có buổi học`;
-      BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      if (newList2[0])
+        BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+      else
+        BHonAir1.innerText = "Không có buổi học";
       btnddHappening.style.display = "none";
     }
   }
   if (newList.length == 0) {
     BHonAir.innerText = `Hiện chưa có buổi học`;
-    BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+    if (newList2[0])
+      BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+    else
+      BHonAir1.innerText = "Không có buổi học";
     btnddHappening.style.display = "none";
   }
   function getDateFromHours(time) {
@@ -156,22 +162,8 @@ async function initEvent() {
 
     let test = moment(tbdTime, "HH:mm");
 
-    // if (st == 1) {
-    //   sotTime = moment(test).add(45, "minutes").format("HH:mm");
-    // }
-    // if (st == 2) {
-    //   sotTime = moment(test).add(90, "minutes").format("HH:mm");
-    // }
-    // if (st == 3) {
-    //   sotTime = moment(test).add(135, "minutes").format("HH:mm");
-    // }
-    // if (st == 4) {
-    //   sotTime = moment(test).add(180, "minutes").format("HH:mm");
-    // }
-    // if (st == 5) {
-    //   sotTime = moment(test).add(225, "minutes").format("HH:mm");
-    // }
     sotTime = moment(test).add(45 * st, "minutes").format("HH:mm");
+    console.log(tbdTime, current, sotTime);
     return current >= tbdTime && current <= sotTime;
   }
 }

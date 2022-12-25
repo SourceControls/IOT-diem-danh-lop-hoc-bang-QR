@@ -5,10 +5,9 @@
 // ></script> */}
 
 
-var socket = io.connect("localhost:8080");
+var socket = io.connect("192.168.137.1:8080");
 socket.on('connected', function (msg) {
   console.log(msg, { io });
-
 });
 
 

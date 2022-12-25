@@ -11,10 +11,10 @@ let data1 = {
 let idLsv = ""
 let idBh = ""
 
-async function loadNos(data){
+async function loadNos(data) {
     const nos = document.querySelector('.nos')
     const avos = document.querySelector('.avos')
-    let sv = await server.getList(server.tbl.SINHVIEN, {MASV: maSv})
+    let sv = await server.getList(server.tbl.SINHVIEN, { MASV: maSv })
     nos.innerHTML = sv[0].HOTEN
     avos.src = sv[0].HINH
 }
@@ -56,8 +56,8 @@ var loadLh = async function (data) {
     let [lsv, bh, dtLhp, gv, gv1] = [...x]
     classHpn.innerHTML = ''
     classHpn1.innerHTML = ''
-    console.log(bh)
-    console.log(lsv)
+    // console.log(bh)
+    // console.log(lsv)
     for (let a of lsv) {
         for (let b of bh) {
             if (a.MALOPHP == b.MALOPHP) {
@@ -85,7 +85,7 @@ var loadLh = async function (data) {
         return 1
     })
     let phong = ''
-    console.log(list)
+    // console.log(list)
     for (let l = 0; l < list.length; l++) {
         if (check) break
         if (isHappening(list[l].TIETBD, list[l].SOTIET)) {
@@ -97,14 +97,14 @@ var loadLh = async function (data) {
             } else {
                 id1 = list[l].MALOPHP
                 phong = ''
-                console.log(list[l].IDBUOIHOC)
+                // console.log(list[l].IDBUOIHOC)
             }
         }
     }
     if (!check && today.getHours() < 17) {
         id = ''
         id1 = list[0].MALOPHP
-        console.log(list[0].IDBUOIHOC)
+        // console.log(list[0].IDBUOIHOC)
         phong = list[0].PHONG
 
     }
@@ -177,7 +177,7 @@ function initEvent() {
         const qrCode = document.querySelector('.qrCode')
         getQRSrc(idBh, idLsv, '200').then((src) => {
             qrCode.src = src;
-            console.log(src);
+            // console.log(src);
         });
     })
 }
@@ -189,7 +189,7 @@ async function loadData(KEY) {
     initEvent()
 }
 
-console.log(maSv)
+// console.log(maSv)
 loadData(maSv)
 // loadLh('SV04')
 

@@ -5,7 +5,7 @@ class CheatDetector {
   static listIPInBuoiHoc = {
   }
   addBuoiHoc(IDBUOIHOC) {
-    if (!CheatDetector.listIPInBuoiHoc.hasOwnProperty(IDBUOIHOC)) {
+    if (!CheatDetector.listIPInBuoiHoc[IDBUOIHOC]) {
       CheatDetector.listIPInBuoiHoc[IDBUOIHOC] = [];
     }
   }
@@ -22,10 +22,10 @@ class CheatDetector {
   }
   dectect(IDBUOIHOC, IPorMAC, giangVienPosition, sinhVienPosition) {
     this.addBuoiHoc(IDBUOIHOC);
-
     //KHONG HỢP LỆ
     if (CheatDetector.listIPInBuoiHoc[IDBUOIHOC].includes(IPorMAC))
       return "WARN!!!: TRÙNG THIẾT BỊ ĐIỂM DANH"
+    this.addIP(IDBUOIHOC, IPorMAC)
     if (!giangVienPosition || !giangVienPosition)
       return "";
     let distance = locationCalc(giangVienPosition, sinhVienPosition)
@@ -33,8 +33,7 @@ class CheatDetector {
     if (distance >= 100)
       return "WARN!!!: KHOẢNG CÁCH THIẾT BỊ KHÔNG HỢP LỆ: " + Math.round(distance) + " (m)";
 
-    //HỢP LỆ
-    this.addIP(IDBUOIHOC, IPorMAC)
+
     return "";
   }
 

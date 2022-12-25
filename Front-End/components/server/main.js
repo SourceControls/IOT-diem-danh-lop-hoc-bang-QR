@@ -1,6 +1,6 @@
 import excute from "./Excutor.js";
 import funct from "./Funct.js";
-const domain = "http://localhost:8080"
+const domain = "http://192.168.137.1:8080"
 
 class Server {
   funct = funct;

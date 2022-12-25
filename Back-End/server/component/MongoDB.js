@@ -26,7 +26,7 @@ class MongoDB {
       else
         var rs = await dbo.collection(collectionName).insertOne(query);
       db.close();
-      console.log("Inserted: ", rs);
+      // console.log("Inserted: ", rs);
       return new Promise((resolve, reject) => {
         if (Array.isArray(query))
           resolve(rs.insertedIds != null);
@@ -38,13 +38,13 @@ class MongoDB {
     }
   }
   find = async (collectionName, query = {}) => {
-    console.log(query);
+    //console.log(query);
     try {
       var db = await MongoClient.connect(DBUri);
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).find(query, { projection: { _id: 0 } }).toArray();
       db.close();
-      console.log("Found: ", rs);
+      // console.log("Found: ", rs);
       return new Promise((resolve, reject) => {
         resolve(rs);
       })
@@ -61,7 +61,7 @@ class MongoDB {
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).updateOne(query, newValue);
       db.close();
-      console.log("Updated: ", rs);
+      // console.log("Updated: ", rs);
       return new Promise((resolve, reject) => {
         if (returnModifiedCount)
           resolve(rs.modifiedCount != 0);
@@ -80,7 +80,7 @@ class MongoDB {
       var dbo = db.db(dbName);
       var rs = await dbo.collection(collectionName).deleteOne(query);
       db.close();
-      console.log("Deleted: ", rs);
+      // console.log("Deleted: ", rs);
       return new Promise((resolve, reject) => {
         resolve(rs.deletedCount != 0);
       })
