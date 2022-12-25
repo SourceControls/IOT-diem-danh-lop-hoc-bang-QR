@@ -1,30 +1,31 @@
-let time = [[0, 0], [7, 0], [8, 15], [9, 0], [9, 45], [10, 30], [11, 15], [13, 30], [14, 15], [15, 0], [15, 45], [16, 30], [17, 15]]
 
-export default function isHappening(tietBd, soTiet) {
-    let check = false
-    var today = new Date()
-    // let hours = today.getHours()
-    // let mins = today.getMinutes()
-    let hours = 16
-    let mins = 44
-    let hoursStart = time[tietBd][0]
-    let minsStart = time[tietBd][1]
-    let hoursEnd = time[tietBd + soTiet][0]
-    let minsEnd = time[tietBd + soTiet][1]
-    console.log(hoursStart + ':' + minsStart, hoursEnd + ':' + minsEnd,)
-    if (hours == hoursEnd) {
-        if (mins <= minsEnd) {
-            check = true
-        }
-    } else if (hours < hoursEnd && hours >= hoursStart && mins >= minsStart) {
-        check = true
-    }
-    return check
+export default function isHappening(tbd, st) {
+    let current = new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    });
+    let tbdTime;
+    let sotTime;
+    if (tbd == 1) tbdTime = new moment("07:00", "HH:mm").format("HH:mm");
+    if (tbd == 2) tbdTime = new moment("08:15", "HH:mm").format("HH:mm");
+    if (tbd == 3) tbdTime = new moment("09:00", "HH:mm").format("HH:mm");
+    if (tbd == 4) tbdTime = new moment("09:45", "HH:mm").format("HH:mm");
+    if (tbd == 5) tbdTime = new moment("10:30", "HH:mm").format("HH:mm");
+    if (tbd == 6) tbdTime = new moment("11:15", "HH:mm").format("HH:mm");
+    if (tbd == 7) tbdTime = new moment("13:30", "HH:mm").format("HH:mm");
+    if (tbd == 8) tbdTime = new moment("14:15", "HH:mm").format("HH:mm");
+    if (tbd == 9) tbdTime = new moment("15:00", "HH:mm").format("HH:mm");
+
+    let test = moment(tbdTime, "HH:mm");
+
+    sotTime = moment(test).add(45 * st, "minutes").format("HH:mm");
+    console.log(tbdTime, current, sotTime);
+    return current >= tbdTime && current <= sotTime;
 }
 
 
-// console.log(isHappening(1, 4))
-// console.log(isHappening(7, 4))
+
 
 
 

@@ -273,6 +273,8 @@ socket.on('diemDanh', function (data) {
     }
 
   })
-  alert("Vừa có sinh viên điểm danh!\n" + data.GHICHU);
+  let tensv = document.querySelectorAll(`tr#${masv} td`)[1].innerText
+
+  alert(`Có sinh viên điểm danh!\n${tensv}\n${data.GHICHU}`);
 })
 
