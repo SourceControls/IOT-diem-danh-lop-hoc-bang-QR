@@ -173,6 +173,7 @@ var loadLh = async function (data) {
 
 function initEvent() {
     const qrBtn = document.querySelector('.qrBtn')
+    const btnDownload = document.querySelector('.download')
     qrBtn.addEventListener("click", e => {
         const qrCode = document.querySelector('.qrCode')
         getQRSrc(idBh, idLsv, '200').then((src) => {
@@ -180,6 +181,27 @@ function initEvent() {
             // console.log(src);
         });
     })
+
+    btnDownload.addEventListener("click", async e => {
+        const qrCode = document.querySelector('.qrCode')
+        const file = await fetch(qrCode.src)
+        const imgFile = await file.blob()
+        console.log(imgFile)
+        var temp_link = document.createElement('a')
+        let objectUrl = URL.createObjectURL(imgFile)
+        console.log(objectUrl)
+        temp_link.download = 'DiemDanh.png'
+
+        temp_link.href = objectUrl
+
+        // temp_link.style.display = "none";
+        document.body.appendChild(temp_link);
+      
+        temp_link.click();
+        document.body.removeChild(temp_link);
+    })
+
+
 }
 
 

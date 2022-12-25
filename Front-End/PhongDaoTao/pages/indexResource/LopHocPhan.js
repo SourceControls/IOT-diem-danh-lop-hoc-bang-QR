@@ -233,7 +233,7 @@ async function getAllDd(data) {
     }
   }
   let checked = []
-  for (let i = 0; i < newArr.length - 1; i++) {
+  for (let i = 0; i < newArr.length; i++) {
     let dd = []
     if (checked.includes(newArr[i].IDLSV)) continue
     for (let j = i + 1; j < newArr.length; j++) {
@@ -248,6 +248,7 @@ async function getAllDd(data) {
     })
     checked.push(newArr[i].IDLSV)
   }
+  console.log(dsdd)
   for (let i of dsdd) {
     for (let j of dtsv) {
       if (i.IDLSV == j.IDLSV) {
@@ -537,6 +538,8 @@ async function loadAllListDiemDanh(data, gv, tenLop) {
   // let dd = await getAllDd({MALOPHP: data})
   // let dt = await getListDd({MALOPHP: data})
   console.log(dt)
+  console.log(dd)
+
   dtAll[0].innerHTML = `${gv.length == 2 ? gv[0] + "<br>" + gv[1] : gv[0]}`
   dtAll[1].innerHTML = `${tenLop + ' - ' + dt[1]}`
   dtAll[2].innerHTML = `${dd[1]}`

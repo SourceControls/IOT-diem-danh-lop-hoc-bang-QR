@@ -5,8 +5,8 @@ export default function isHappening(tietBd, soTiet) {
     var today = new Date()
     // let hours = today.getHours()
     // let mins = today.getMinutes()
-    let hours = 16
-    let mins = 44
+    let hours = 12
+    let mins = 47
     let hoursStart = time[tietBd][0]
     let minsStart = time[tietBd][1]
     let hoursEnd = time[tietBd + soTiet][0]
@@ -16,7 +16,9 @@ export default function isHappening(tietBd, soTiet) {
         if (mins <= minsEnd) {
             check = true
         }
-    } else if (hours < hoursEnd && hours >= hoursStart && mins >= minsStart) {
+    } else if (hours < hoursEnd) {
+        check = true
+    } else if(hours == hoursStart && mins >= minsStart){
         check = true
     }
     return check
