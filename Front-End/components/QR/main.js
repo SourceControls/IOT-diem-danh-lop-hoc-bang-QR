@@ -6,6 +6,7 @@ export default function getQRSrc(IDBUOIHOC, IDLSV, size) {
     navigator.geolocation.getCurrentPosition((p) => {
       resolve({ lat: p.coords.latitude, lng: p.coords.longitude, deviceIP });
     }, e => {
+      //vị trí của trường học
       resolve({ lat: 10.848085, lng: 106.786452, deviceIP });
     });
   }).then((p) => {

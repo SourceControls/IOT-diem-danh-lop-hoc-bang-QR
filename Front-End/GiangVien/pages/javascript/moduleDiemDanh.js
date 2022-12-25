@@ -12,7 +12,21 @@ var dsCTDD = await server.getList(server.tbl.CT_DIEMDANH, { MALOPHP: BUOIHOC.MAL
 var dsSVTheoBuoi;
 
 btnStartDiemDanh.onclick = async () => {
-  //load list sinh viên của buổi học đó
+
+
+  //tạo dữ liệu CT điểm danh trong csdl
+  let dsIDLSVTheoBuoi = await server.getList(server.tbl.CT_LOP_SV, { MALOPHP: BUOIHOC.MALOPHP });
+  console.log(BUOIHOC.MALOPHP, dsIDLSVTheoBuoi);
+  if (dsIDLSVTheoBuoi.length == 0) {
+    alert("Lớp không có sinh viên");
+  }
+  return;
+
+  for (let index = 0; index < dsIDLSVTheoBuoi.length; index++) {
+    let e = dsIDLSVTheoBuoi[index];
+    server.insert(server.tbl.CT_DIEMDANH, { IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: e.IDLSV, DADIEMDANH: false, GHICHU: '' });
+    dsCTDD.push({ IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: e.IDLSV, DADIEMDANH: false, GHICHU: '' });
+  }
   //init start time
   let STARTTIME = (new Date()).getHours() + ':' + (new Date()).getMinutes()
   server.update(server.tbl.BUOIHOC, {
@@ -22,15 +36,6 @@ btnStartDiemDanh.onclick = async () => {
   })
 
   initClock(14, 59);
-
-  //tạo dữ liệu CT điểm danh trong csdl
-  let dsIDLSVTheoBuoi = await server.getList(server.tbl.CT_LOP_SV, { MALOPHP: BUOIHOC.MALOPHP });
-
-  for (let index = 0; index < dsIDLSVTheoBuoi.length; index++) {
-    let e = dsIDLSVTheoBuoi[index];
-    server.insert(server.tbl.CT_DIEMDANH, { IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: e.IDLSV, DADIEMDANH: false, GHICHU: '' });
-    dsCTDD.push({ IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: e.IDLSV, DADIEMDANH: false, GHICHU: '' });
-  }
   btnStartDiemDanh.disabled = true;
   renderDanhSachDiemDanh(true);
 
@@ -127,7 +132,6 @@ async function renderDanhSachDiemDanh(needRenderBtnsHuyDiemDanh = false) {
   let dsCTDDTheoBuoi = dsCTDD.filter(e => e.IDBUOIHOC == BUOIHOC.IDBUOIHOC);
   let dsCTLSVTheoBuoi = innerJoin(dsCTLSV, dsCTDDTheoBuoi, 'IDLSV');
   dsSVTheoBuoi = innerJoin(dsSV, dsCTLSVTheoBuoi, 'MASV');
-
   tblDSDiemDanh.innerHTML = ''
   dsSVTheoBuoi.forEach(e => {
     if (e.DADIEMDANH) {
@@ -183,7 +187,7 @@ export default function initBtnsDiemDanh() {
 
       let [IDBUOIHOC, TENMON] = b.target.dataset.set.split('&');
       BUOIHOC = (await server.getList(server.tbl.BUOIHOC, { IDBUOIHOC: parseInt(IDBUOIHOC) }))[0];
-
+      console.log(BUOIHOC);
       //thông tin lớp học
       let currentDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
       document.querySelector(".ddText").innerHTML = `<p><b>Môn học: ${TENMON}</b></p><p>Ngày: ${BUOIHOC.NGAY} </p>`;
