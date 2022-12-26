@@ -125,6 +125,9 @@
       import {server} from './components/server/main.js';
       try {
         const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
+        if (listTaiKhoan.length == 0) {
+          alert('Không thể kết nối tới server!');
+        }
         console.log(listTaiKhoan);
         var form = document.querySelector('form');
         form.onsubmit = (e) => {
