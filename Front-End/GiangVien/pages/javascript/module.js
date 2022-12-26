@@ -122,8 +122,11 @@ async function initEvent() {
   if (newList.length == 1) {
     if (isHappen(newList[0].TIETBD, newList[0].SOTIET)) {
       BHonAir.innerText = `Môn học:\t${newList[0].TENMH}\nNgày: ${newList[0].NGAY}\nTiết bắt đầu: ${newList[0].TIETBD}`;
+      btnddHappening.dataset.set = `${newList[0].IDBUOIHOC + '&' + newList[0].TENMH + '&' + newList[0].NGAY}`
+
       if (newList2[0])
         BHonAir1.innerText = `Môn học:\t${newList2[0].TENMH}\nNgày: ${newList2[0].NGAY}\nTiết bắt đầu: ${newList2[0].TIETBD}`;
+
     } else {
       BHonAir.innerText = `Hiện chưa có buổi học`;
       if (newList2[0])
@@ -214,7 +217,7 @@ searchBox.addEventListener("keyup", () => {
 let text = document.querySelector('.admin')
 let ad = window.localStorage.getItem("TENDN");
 
-  server.getList(server.tbl.GIANGVIEN, { 'MAGV': ad }).then((rs) => {
-    text.innerText = `${rs[0].HOTEN}`;
-  });
+server.getList(server.tbl.GIANGVIEN, { 'MAGV': ad }).then((rs) => {
+  text.innerText = `${rs[0].HOTEN}`;
+});
 

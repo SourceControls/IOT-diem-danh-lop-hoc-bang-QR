@@ -114,46 +114,50 @@
       //     alert(data.latitude);
       //   });
     </script>
-    // Thêm cái này ở đầu mỗi file
+
     <!-- <script>
+      //Thêm cái này ở đầu mỗi file
       if (!window.localStorage.getItem('TENDN')) {
         window.location.replace('../sign-in.html');
       }
     </script> -->
     <script type="module" async>
       import {server} from './components/server/main.js';
-
-      const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
-      console.log(listTaiKhoan);
-      var form = document.querySelector('form');
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-        let authSuccess = false;
-        listTaiKhoan.forEach((e) => {
-          if (e.TENDN == formProps.TENDN && e.MATKHAU == formProps.MATKHAU) {
-            authSuccess = true;
-            window.localStorage.setItem('TENDN', e.TENDN);
-            window.localStorage.setItem('LOAITK', e.LOAITK);
-            if (e.LOAITK == 'PDT') {
-              alert('Phòng Đào Tạo');
-              window.location.replace('/Front-End/PhongDaoTao/index.html');
+      try {
+        const listTaiKhoan = await server.getList(server.tbl.TAIKHOAN, {});
+        console.log(listTaiKhoan);
+        var form = document.querySelector('form');
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const formProps = Object.fromEntries(formData);
+          let authSuccess = false;
+          listTaiKhoan.forEach((e) => {
+            if (e.TENDN == formProps.TENDN && e.MATKHAU == formProps.MATKHAU) {
+              authSuccess = true;
+              window.localStorage.setItem('TENDN', e.TENDN);
+              window.localStorage.setItem('LOAITK', e.LOAITK);
+              if (e.LOAITK == 'PDT') {
+                alert('Phòng Đào Tạo');
+                window.location.replace('/Front-End/PhongDaoTao/index.html');
+              }
+              if (e.LOAITK == 'GV') {
+                alert('Giảng viên');
+                window.location.replace('/Front-End/GiangVien/index.html');
+              }
+              if (e.LOAITK == 'SV') {
+                alert('Sinh viên');
+                window.location.replace('/Front-End/SinhVien/index.html');
+              }
             }
-            if (e.LOAITK == 'GV') {
-              alert('Giảng viên');
-              window.location.replace('/Front-End/GiangVien/index.html');
-            }
-            if (e.LOAITK == 'SV') {
-              alert('Sinh viên');
-              window.location.replace('/Front-End/SinhVien/index.html');
-            }
+          });
+          if (!authSuccess) {
+            alert('Sai tên đăng nhập hoặc mật khẩu');
           }
-        });
-        if (!authSuccess) {
-          alert('Sai tên đăng nhập hoặc mật khẩu');
-        }
-      };
+        };
+      } catch (e) {
+        alert(e.message);
+      }
     </script>
   </body>
 </html>

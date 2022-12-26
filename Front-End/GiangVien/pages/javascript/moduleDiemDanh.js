@@ -12,16 +12,12 @@ var dsCTDD = await server.getList(server.tbl.CT_DIEMDANH, { MALOPHP: BUOIHOC.MAL
 var dsSVTheoBuoi;
 
 btnStartDiemDanh.onclick = async () => {
-
-
   //tạo dữ liệu CT điểm danh trong csdl
   let dsIDLSVTheoBuoi = await server.getList(server.tbl.CT_LOP_SV, { MALOPHP: BUOIHOC.MALOPHP });
-  console.log(BUOIHOC.MALOPHP, dsIDLSVTheoBuoi);
-  if (dsIDLSVTheoBuoi.length == 0) {
+  if (!dsIDLSVTheoBuoi.length) {
     alert("Lớp không có sinh viên");
+    return;
   }
-  return;
-
   for (let index = 0; index < dsIDLSVTheoBuoi.length; index++) {
     let e = dsIDLSVTheoBuoi[index];
     server.insert(server.tbl.CT_DIEMDANH, { IDBUOIHOC: BUOIHOC.IDBUOIHOC, IDLSV: e.IDLSV, DADIEMDANH: false, GHICHU: '' });
@@ -95,9 +91,10 @@ async function renderBtnsHuyDiemDanh() {
   btnsHuyDiemDanh.forEach((e) => {
     e.onclick = async (b) => {
       let MASV = b.target.id;
-      let IDLSV = (await server.getList(server.tbl.CT_LOP_SV, { MASV, MALOPHP: BUOIHOC.MALOPH }))[0].IDLSV;
+      let IDLSV = (await server.getList(server.tbl.CT_LOP_SV, { MASV, MALOPHP: BUOIHOC.MALOPHP }))[0].IDLSV;
       let DADIEMDANH = false
-      if (document.querySelector(`#TTDIEMDANH-${MASV}`).innerText == 'Vắng') {
+      console.log(document.querySelector(`#TTDIEMDANH-${MASV}`).innerText);
+      if (document.querySelector(`#TTDIEMDANH-${MASV}`).innerText.includes('V')) {
         DADIEMDANH = true;
       }
       let rs = await server.update(server.tbl.CT_DIEMDANH, {
@@ -184,14 +181,13 @@ export default function initBtnsDiemDanh() {
       if (countDownInterval)
         clearInterval(countDownInterval);
       tblDSDiemDanh.innerHTML = '';
-
+      btnStartDiemDanh.disabled = true;
       let [IDBUOIHOC, TENMON] = b.target.dataset.set.split('&');
       BUOIHOC = (await server.getList(server.tbl.BUOIHOC, { IDBUOIHOC: parseInt(IDBUOIHOC) }))[0];
       console.log(BUOIHOC);
       //thông tin lớp học
       let currentDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
       document.querySelector(".ddText").innerHTML = `<p><b>Môn học: ${TENMON}</b></p><p>Ngày: ${BUOIHOC.NGAY} </p>`;
-
       if (BUOIHOC.SUBMITTED) {
         //đã điểm danh xong rồi
         btnStartDiemDanh.disabled = true;

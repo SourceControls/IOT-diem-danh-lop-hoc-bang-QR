@@ -2,19 +2,19 @@ const io = require('../component/IO');
 const doRequest = require('../component/doRequest');
 let request = require('request');
 const cheatDetector = require('../component/CheatDetector');
-const LEDIP = '192.168.137.150'
+const LEDIP = '192.168.137.25'
 class SensorControllers {
   alertSensorFail() {
     request.get('http://' + LEDIP + '/LED=ON');
     setTimeout(() => {
       request.get('http://' + LEDIP + '/LED=OFF');
-    }, 300)
+    }, 200)
     setTimeout(() => {
       request.get('http://' + LEDIP + '/LED=ON');
-    }, 500)
+    }, 400)
     setTimeout(() => {
       request.get('http://' + LEDIP + '/LED=OFF');
-    }, 700)
+    }, 600)
   }
   alertSensorSuccess() {
     request.get('http://' + LEDIP + '/LED=ON');
